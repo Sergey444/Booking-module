@@ -9,7 +9,7 @@
 	<!-- Bootstrap css -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<!-- datetimepicker css -->
-	<link rel="stylesheet" href="/dist/lib/datetimepicer/jquery.datetimepicker.css">
+	<link rel="stylesheet" href="./dist/lib/datetimepicer/jquery.datetimepicker.css">
 	
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -21,14 +21,13 @@
 	<script src="https://kit.fontawesome.com/a4eb6dc731.js"></script>
 
 	<!-- datetimepicker js-->
-	<script src="/dist/lib/datetimepicer/jquery.datetimepicker.full.min.js"></script>
+	<script src="./dist/lib/datetimepicer/jquery.datetimepicker.full.min.js"></script>
 	<!-- Bitrix24 api -->
 	<script src="//api.bitrix24.com/api/v1/"></script>
 </head>
 <body>
 
-<table id="table"></table>
-
+<table id="table" class=""></table>
 
 <!-- Modal -->
 <div class="modal fade" id="add-deal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -40,7 +39,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="">
+			<form action="" id="rs-add-task-form">
 				<div class="modal-body">
 						<div class="form-group">
 							<div class="row">
@@ -50,24 +49,24 @@
 								</div>
 								<div class="col-md-6">
 									<label for="">Введите дату окончания:</label>
-									<input type="text" class='form-control' name="date-start" id="date_timepicker_end" >
+									<input type="text" class='form-control' name="date-end" id="date_timepicker_end" >
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="">Название сделки</label>
-							<input type="text" class='form-control' name="name" placeholder=>
+							<label for="">Название задачи</label>
+							<input type="text" class='form-control' name="task-name" required placeholder=>
 						</div>
 						<div class="form-group">
 							<label for="">Имя клиента</label>
-							<input type="text" class='form-control' name="name" placeholder=>
+							<input type="text" class='form-control' readonly="readonly" name="responsible" placeholder=>
 						</div>
-						
+						<input type="hidden" name="company-id" >	
 					
 				</div>
 				<div class="modal-footer  modal-footer--space">
-					<button type="reset" class="btn btn-secondary" >Очистить форму</button>
-					<button type="button" class="btn btn-primary">Забронировать</button>
+					<!-- <button type="reset" class="btn btn-secondary" >Очистить форму</button> -->
+					<button type="submit" class="btn btn-primary">Забронировать</button>
 				</div>
 			</form>
 		</div>

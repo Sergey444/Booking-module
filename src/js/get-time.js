@@ -1,18 +1,17 @@
-
 export default () => {	
     //Считаем количество дней в месяце
     Date.prototype.daysInMonth = function() {
         return 33 - new Date(this.getFullYear(), this.getMonth() + month, 33).getDate();
     };
 
-    var  countDay = new Date().daysInMonth();
-    var  timestamp = [];
+    let countDay = new Date().daysInMonth();
+    window.timestamp = [];
 
-    for (var i = 1; i <= countDay; i++) {
+    for (let i = 1; i <= countDay; i++) {
         timestamp.push( +new Date(d.getFullYear(), d.getMonth() + month, i)) ;
     }
 
-    var  monthName = new Date();
+    let monthName = new Date();
         monthName = new Date(monthName.getFullYear(), monthName.getMonth() + window.month, monthName.getDate());
         monthName = monthName.toLocaleString('ru', {'month': 'long', 'year': 'numeric'}) ;
 
@@ -26,7 +25,7 @@ export default () => {
                 </tr>`;
     content += `<tr>`;			
     for ( let j = 1; j <= countDay; j++ ) {
-        content += `<td height="30" class="">${j}</td>`;
+        content += `<td  class="rs-day-column">${j}</td>`;
     }	
     content += `</tr></thead>`;
 

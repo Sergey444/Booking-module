@@ -15,10 +15,27 @@ a {
     width: 400px;
     border: none;
 }
-.td-for-task {
-    /*opacity: 0;*/
-    background-color: lightcoral;
+.td-for-task.rs-touday {
+    /* background-color: #dcdcdc;   */
+    border-left: none;
 }
+.rs-line.rs-touday {
+    margin-left: -18px;
+}
+.rs-line {
+    display: block;
+    background-color: lightcoral;   
+    height: 20px;
+    margin-right: 11px;
+    /* margin-left: 13px; */
+    border-radius: 15px;
+    /* margin-bottom: 5px; */
+}
+.rs-line--last {
+    margin-right: 0;
+    border-radius: 15px 0 0 15px;
+}
+
 .table__title {
     font-size: 28px;
     text-align: center;
@@ -32,15 +49,6 @@ a {
 .rs-objects {
     width: 300px;
 }
-/* .btn {
-    position: absolute;
-
-    font-size: 0;
-    display: block;
-    width: 32px;
-    height: 31px;
-    border: 1px solid lightgrey;
-} */
 
 .btn--prev {
     float: left;
@@ -57,11 +65,10 @@ a {
     text-align: center;
     cursor: pointer;
 }
-
-/* i {
-    color: #0172cb;
-} */
-
 .modal-footer--space {
-    justify-content: space-between;
+    justify-content: flex-end;
+}
+.rs-day-column {
+    min-width: 25px;
+    height: 25px;
 }

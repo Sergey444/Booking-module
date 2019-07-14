@@ -95,7 +95,7 @@
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "\r\ntable {\r\n    border-collapse: collapse;\r\n    width: 100%;\r\n}\r\ntd {\r\n    border: 1px solid black;\r\n    padding: 5px;\r\n}\r\na {\r\n    color: black;\r\n}\r\n\r\n.task {\r\n    width: 400px;\r\n    border: none;\r\n}\r\n.td-for-task {\r\n    /*opacity: 0;*/\r\n    background-color: lightcoral;\r\n}\r\n.table__title {\r\n    font-size: 28px;\r\n    text-align: center;\r\n    position: relative;\r\n    width: 80%;\r\n    line-height: 28px;\r\n}\r\n.rs-type {\r\n    background-color: lightgrey;\r\n}\r\n.rs-objects {\r\n    width: 300px;\r\n}\r\n/* .btn {\r\n    position: absolute;\r\n\r\n    font-size: 0;\r\n    display: block;\r\n    width: 32px;\r\n    height: 31px;\r\n    border: 1px solid lightgrey;\r\n} */\r\n\r\n.btn--prev {\r\n    float: left;\r\n} \r\n.btn--next {\r\n    float: right;\r\n} \r\n\r\n#table tbody tr:hover {\r\n    background-color: #f1f1f1;\r\n}\r\n\r\n.rs-show-modal{\r\n    text-align: center;\r\n    cursor: pointer;\r\n}\r\n\r\n/* i {\r\n    color: #0172cb;\r\n} */\r\n\r\n.modal-footer--space {\r\n    justify-content: space-between;\r\n}", ""]);
+exports.push([module.i, "\r\ntable {\r\n    border-collapse: collapse;\r\n    width: 100%;\r\n}\r\ntd {\r\n    border: 1px solid black;\r\n    padding: 5px;\r\n}\r\na {\r\n    color: black;\r\n}\r\n\r\n.task {\r\n    width: 400px;\r\n    border: none;\r\n}\r\n.td-for-task.rs-touday {\r\n    /* background-color: #dcdcdc;   */\r\n    border-left: none;\r\n}\r\n.rs-line.rs-touday {\r\n    margin-left: -18px;\r\n}\r\n.rs-line {\r\n    display: block;\r\n    background-color: lightcoral;   \r\n    height: 20px;\r\n    margin-right: 11px;\r\n    /* margin-left: 13px; */\r\n    border-radius: 15px;\r\n    /* margin-bottom: 5px; */\r\n}\r\n.rs-line--last {\r\n    margin-right: 0;\r\n    border-radius: 15px 0 0 15px;\r\n}\r\n\r\n.table__title {\r\n    font-size: 28px;\r\n    text-align: center;\r\n    position: relative;\r\n    width: 80%;\r\n    line-height: 28px;\r\n}\r\n.rs-type {\r\n    background-color: lightgrey;\r\n}\r\n.rs-objects {\r\n    width: 300px;\r\n}\r\n\r\n.btn--prev {\r\n    float: left;\r\n} \r\n.btn--next {\r\n    float: right;\r\n} \r\n\r\n#table tbody tr:hover {\r\n    background-color: #f1f1f1;\r\n}\r\n\r\n.rs-show-modal{\r\n    text-align: center;\r\n    cursor: pointer;\r\n}\r\n.modal-footer--space {\r\n    justify-content: flex-end;\r\n}\r\n.rs-day-column {\r\n    min-width: 25px;\r\n    height: 25px;\r\n}", ""]);
 
 
 /***/ }),
@@ -734,6 +734,41 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./src/js/create-deal.js":
+/*!*******************************!*\
+  !*** ./src/js/create-deal.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (function (data) {
+  return new Promise(function (resolve) {
+    console.log(data);
+    BX24.callBatch({
+      task_add: ['tasks.task.add', {
+        'fields': {
+          'TITLE': data['task-name'],
+          'RESPONSIBLE_ID': 16,
+          'START_DATE_PLAN': data['date-start'],
+          'DEADLINE': data['date-end'],
+          'UF_CRM_TASK': [data['company-id']]
+        }
+      }] // get_company_list: ['crm.company.list', {'order': { "UF_CRM_1561620120175": "ASC" }, 'filter': { 'COMPANY_TYPE' : 'SUPPLIER' }, 'select': [ "*", "UF_*",  ] }],
+
+    }, function (result) {
+      return resolve(result);
+    });
+  });
+}); // BX24.callMethod(
+//     'tasks.task.add', 
+//     {fields:{TITLE:'task for test', RESPONSIBLE_ID:1}}, 
+//     function(res){console.log(res.answer.result);}
+//  );
+
+/***/ }),
+
 /***/ "./src/js/get-company.js":
 /*!*******************************!*\
   !*** ./src/js/get-company.js ***!
@@ -755,8 +790,15 @@ __webpack_require__.r(__webpack_exports__);
           'COMPANY_TYPE': 'SUPPLIER'
         },
         'select': ["*", "UF_*"]
+      }],
+      get_task_list: ['tasks.task.list', {
+        'filter': {
+          '!UF_CRM_TASK': false
+        },
+        'select': ["*", "UF_*"]
       }]
     }, function (result) {
+      console.log(result.get_task_list.data());
       window.typesOfCompany = [];
       result.get_company_fields.data().UF_CRM_1561620120175.items.forEach(function (elem) {
         window.typesOfCompany.push({
@@ -765,6 +807,16 @@ __webpack_require__.r(__webpack_exports__);
             return company.UF_CRM_1561620120175 == elem.ID;
           })
         });
+      });
+      window.objCompanyTasks = {};
+      result.get_task_list.data().tasks.forEach(function (task) {
+        if (objCompanyTasks[task.ufCrmTask[0]] == undefined) {
+          objCompanyTasks[task.ufCrmTask[0]] = [];
+        }
+
+        task.timestamp_start = +new Date(task.startDatePlan);
+        task.timestamp_end = +new Date(task.deadline) - 3600 * 24;
+        objCompanyTasks[task.ufCrmTask[0]].push(task);
       });
       return resolve(window.typesOfCompany);
     });
@@ -789,7 +841,7 @@ __webpack_require__.r(__webpack_exports__);
   };
 
   var countDay = new Date().daysInMonth();
-  var timestamp = [];
+  window.timestamp = [];
 
   for (var i = 1; i <= countDay; i++) {
     timestamp.push(+new Date(d.getFullYear(), d.getMonth() + month, i));
@@ -805,7 +857,7 @@ __webpack_require__.r(__webpack_exports__);
   content += "<tr>";
 
   for (var j = 1; j <= countDay; j++) {
-    content += "<td height=\"30\" class=\"\">".concat(j, "</td>");
+    content += "<td  class=\"rs-day-column\">".concat(j, "</td>");
   }
 
   content += "</tr></thead>";
@@ -836,16 +888,88 @@ __webpack_require__.r(__webpack_exports__);
 
     content += "<tr><td colspan=\"50\" class=\"rs-type\">".concat(type['NAME'], "</td></tr>");
     type['COMPANIES'].forEach(function (company) {
-      content += "<tr>\n                                <td><a href=\"https://bazaivolga.bitrix24.ru/crm/company/details/".concat(company.ID, "/\" target=\"blank\">").concat(company.TITLE, "</a></td>\n                                <td class=\"rs-show-modal\" data-id=\"").concat(company.ID, "\">\n                                    <a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#add-deal\" data-company-name=\"").concat(company.TITLE, "\"><i class=\"fas fa-user-plus\"></i></a>\n                                </td>");
+      content += "<tr>\n                        <td><a href=\"https://bazaivolga.bitrix24.ru/crm/company/details/".concat(company.ID, "/\" target=\"blank\">").concat(company.TITLE, "</a></td>\n                        <td class=\"rs-show-modal\" data-id=\"").concat(company.ID, "\">\n                            <a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#add-deal\" data-company-id=\"CO_").concat(company.ID, "\" data-company-name=\"").concat(company.TITLE, "\"><i class=\"fas fa-user-plus\"></i></a>\n                        </td>");
+      var arTasks = [];
 
-      for (var j = 1; j <= window.dataObj['COUNT_DAY']; j++) {
-        // if ( dateEndPlan >= timestamp[j] && dateStart <= timestamp[j] ) {//|| dateStart > timestamp[1]) ) {
-        // 	daysForTask += '<td height="30" class="td-for-task">'+ j +'</td>';
-        // } else {
-        content += "<td height=\"30\" class=\"\"></td>"; // }	
+      if (window.objCompanyTasks["CO_".concat(company.ID)]) {
+        arTasks = window.objCompanyTasks["CO_".concat(company.ID)].filter(function (task) {
+          return task.timestamp_end >= timestamp[0] && task.timestamp_start <= timestamp[window.dataObj['COUNT_DAY'] - 1];
+        }).sort(function (a, b) {
+          return a.timestamp_start - b.timestamp_start;
+        });
       }
 
-      content += "</tr>";
+      var flag_start = false;
+      var count = 0;
+      var todayClass = '';
+      var i = 0;
+      /**
+       * Вывод диаграммы
+       */
+
+      console.log(arTasks);
+
+      for (var j = 1; j <= window.dataObj['COUNT_DAY']; j++) {
+        if (window.objCompanyTasks["CO_".concat(company.ID)]) {
+          if (flag_start && arTasks[i].timestamp_end <= timestamp[j]) {
+            i++;
+            count++;
+            content += "<td colspan=\"".concat(count, "\" class=\"td-for-task ").concat(todayClass, "\"><a href=\"#\" class=\"rs-line ").concat(todayClass, "\"></a></td>");
+
+            if (arTasks[i] && arTasks[i].timestamp_end >= timestamp[j] && arTasks[i].timestamp_start <= timestamp[j]) {
+              todayClass = 'rs-touday';
+              count = 0;
+              continue;
+            }
+
+            count = 0;
+            todayClass = '';
+            flag_start = false;
+            continue;
+          }
+
+          if (arTasks[i] && arTasks[i].timestamp_end >= timestamp[j] && arTasks[i].timestamp_start <= timestamp[j]) {
+            flag_start = true;
+          }
+
+          console.log(flag_start);
+
+          if (flag_start && window.dataObj['COUNT_DAY'] == j) {
+            count++;
+
+            if (arTasks[i].timestamp_end > timestamp[j - 1]) {
+              content += "<td colspan=\"".concat(count, "\" class=\"td-for-task ").concat(todayClass, "\"><a href=\"#\" class=\"rs-line rs-line--last\"></a></td>");
+            } else {
+              content += "<td colspan=\"".concat(count, "\" class=\"td-for-task ").concat(todayClass, "\"><a href=\"#\" class=\"rs-line\"></a></td>");
+            }
+          }
+
+          if (flag_start) {
+            count++;
+            continue;
+          }
+
+          content += "<td  class=\"\">".concat(j, "</td>");
+        } else {
+          content += "<td  class=\"\">".concat(j, "</td>");
+        }
+      }
+
+      return content += "</tr>"; // }
+      // for ( var j = 1; j <= window.dataObj['COUNT_DAY']; j++ ) {
+      //     for (let i = 0; i < arTasks.length; i++) {
+      //         if (arTasks[i].timestamp_end >= timestamp[j] && arTasks[i].timestamp_start <= timestamp[j]) {
+      //             content += '<td  class="td-for-task">'+ j +'</td>';
+      //         } else {
+      //             content += `<td  class=""></td>`;
+      //         }
+      //     }
+      //     // if ( dateEndPlan >= timestamp[j] && dateStart <= timestamp[j] ) {//|| dateStart > timestamp[1]) ) {
+      //     // 	daysForTask += '<td  class="td-for-task">'+ j +'</td>';
+      //     // } else {
+      //     //     content += `<td  class=""></td>`;
+      //     // }	
+      // }		
     });
   });
   content += "</tbody>";
@@ -868,21 +992,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_get_company_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/get-company.js */ "./src/js/get-company.js");
 /* harmony import */ var _js_show_table_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/show-table.js */ "./src/js/show-table.js");
 /* harmony import */ var _js_get_time_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/get-time.js */ "./src/js/get-time.js");
+/* harmony import */ var _js_create_deal_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./js/create-deal.js */ "./src/js/create-deal.js");
 // styles
  // js
 
 
 
 
+
 document.addEventListener('DOMContentLoaded', function () {
+  var _this = this;
+
   window.timestamp = [];
   window.d = new Date();
   window.month = 0;
   window.content = '';
 
   window.changeMonth = function (direction) {
-    console.log(direction);
-
     if (direction == 'next') {
       month++;
     } else {
@@ -899,8 +1025,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
   $('#add-deal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
-    var modal = $(this);
-    modal.find('.modal-title').text("\u0417\u0430\u0431\u0440\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C \xAB".concat(button.data('company-name'), "\xBB")); // modal.find('.modal-body input').val(recipient)
+    var modal = $(_this);
+    var companyName = button.data('company-name');
+    modal.find('.modal-title').text("\u0417\u0430\u0431\u0440\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C \xAB".concat(companyName, "\xBB"));
+    modal.find('input[name="task-name"').val("".concat(companyName));
+    modal.find('input[name="responsible"').val("\u0417\u0434\u0435\u0441\u044C \u0431\u0443\u0434\u0435\u0442 \u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0439 \u043F\u0440\u0438\u0432\u044F\u0437\u0430\u043D\u043D\u044B\u0439 \u043A \u0441\u0434\u0435\u043B\u043A\u0435");
+    modal.find('input[name="company-id"').val(button.data('company-id')); // modal.find('.modal-body input').val(recipient)
+  });
+  /**
+   * Созздание задачи
+   */
+
+  $('#rs-add-task-form').on('submit', function (evt) {
+    evt.preventDefault();
+    console.log(evt);
+    var form = evt.target;
+    var data = {
+      'date-start': form.querySelector('input[name="date-start"]').value,
+      'date-end': form.querySelector('input[name="date-end"]').value,
+      'task-name': form.querySelector('input[name="task-name"]').value,
+      'responsible': form.querySelector('input[name="responsible"]').value,
+      'company-id': form.querySelector('input[name="company-id"]').value
+    };
+    Object(_js_create_deal_js__WEBPACK_IMPORTED_MODULE_4__["default"])(data).then(function (resolve) {
+      console.log(resolve);
+    });
   });
   /**
    * datetimepicker
@@ -908,18 +1057,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   $.datetimepicker.setLocale('ru');
   $('#date_timepicker_start').datetimepicker({
-    format: 'Y/m/d',
+    format: 'd.m.Y',
     dayOfWeekStart: 1,
     value: new Date(),
     onShow: function onShow(ct) {
-      this.setOptions({
-        maxDate: $('#date_timepicker_end').val() ? $('#date_timepicker_end').val() : false
+      this.setOptions({// maxDate: $('#date_timepicker_end').val() ? $('#date_timepicker_end').val() : false
       });
     },
     timepicker: false
   });
   $('#date_timepicker_end').datetimepicker({
-    format: 'Y/m/d',
+    format: 'd.m.Y',
     dayOfWeekStart: 1,
     value: new Date(),
     onShow: function onShow(ct) {
@@ -931,6 +1079,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }); //----- /datetimepicker -----//
 
   BX24.init(function () {
+    var place = BX24.placement.info();
     Object(_js_get_company_js__WEBPACK_IMPORTED_MODULE_1__["default"])().then(function (resolve) {
       Object(_js_get_time_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
       Object(_js_show_table_js__WEBPACK_IMPORTED_MODULE_2__["default"])();

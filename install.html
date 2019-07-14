@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="//api.bitrix24.com/api/v1/"></script>
+</head>
+<body>
+    <form action="" id="rs-install-form">
+
+        <div class="form-group">
+            <label for="">Укажите ссылку на приложение, для встраивания в карточку CRM</label>
+            <input type="text" name="url" class="form-control" >
+        </div>
+        <div class="form-group">        
+            <button type="submit" class="btn">Сохранить</button>
+        </div>
+    </form>
+
+
+    <script>
+
+        const form = document.querySelector('#rs-install-form')
+              form.addEventListener('submit', function (evt) {
+                    console.log('here');
+                    // const url = prompt('Введите ссылку на приложение', 100);
+                    const url = form.querySelector('input[name="url"]').value;
+
+                    console.log('url', url);
+
+                    BX24.callMethod('placement.bind', { 'PLACEMENT': 'CRM_DEAL_DETAIL_TAB', 'HANDLER' : url, 'TITLE': 'Модуль «Бронирование»'}, function (result) {
+                        console.log(result);
+                        console.log('test');
+                        BX24.installFinish();
+                    });
+              });
+
+        // BX24.init(function() {
+
+
+
+        //     //BX24.installFinish();
+        // }); 
+    </script>
+</body>
+</html>
