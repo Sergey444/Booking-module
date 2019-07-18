@@ -3,25 +3,24 @@ import "./css/style.css";
 
 // js
 import getCompany from './js/get-company.js';
-import showTable from './js/show-table.js';
-import getTime from './js/get-time.js';
-import createDeal from './js/create-deal.js';
+import getBusyDays from './js/get-busy-days.js';
+import getTable from "./js/get-table";
+
+
+// import showTable from './js/show-table.js';
+// import getTime from './js/get-time.js';
+// import createDeal from './js/create-deal.js';
 
 document.addEventListener('DOMContentLoaded', function() { 
 
-	window.timestamp = [];
-	window.d = new Date();
 	window.month = 0;
-    window.content = '';
-    
+
     window.changeMonth = (direction) => {
         if (direction == 'next') {
             month++;
         } else {
             month--;
         }
-        getTime();
-        showTable();
     }
     
     /**
@@ -40,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /**
-     * Созздание задачи
+     * Создание задачи
      */
     $('#rs-add-task-form').on('submit', (evt)=> {
         evt.preventDefault();
@@ -68,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		value: new Date(),
 		onShow: function(ct) {
 			this.setOptions({
-				// maxDate: $('#date_timepicker_end').val() ? $('#date_timepicker_end').val() : false
+				maxDate: $('#date_timepicker_end').val() ? $('#date_timepicker_end').val() : false
 			})
 		},
 		timepicker: false
@@ -89,12 +88,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
     BX24.init(() => {
-        
+
         const place = BX24.placement.info();
 
         getCompany().then( (resolve) => {
-            getTime();
-            showTable();
+            const data = getBusyDays(resolve);   
+            const content = getTable(data); 
+
+            document.querySelector("#table").innerHTML = content;
         });
     });
 });		
