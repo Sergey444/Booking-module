@@ -27,6 +27,26 @@
 </head>
 <body>
 
+		<div class="rs-container" >
+			<form class="rs-form">
+				<div class="rs-form__img"><h1>Модуль «Бронирование»</h1></div>
+				
+				<div class="rs-form-list">
+					<div class="rs-form-item">
+						<label for="">Дата начала</label>
+						<input name="time_start" class="form-control">
+					</div>
+					<div class="rs-form-item">	
+						<label for="">Дата конца</label>
+						<input type="text" name="time_end" class="form-control">
+					</div>
+					<div class="rs-form-item">
+						<button type="submit" class="btn btn-primary"  style="margin-top: 30px;" id="findTasks">Показать</button>
+					</div>
+				</div>
+			</form>	
+		</div>
+
 <table id="table" class=""></table>
 
 <!-- Modal -->
@@ -65,7 +85,6 @@
 					
 				</div>
 				<div class="modal-footer  modal-footer--space">
-					<!-- <button type="reset" class="btn btn-secondary" >Очистить форму</button> -->
 					<button type="submit" class="btn btn-primary">Забронировать</button>
 				</div>
 			</form>

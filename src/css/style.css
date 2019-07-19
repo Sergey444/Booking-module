@@ -1,4 +1,3 @@
-
 table {
     border-collapse: collapse;
     width: 100%;
@@ -27,6 +26,9 @@ a:hover {
     padding: 5px;
     color: #fff;
     text-align: center;
+}
+.rs-line:hover {
+    color: #fff;
 }
 .rs-line--last {
     margin-right: 0;
@@ -73,4 +75,34 @@ a:hover {
 .rs-day-column {
     min-width: 25px;
     height: 25px;
+}
+.rs-container {
+	padding: 0 20px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+caption {
+	caption-side: top!important;
+}
+.rs-form {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+    margin-top: 40px;
+    align-items: flex-end;
+}
+.rs-form__img  h1{
+    line-height: 34px;
+    color: #0062cc;
+}
+.rs-form-list {
+	display: flex;
+	flex-wrap: wrap;
+	/*width: 728px;*/
+}
+.rs-form-item:not(:last-child) {
+	margin-right: 20px;
+}
+.rs-form__img img{
+	max-width: 223px;
 }

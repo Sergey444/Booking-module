@@ -1,6 +1,46 @@
 /**
  * 
+ * @param {object} data 
+ * @param {object} task 
+ * @param {object} days 
+ * @return {array}
+ */
+const isLong = (data, task, days) => {
+    const className = [];
+     // Если задача с прошлого месяца
+    if (days.start == 1 && task.timestamp_start < data.DATE.TIMESTAMP[days.start] / 3600 * 4 * 1000) {
+        className.push('rs-line--first');
+    }
+    // Если задача закончится в следующем месяце 
+    if (days.end == data.DATE.COUNT_DAY && task.timestamp_end > data.DATE.TIMESTAMP[days.end] ) {
+        className.push('rs-line--last');
+    }
+    return className;
+}
+
+/**
+ * 
+ * @param {object}
+ * @return {string}
+ */
+const getHead = (data) => {
+    return `<tr>
+                <td rowspan="2" colspan="2" class="rs-objects">Объекты</td>
+                <td class="table__title" colspan="${data.DATE.COUNT_DAY}">
+                    <a href="javascript:void(0)" onclick="changeMonth('prev')" class="btn btn--prev" id="prev"><i class="fas fa-backward"></i></a>
+                    ${data.DATE.MONTH}
+                    <a href="javascript:void(0)" onclick="changeMonth('next')" class="btn btn--next" id="next"><i class="fas fa-forward"></i></a>
+                </td>
+            </tr>
+            <tr>
+                ${data.DATE.HEAD}
+            </tr>`;
+}
+
+/**
+ * 
  * @param {object} type 
+ * @return {string}
  */
 const getCompanyType = (type) => {
     return `<tr><td colspan="50" class="rs-type">${type.NAME}</td></tr>`;
@@ -9,6 +49,7 @@ const getCompanyType = (type) => {
 /**
  * 
  * @param {object} company 
+ * @return {string}
  */
 const getCompanyName = (company) => {
     return  `<td>
@@ -23,41 +64,34 @@ const getCompanyName = (company) => {
 
 /**
  * 
+ * 
  * @param {object} company
  * @param {object} data
- * 
  * @return {string} 
  */
 const getDaysTable = (company, data) => {
 
     const result = [];
     for (let i = 1; i <= data.DATE.COUNT_DAY; i++) { 
-        const className = ['rs-line'];
         const index = company.tasks.findIndex((task) => task.busy[0] == i );
-        const task = company.tasks[index];
-
         // Текущий день не занят
         if (index == -1) {result.push(`<td  class="rs-day-column">${i}</td>`); continue;}
-        // Если задача с прошлого месяца
-        if (i == 1 && task.timestamp_start < data.DATE.TIMESTAMP[i] / 3600 * 4 * 1000) {
-            className.push('rs-line--first');
-        }
-
-        const end =  i + task.busy.length - 1;
-
-        // Если задача закончится в следующем месяце 
-        if (end == data.DATE.COUNT_DAY && task.timestamp_end > data.DATE.TIMESTAMP[end] ) {
-            className.push('rs-line--last');
-        }
-
-        result.push(`<td colspan="${task.busy.length}"><a href="https://bazaivolga.bitrix24.ru/company/personal/user/1/tasks/task/view/${task.id}/" target="_blank" class="${className.join(' ')}">${i}</a></td>`);
+    
+        const task = company.tasks[index];
+        const days = {'start': i, 'end': i + task.busy.length - 1 };
+        result.push(`<td colspan="${task.busy.length}"><a href="https://bazaivolga.bitrix24.ru/company/personal/user/1/tasks/task/view/${task.id}/" target="_blank" class="rs-line ${ isLong(data, task, days).join(' ') }">${i}</a></td>`);
         
-        i = end;
+        i = days.end;
     } 
     return result.join('');
 }
 
-const getContent = () => {
+/**
+ * 
+ * @param {object}
+ * @return {string} 
+ */
+const getContent = (data) => {
     const content = [];
     data.TYPES_OF_COMPANY.forEach((type) => {
         if (!type.COMPANIES.length) {return false ;}
@@ -67,27 +101,15 @@ const getContent = () => {
             content.push(`<tr>${getCompanyName(company)} ${getDaysTable(company, data)}</tr>`);  
         });
     });
-    return content;
+    return content.join('');
 }
 
-
+/**
+ * 
+ * @return {string}
+ */
 export default (data) => {
-    // console.log(data);
-    return ` <thead>
-            <tr>
-                <td rowspan="2" colspan="2" class="rs-objects">Объекты</td>
-                <td class="table__title" colspan="${data.DATE.COUNT_DAY}">
-                    <a href="javascript:void(0)" onclick="changeMonth('prev')" class="btn btn--prev" id="prev"><i class="fas fa-backward"></i></a>
-                    ${data.DATE.MONTH}
-                    <a href="javascript:void(0)" onclick="changeMonth('next')" class="btn btn--next" id="next"><i class="fas fa-forward"></i></a>
-                </td>
-            </tr>
-            <tr>
-                ${data.DATE.HEAD}
-            </tr>
-        </thead>  
-        <tbody>
-            ${ getContent().join('') }
-        </tbody>`;
+
+    return `<thead> ${ getHead(data) } </thead><tbody> ${ getContent(data) } </tbody>`;
 }
 

@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'responsible': form.querySelector('input[name="responsible"]').value,
             'company-id': form.querySelector('input[name="company-id"]').value,
         }
+
         createDeal(data).then((resolve) => {
             console.log(resolve);
         });
@@ -68,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		value: new Date(),
 		onShow: function(ct) {
 			this.setOptions({
-				maxDate: false  //$('#date_timepicker_end').val() ? $('#date_timepicker_end').val() :
+				maxDate: $('#date_timepicker_end').val() ? $('#date_timepicker_end').val() : false
 			})
 		},
 		timepicker: false
@@ -79,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		value: new Date(),
 		onShow: function(ct) {
 			this.setOptions({
-				minDate: false, //$('#date_timepicker_start').val() ? $('#date_timepicker_start').val()  : 
+				minDate: $('#date_timepicker_start').val() ? $('#date_timepicker_start').val()  : false
 			})
 		},
 		timepicker: false,
@@ -93,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const data = getBusyDays(resolve);  
             const content = getTable(data); 
-
             document.querySelector("#table").innerHTML = content;
         });
     });
