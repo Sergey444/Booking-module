@@ -11,12 +11,12 @@ export default (month) => {
     };
 
     const countDay = date.daysInMonth();
-    const timestamp = [];
+    const timestamp = [0];
     let head = '';
 
     for (let i = 1; i <= countDay; i++) {
         head += `<td  class="rs-day-column">${i}</td>`;
-        timestamp.push( +new Date(date.getFullYear(), date.getMonth() + month, i) ) ;
+        timestamp.push( +new Date(date.getFullYear(), date.getMonth(), i) + 3600 * 2 * 1000  ) ;
     }
 
     return  {

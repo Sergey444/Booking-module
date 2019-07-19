@@ -5,15 +5,12 @@ import "./css/style.css";
 import getCompany from './js/get-company.js';
 import getBusyDays from './js/get-busy-days.js';
 import getTable from "./js/get-table";
-
-
-// import showTable from './js/show-table.js';
-// import getTime from './js/get-time.js';
-// import createDeal from './js/create-deal.js';
+import createDeal from './js/create-deal.js';
 
 document.addEventListener('DOMContentLoaded', function() { 
 
-	window.month = 0;
+    window.month = 0;
+    window.data = [];
 
     window.changeMonth = (direction) => {
         if (direction == 'next') {
@@ -21,6 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             month--;
         }
+        
+        getBusyDays(data); 
+        const content = getTable(data); 
+        document.querySelector("#table").innerHTML = content;
     }
     
     /**
@@ -67,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		value: new Date(),
 		onShow: function(ct) {
 			this.setOptions({
-				maxDate: $('#date_timepicker_end').val() ? $('#date_timepicker_end').val() : false
+				maxDate: false  //$('#date_timepicker_end').val() ? $('#date_timepicker_end').val() :
 			})
 		},
 		timepicker: false
@@ -78,21 +79,19 @@ document.addEventListener('DOMContentLoaded', function() {
 		value: new Date(),
 		onShow: function(ct) {
 			this.setOptions({
-				minDate: $('#date_timepicker_start').val() ? $('#date_timepicker_start').val()  : false,
+				minDate: false, //$('#date_timepicker_start').val() ? $('#date_timepicker_start').val()  : 
 			})
 		},
 		timepicker: false,
 	});
     //----- /datetimepicker -----//
     
-    
-
     BX24.init(() => {
 
-        const place = BX24.placement.info();
-
+        const place = BX24.placement.info();    
         getCompany().then( (resolve) => {
-            const data = getBusyDays(resolve);   
+            
+            const data = getBusyDays(resolve);  
             const content = getTable(data); 
 
             document.querySelector("#table").innerHTML = content;

@@ -8,8 +8,8 @@ export default () => {
             get_company_list: ['crm.company.list', {'order': { "UF_CRM_1561620120175": "ASC" }, 'filter': { 'COMPANY_TYPE' : 'SUPPLIER' }, 'select': [ "*", "UF_*",  ] }],
             get_task_list: ['tasks.task.list', {'filter': {'!UF_CRM_TASK': false}, 'select': [ "*", "UF_*",  ]}]
         }, 
-        (result) => {
 
+        (result) => {
             const typesOfCompany = [];
             result.get_company_fields.data().UF_CRM_1561620120175.items.forEach( (elem) => {
                 typesOfCompany.push({
@@ -23,16 +23,15 @@ export default () => {
                 });
             });
             
-            result.get_task_list.data().tasks.forEach((task)=> {
-                task.timestamp_start = +new Date(task.startDatePlan);
-                task.timestamp_end = +new Date(task.deadline) - 3600 * 24;
+            result.get_task_list.data().tasks.forEach((task) => {
+                task.timestamp_start = +new Date(task.startDatePlan); 
+                task.timestamp_end = +new Date(task.deadline); //- 3600 * 24
             });
 
-            const data = {
+            window.data = {
                 'TYPES_OF_COMPANY' : typesOfCompany,
                 'TASKS': result.get_task_list.data().tasks
             }
-
             return resolve(data);
         });
     });

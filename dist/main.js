@@ -95,7 +95,7 @@
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "\r\ntable {\r\n    border-collapse: collapse;\r\n    width: 100%;\r\n}\r\ntd {\r\n    border: 1px solid black;\r\n    padding: 5px;\r\n}\r\na {\r\n    color: black;\r\n}\r\n\r\n.task {\r\n    width: 400px;\r\n    border: none;\r\n}\r\n.td-for-task.rs-touday {\r\n    /* background-color: #dcdcdc;   */\r\n    border-left: none;\r\n}\r\n.rs-line.rs-touday {\r\n    margin-left: -18px;\r\n}\r\n.rs-line {\r\n    display: block;\r\n    background-color: lightcoral;   \r\n    height: 20px;\r\n    margin-right: 11px;\r\n    /* margin-left: 13px; */\r\n    border-radius: 15px;\r\n    /* margin-bottom: 5px; */\r\n}\r\n.rs-line--last {\r\n    margin-right: 0;\r\n    border-radius: 15px 0 0 15px;\r\n}\r\n\r\n.table__title {\r\n    font-size: 28px;\r\n    text-align: center;\r\n    position: relative;\r\n    width: 80%;\r\n    line-height: 28px;\r\n}\r\n.rs-type {\r\n    background-color: lightgrey;\r\n}\r\n.rs-objects {\r\n    width: 300px;\r\n}\r\n\r\n.btn--prev {\r\n    float: left;\r\n} \r\n.btn--next {\r\n    float: right;\r\n} \r\n\r\n#table tbody tr:hover {\r\n    background-color: #f1f1f1;\r\n}\r\n\r\n.rs-show-modal{\r\n    text-align: center;\r\n    cursor: pointer;\r\n}\r\n.modal-footer--space {\r\n    justify-content: flex-end;\r\n}\r\n.rs-day-column {\r\n    min-width: 25px;\r\n    height: 25px;\r\n}", ""]);
+exports.push([module.i, "\r\ntable {\r\n    border-collapse: collapse;\r\n    width: 100%;\r\n}\r\ntd {\r\n    border: 1px solid black;\r\n    padding: 5px;\r\n}\r\na {\r\n    color: black;\r\n}\r\na:hover {\r\n    text-decoration: none;\r\n    color: inherit;\r\n}\r\n.task {\r\n    width: 400px;\r\n    border: none;\r\n}\r\n\r\n.rs-line {\r\n    display: block;\r\n    background-color: lightcoral;   \r\n    border-radius: 15px;\r\n    font-size: 12px;\r\n    padding: 5px;\r\n    color: #fff;\r\n    text-align: center;\r\n}\r\n.rs-line--last {\r\n    margin-right: 0;\r\n    border-top-right-radius: 0px;\r\n    border-bottom-right-radius: 0px;\r\n}\r\n.rs-line--first {\r\n    margin-right: 0;\r\n    border-top-left-radius: 0px;\r\n    border-bottom-left-radius: 0px;\r\n}\r\n.table__title {\r\n    font-size: 28px;\r\n    text-align: center;\r\n    position: relative;\r\n    width: 80%;\r\n    line-height: 28px;\r\n}\r\n.rs-type {\r\n    background-color: lightgrey;\r\n}\r\n.rs-objects {\r\n    width: 300px;\r\n}\r\n\r\n.btn--prev {\r\n    float: left;\r\n} \r\n.btn--next {\r\n    float: right;\r\n} \r\n\r\n#table tbody tr:hover {\r\n    background-color: #f1f1f1;\r\n}\r\n\r\n.rs-show-modal{\r\n    text-align: center;\r\n    cursor: pointer;\r\n}\r\n.modal-footer--space {\r\n    justify-content: flex-end;\r\n}\r\n.rs-day-column {\r\n    min-width: 25px;\r\n    height: 25px;\r\n}", ""]);
 
 
 /***/ }),
@@ -734,6 +734,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./src/js/create-deal.js":
+/*!*******************************!*\
+  !*** ./src/js/create-deal.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (function (data) {
+  return new Promise(function (resolve) {
+    BX24.callBatch({
+      task_add: ['tasks.task.add', {
+        'fields': {
+          'TITLE': data['task-name'],
+          'RESPONSIBLE_ID': 16,
+          'START_DATE_PLAN': data['date-start'],
+          'DEADLINE': data['date-end'],
+          'UF_CRM_TASK': [data['company-id']]
+        }
+      }] // get_company_list: ['crm.company.list', {'order': { "UF_CRM_1561620120175": "ASC" }, 'filter': { 'COMPANY_TYPE' : 'SUPPLIER' }, 'select': [ "*", "UF_*",  ] }],
+
+    }, function (result) {
+      return resolve(result);
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./src/js/get-busy-days.js":
 /*!*********************************!*\
   !*** ./src/js/get-busy-days.js ***!
@@ -811,9 +841,9 @@ __webpack_require__.r(__webpack_exports__);
       });
       result.get_task_list.data().tasks.forEach(function (task) {
         task.timestamp_start = +new Date(task.startDatePlan);
-        task.timestamp_end = +new Date(task.deadline) - 3600 * 24;
+        task.timestamp_end = +new Date(task.deadline); //- 3600 * 24
       });
-      var data = {
+      window.data = {
         'TYPES_OF_COMPANY': typesOfCompany,
         'TASKS': result.get_task_list.data().tasks
       };
@@ -833,80 +863,91 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (function (data) {
-  console.log(data);
+/**
+ * 
+ * @param {object} type 
+ */
+var getCompanyType = function getCompanyType(type) {
+  return "<tr><td colspan=\"50\" class=\"rs-type\">".concat(type.NAME, "</td></tr>");
+};
+/**
+ * 
+ * @param {object} company 
+ */
 
-  var getContent = function getContent() {
-    var content = "";
-    data.TYPES_OF_COMPANY.forEach(function (type) {
-      if (!type.COMPANIES.length) {
-        return false;
-      }
 
-      content += "<tr><td colspan=\"50\" class=\"rs-type\">".concat(type.NAME, "</td></tr>");
-      type.COMPANIES.forEach(function (company) {
-        content += "\n                <tr>\n                    <td>\n                        <a href=\"https://bazaivolga.bitrix24.ru/crm/company/details/".concat(company.ID, "/\" target=\"blank\">\n                            ").concat(company.TITLE, "\n                        </a>\n                    </td>\n                    <td class=\"rs-show-modal\" data-id=\"").concat(company.ID, "\">\n                        <a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#add-deal\" data-company-id=\"CO_").concat(company.ID, "\" data-company-name=\"").concat(company.TITLE, "\"><i class=\"fas fa-user-plus\"></i></a>\n                    </td>\n                    <table>\n                    ");
+var getCompanyName = function getCompanyName(company) {
+  return "<td>\n                <a href=\"https://bazaivolga.bitrix24.ru/crm/company/details/".concat(company.ID, "/\" target=\"blank\">\n                    ").concat(company.TITLE, "\n                </a>\n            </td>\n            <td class=\"rs-show-modal\" data-id=\"").concat(company.ID, "\">\n                <a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#add-deal\" data-company-id=\"CO_").concat(company.ID, "\" data-company-name=\"").concat(company.TITLE, "\"><i class=\"fas fa-user-plus\"></i></a>\n            </td>");
+};
+/**
+ * 
+ * @param {object} company
+ * @param {object} data
+ * 
+ * @return {string} 
+ */
 
-        var _loop = function _loop(_i) {
-          company.tasks.forEach(function (task) {
-            if (task.busy[0] == _i) {
-              content += "<td colspan=\"".concat(task.busy.length, "\"><a href=\"https://bazaivolga.bitrix24.ru/company/personal/user/1/tasks/task/view/").concat(task.id, "/\" class=\"rs-line\"></a></td>");
-              i = _i;
-              return _i += task.busy.length;
-            }
-          });
-          content += "<td  class=\"rs-day-column\">".concat(_i, "</td>");
-          i = _i;
-        };
 
-        for (var i = 1; i <= data.DATE.COUNT_DAY; i++) {
-          _loop(i);
-        }
+var getDaysTable = function getDaysTable(company, data) {
+  var result = [];
 
-        content += "</table>";
-      });
+  var _loop = function _loop(_i) {
+    var className = ['rs-line'];
+    var index = company.tasks.findIndex(function (task) {
+      return task.busy[0] == _i;
     });
-    return content;
+    var task = company.tasks[index]; // Текущий день не занят
+
+    if (index == -1) {
+      result.push("<td  class=\"rs-day-column\">".concat(_i, "</td>"));
+      i = _i;
+      return "continue";
+    } // Если задача с прошлого месяца
+
+
+    if (_i == 1 && task.timestamp_start < data.DATE.TIMESTAMP[_i] / 3600 * 4 * 1000) {
+      className.push('rs-line--first');
+    }
+
+    var end = _i + task.busy.length - 1; // Если задача закончится в следующем месяце 
+
+    if (end == data.DATE.COUNT_DAY && task.timestamp_end > data.DATE.TIMESTAMP[end]) {
+      className.push('rs-line--last');
+    }
+
+    result.push("<td colspan=\"".concat(task.busy.length, "\"><a href=\"https://bazaivolga.bitrix24.ru/company/personal/user/1/tasks/task/view/").concat(task.id, "/\" target=\"_blank\" class=\"").concat(className.join(' '), "\">").concat(_i, "</a></td>"));
+    _i = end;
+    i = _i;
   };
 
-  return " <thead>\n            <tr>\n                <td rowspan=\"2\" colspan=\"2\" class=\"rs-objects\">\u041E\u0431\u044A\u0435\u043A\u0442\u044B</td>\n                <td class=\"table__title\" colspan=\"".concat(data.DATE.COUNT_DAY, "\">\n                    <a href=\"javascript:void(0)\" onclick=\"changeMonth('prev')\" class=\"btn btn--prev\" id=\"prev\"><i class=\"fas fa-backward\"></i></a>\n                    ").concat(data.DATE.MONTH, "\n                    <a href=\"javascript:void(0)\" onclick=\"changeMonth('next')\" class=\"btn btn--next\" id=\"next\"><i class=\"fas fa-forward\"></i></a>\n                </td>\n            </tr>\n            <tr>\n                ").concat(data.DATE.HEAD, "\n            </tr>\n        </thead>  \n        <tbody>\n            ").concat(getContent(), "\n        </tbody>");
-}); // rs-line--last
-// content = `<thead><tr>
-//     <td rowspan="2" colspan="2" class="rs-objects">Объекты</td>
-//     <td class="table__title" colspan="${countDay}">
-//         <a href="javascript:void(0)" onclick="changeMonth('prev')" class="btn btn--prev" id="prev"><i class="fas fa-backward"></i></a>
-//         ${monthName}
-//         <a href="javascript:void(0)" onclick="changeMonth('next')" class="btn btn--next" id="next"><i class="fas fa-forward"></i></a>
-//     </td>
-// </tr>`;
-//     content += `<tr>`;		
-//     for ( let j = 1; j <= countDay; j++ ) {
-//         content += `<td  class="rs-day-column">${j}</td>`;
-//     }	
-//     content += `</tr></thead>`;
-// content += `<tbody>`;	
-// typesOfCompany.forEach(function (type) {
-//     if (!type['COMPANIES'].length) {return false ;}
-//     content += `<tr><td colspan="50" class="rs-type">${type['NAME']}</td></tr>`;
-//     type['COMPANIES'].forEach(function (company) {
-// content += `<tr>
-//         <td><a href="https://bazaivolga.bitrix24.ru/crm/company/details/${company.ID}/" target="blank">${company.TITLE}</a></td>
-//         <td class="rs-show-modal" data-id="${company.ID}">
-//             <a href="javascript:void(0)" data-toggle="modal" data-target="#add-deal" data-company-id="CO_${company.ID}" data-company-name="${company.TITLE}"><i class="fas fa-user-plus"></i></a>
-//         </td>`;
-// let arTasks = [];
-// if (window.objCompanyTasks[`CO_${company.ID}`]) {
-//     arTasks = window.objCompanyTasks[`CO_${company.ID}`].filter((task) => {
-//         return task.timestamp_end >= timestamp[0] && task.timestamp_start <= timestamp[window.dataObj['COUNT_DAY'] - 1];
-//     }).sort((a, b) => {
-//         return a.timestamp_start - b.timestamp_start;
-//     });
-// } 
-//     });	
-// });	
-//     content += `</tbody>`;	
-//     $("#table").html(content);
-// }
+  for (var i = 1; i <= data.DATE.COUNT_DAY; i++) {
+    var _ret = _loop(i);
+
+    if (_ret === "continue") continue;
+  }
+
+  return result.join('');
+};
+
+var getContent = function getContent() {
+  var content = [];
+  data.TYPES_OF_COMPANY.forEach(function (type) {
+    if (!type.COMPANIES.length) {
+      return false;
+    }
+
+    content.push(getCompanyType(type));
+    type.COMPANIES.forEach(function (company) {
+      content.push("<tr>".concat(getCompanyName(company), " ").concat(getDaysTable(company, data), "</tr>"));
+    });
+  });
+  return content;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (function (data) {
+  // console.log(data);
+  return " <thead>\n            <tr>\n                <td rowspan=\"2\" colspan=\"2\" class=\"rs-objects\">\u041E\u0431\u044A\u0435\u043A\u0442\u044B</td>\n                <td class=\"table__title\" colspan=\"".concat(data.DATE.COUNT_DAY, "\">\n                    <a href=\"javascript:void(0)\" onclick=\"changeMonth('prev')\" class=\"btn btn--prev\" id=\"prev\"><i class=\"fas fa-backward\"></i></a>\n                    ").concat(data.DATE.MONTH, "\n                    <a href=\"javascript:void(0)\" onclick=\"changeMonth('next')\" class=\"btn btn--next\" id=\"next\"><i class=\"fas fa-forward\"></i></a>\n                </td>\n            </tr>\n            <tr>\n                ").concat(data.DATE.HEAD, "\n            </tr>\n        </thead>  \n        <tbody>\n            ").concat(getContent().join(''), "\n        </tbody>");
+});
 
 /***/ }),
 
@@ -931,12 +972,12 @@ __webpack_require__.r(__webpack_exports__);
   };
 
   var countDay = date.daysInMonth();
-  var timestamp = [];
+  var timestamp = [0];
   var head = '';
 
   for (var i = 1; i <= countDay; i++) {
     head += "<td  class=\"rs-day-column\">".concat(i, "</td>");
-    timestamp.push(+new Date(date.getFullYear(), date.getMonth() + month, i));
+    timestamp.push(+new Date(date.getFullYear(), date.getMonth(), i) + 3600 * 2 * 1000);
   }
 
   return {
@@ -966,19 +1007,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_get_company_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/get-company.js */ "./src/js/get-company.js");
 /* harmony import */ var _js_get_busy_days_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/get-busy-days.js */ "./src/js/get-busy-days.js");
 /* harmony import */ var _js_get_table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/get-table */ "./src/js/get-table.js");
+/* harmony import */ var _js_create_deal_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./js/create-deal.js */ "./src/js/create-deal.js");
 // styles
  // js
 
 
 
- // import showTable from './js/show-table.js';
-// import getTime from './js/get-time.js';
-// import createDeal from './js/create-deal.js';
+
 
 document.addEventListener('DOMContentLoaded', function () {
   var _this = this;
 
   window.month = 0;
+  window.data = [];
 
   window.changeMonth = function (direction) {
     if (direction == 'next') {
@@ -986,6 +1027,10 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       month--;
     }
+
+    Object(_js_get_busy_days_js__WEBPACK_IMPORTED_MODULE_2__["default"])(data);
+    var content = Object(_js_get_table__WEBPACK_IMPORTED_MODULE_3__["default"])(data);
+    document.querySelector("#table").innerHTML = content;
   };
   /**
    * Форма bootstrap 4 - забронировать время
@@ -1016,7 +1061,7 @@ document.addEventListener('DOMContentLoaded', function () {
       'responsible': form.querySelector('input[name="responsible"]').value,
       'company-id': form.querySelector('input[name="company-id"]').value
     };
-    createDeal(data).then(function (resolve) {
+    Object(_js_create_deal_js__WEBPACK_IMPORTED_MODULE_4__["default"])(data).then(function (resolve) {
       console.log(resolve);
     });
   });
@@ -1031,7 +1076,8 @@ document.addEventListener('DOMContentLoaded', function () {
     value: new Date(),
     onShow: function onShow(ct) {
       this.setOptions({
-        maxDate: $('#date_timepicker_end').val() ? $('#date_timepicker_end').val() : false
+        maxDate: false //$('#date_timepicker_end').val() ? $('#date_timepicker_end').val() :
+
       });
     },
     timepicker: false
@@ -1042,7 +1088,8 @@ document.addEventListener('DOMContentLoaded', function () {
     value: new Date(),
     onShow: function onShow(ct) {
       this.setOptions({
-        minDate: $('#date_timepicker_start').val() ? $('#date_timepicker_start').val() : false
+        minDate: false //$('#date_timepicker_start').val() ? $('#date_timepicker_start').val()  : 
+
       });
     },
     timepicker: false
