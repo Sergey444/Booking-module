@@ -8,7 +8,7 @@
 const isLong = (data, task, days) => {
     const className = [];
      // Если задача с прошлого месяца
-    if (days.start == 1 && task.timestamp_start < data.DATE.TIMESTAMP[days.start] / 3600 * 4 * 1000) {
+    if (days.start == 1 && task.timestamp_start < data.DATE.TIMESTAMP[days.start] - 3600 * 4 * 1000) {
         className.push('rs-line--first');
     }
     // Если задача закончится в следующем месяце 
@@ -18,18 +18,21 @@ const isLong = (data, task, days) => {
     return className;
 }
 
+
+
 /**
  * 
  * @param {object}
  * @return {string}
  */
 const getHead = (data) => {
+
     return `<tr>
                 <td rowspan="2" colspan="2" class="rs-objects">Объекты</td>
                 <td class="table__title" colspan="${data.DATE.COUNT_DAY}">
-                    <a href="javascript:void(0)" onclick="changeMonth('prev')" class="btn btn--prev" id="prev"><i class="fas fa-backward"></i></a>
+                    <a href="javascript:void(0)" class="btn btn--prev" data-name="control" id="prev"><i class="fas fa-backward"></i></a>
                     ${data.DATE.MONTH}
-                    <a href="javascript:void(0)" onclick="changeMonth('next')" class="btn btn--next" id="next"><i class="fas fa-forward"></i></a>
+                    <a href="javascript:void(0)" class="btn btn--next" data-name="control" id="next"><i class="fas fa-forward"></i></a>
                 </td>
             </tr>
             <tr>
@@ -53,7 +56,7 @@ const getCompanyType = (type) => {
  */
 const getCompanyName = (company) => {
     return  `<td>
-                <a href="https://bazaivolga.bitrix24.ru/crm/company/details/${company.ID}/" target="blank">
+                <a href="https://bazaivolga.bitrix24.ru/crm/company/details/${company.ID}/" target="_blank">
                     ${company.TITLE}
                 </a>
             </td>
@@ -79,8 +82,9 @@ const getDaysTable = (company, data) => {
     
         const task = company.tasks[index];
         const days = {'start': i, 'end': i + task.busy.length - 1 };
-        result.push(`<td colspan="${task.busy.length}"><a href="https://bazaivolga.bitrix24.ru/company/personal/user/1/tasks/task/view/${task.id}/" target="_blank" class="rs-line ${ isLong(data, task, days).join(' ') }">${i}</a></td>`);
-        
+        result.push(`<td colspan="${task.busy.length}"><a href="javascript:void(0)" data-toggle="modal" data-target="#show-task" data-id="${task.id}" class="rs-line ${ isLong(data, task, days).join(' ') }">${i}</a></td>`);
+
+        //https://bazaivolga.bitrix24.ru/company/personal/user/1/tasks/task/view/${task.id}/
         i = days.end;
     } 
     return result.join('');
@@ -109,7 +113,6 @@ const getContent = (data) => {
  * @return {string}
  */
 export default (data) => {
-
     return `<thead> ${ getHead(data) } </thead><tbody> ${ getContent(data) } </tbody>`;
 }
 

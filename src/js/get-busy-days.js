@@ -4,7 +4,7 @@ import getTime from './get-time.js';
  * @param {array} 
  */
 export default (data) => {
-    data.DATE = getTime(month);
+    data.DATE = getTime(data.MONTH_COUNTER);
     data.TASKS.forEach((task) => {
         task.busy = [];
         data.DATE.TIMESTAMP.forEach((timestamp, index) => {

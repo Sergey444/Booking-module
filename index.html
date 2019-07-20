@@ -27,29 +27,69 @@
 </head>
 <body>
 
-		<div class="rs-container" >
-			<form class="rs-form">
-				<div class="rs-form__img"><h1>Модуль «Бронирование»</h1></div>
-				
-				<div class="rs-form-list">
-					<div class="rs-form-item">
-						<label for="">Дата начала</label>
-						<input name="time_start" class="form-control">
-					</div>
-					<div class="rs-form-item">	
-						<label for="">Дата конца</label>
-						<input type="text" name="time_end" class="form-control">
-					</div>
-					<div class="rs-form-item">
-						<button type="submit" class="btn btn-primary"  style="margin-top: 30px;" id="findTasks">Показать</button>
-					</div>
+<section>
+	<div class="rs-container" >
+		<form class="rs-form">
+			<div class="rs-form__img"><h1>«Бронирование»</h1></div>
+			
+			<div class="rs-form-list">
+				<div class="rs-form-item">
+					<label for="">Дата начала</label>
+					<input name="time_start" id="date_timepicker_find_start" class="form-control">
 				</div>
-			</form>	
-		</div>
+				<div class="rs-form-item">	
+					<label for="">Дата конца</label>
+					<input type="text" id="date_timepicker_find_end" name="time_end" class="form-control">
+				</div>
+				<div class="rs-form-item">
+					<button type="submit" class="btn btn-primary"  style="margin-top: 30px;" id="findTasks">Показать</button>
+				</div>
+			</div>
+		</form>	
+	</div>
+</section>
 
 <table id="table" class=""></table>
 
-<!-- Modal -->
+<div class="modal fade" id="show-task" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id=""></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-6">
+							<label for="">Дата начала:</label>
+							<input type="text" class='form-control' name="date-start" id="date_timepicker_task_start" >
+						</div>
+						<div class="col-md-6">
+							<label for="">Дата окончания:</label>
+							<input type="text" class='form-control' name="date-end" id="date_timepicker_task_end" >
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="">Ответственный</label>
+					<input type="text" class='form-control' readonly="readonly" name="responsible">
+				</div>
+
+			</div>
+			<div class="modal-footer  modal-footer--space">
+				<a href="" class="btn btn-info" target="_blank" id="task-detail">Перейти к задаче</a>
+				<button type="submit" class="btn btn-primary">Сохранить изменения</button>
+			</div>
+		</div>
+	</div>		
+</div>
+
+
+<!-- booking modal -->
 <div class="modal fade" id="add-deal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -78,20 +118,21 @@
 							<input type="text" class='form-control' name="task-name" required placeholder=>
 						</div>
 						<div class="form-group">
-							<label for="">Имя клиента</label>
+							<label for="">Ответственный</label>
 							<input type="text" class='form-control' readonly="readonly" name="responsible" placeholder=>
 						</div>
 						<input type="hidden" name="company-id" >	
+						<input type="hidden" name="deal-id">	
 					
 				</div>
-				<div class="modal-footer  modal-footer--space">
+				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary">Забронировать</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
-
+<!-- /booking modal -->
 
 <script type="text/javascript" src="./dist/main.js"></script>
 

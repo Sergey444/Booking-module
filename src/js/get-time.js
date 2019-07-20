@@ -1,5 +1,6 @@
 export default (month) => {
     
+    const days = ['вс', 'пн','вт','ср','чт','пт','сб'];
     const date = new Date();
           date.setMonth(date.getMonth() + month); 
 
@@ -9,14 +10,14 @@ export default (month) => {
     Date.prototype.daysInMonth = function() {
         return 33 - new Date(this.getFullYear(), this.getMonth(), 33).getDate();
     };
-
     const countDay = date.daysInMonth();
     const timestamp = [0];
-    let head = '';
+    let head = ``;
 
     for (let i = 1; i <= countDay; i++) {
-        head += `<td  class="rs-day-column">${i}</td>`;
-        timestamp.push( +new Date(date.getFullYear(), date.getMonth(), i) + 3600 * 2 * 1000  ) ;
+        const time = +new Date(date.getFullYear(), date.getMonth(), i) + 3600 * 2 * 1000 ;
+        head += `<td  class="rs-day-column">${days[new Date(time).getDay()]}</td>`;
+        timestamp.push( time ) ;
     }
 
     return  {

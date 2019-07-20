@@ -3,7 +3,7 @@ table {
     width: 100%;
 }
 td {
-    border: 1px solid black;
+    border: 1px solid #ced4da;
     padding: 5px;
 }
 a {
@@ -70,11 +70,12 @@ a:hover {
     cursor: pointer;
 }
 .modal-footer--space {
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 .rs-day-column {
     min-width: 25px;
     height: 25px;
+    text-align: center;
 }
 .rs-container {
 	padding: 0 20px;
