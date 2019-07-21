@@ -95,7 +95,7 @@
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "table {\r\n    border-collapse: collapse;\r\n    width: 100%;\r\n}\r\ntd {\r\n    border: 1px solid #ced4da;\r\n    padding: 5px;\r\n}\r\na {\r\n    color: black;\r\n}\r\na:hover {\r\n    text-decoration: none;\r\n    color: inherit;\r\n}\r\n.task {\r\n    width: 400px;\r\n    border: none;\r\n}\r\n\r\n.rs-line {\r\n    display: block;\r\n    background-color: lightcoral;   \r\n    border-radius: 15px;\r\n    font-size: 12px;\r\n    padding: 5px;\r\n    color: #fff;\r\n    text-align: center;\r\n}\r\n.rs-line:hover {\r\n    color: #fff;\r\n}\r\n.rs-line--last {\r\n    margin-right: 0;\r\n    border-top-right-radius: 0px;\r\n    border-bottom-right-radius: 0px;\r\n}\r\n.rs-line--first {\r\n    margin-right: 0;\r\n    border-top-left-radius: 0px;\r\n    border-bottom-left-radius: 0px;\r\n}\r\n.table__title {\r\n    font-size: 28px;\r\n    text-align: center;\r\n    position: relative;\r\n    width: 80%;\r\n    line-height: 28px;\r\n}\r\n.rs-type {\r\n    background-color: lightgrey;\r\n}\r\n.rs-objects {\r\n    width: 300px;\r\n}\r\n\r\n.btn--prev {\r\n    float: left;\r\n} \r\n.btn--next {\r\n    float: right;\r\n} \r\n\r\n#table tbody tr:hover {\r\n    background-color: #f1f1f1;\r\n}\r\n\r\n.rs-show-modal{\r\n    text-align: center;\r\n    cursor: pointer;\r\n}\r\n.modal-footer--space {\r\n    justify-content: space-between;\r\n}\r\n.rs-day-column {\r\n    min-width: 25px;\r\n    height: 25px;\r\n    text-align: center;\r\n}\r\n.rs-container {\r\n\tpadding: 0 20px;\r\n\tmax-width: 1200px;\r\n\tmargin: 0 auto;\r\n}\r\ncaption {\r\n\tcaption-side: top!important;\r\n}\r\n.rs-form {\r\n\tdisplay: flex;\r\n\tjustify-content: space-between;\r\n\tmargin-bottom: 20px;\r\n    margin-top: 40px;\r\n    align-items: flex-end;\r\n}\r\n.rs-form__img  h1{\r\n    line-height: 34px;\r\n    color: #0062cc;\r\n}\r\n.rs-form-list {\r\n\tdisplay: flex;\r\n\tflex-wrap: wrap;\r\n\t/*width: 728px;*/\r\n}\r\n.rs-form-item:not(:last-child) {\r\n\tmargin-right: 20px;\r\n}\r\n.rs-form__img img{\r\n\tmax-width: 223px;\r\n}", ""]);
+exports.push([module.i, "table {\r\n    border-collapse: collapse;\r\n    width: 100%;\r\n}\r\ntd {\r\n    border: 1px solid #ced4da;\r\n    padding: 5px;\r\n}\r\na {\r\n    color: black;\r\n}\r\na:hover {\r\n    text-decoration: none;\r\n    color: inherit;\r\n}\r\n.task {\r\n    width: 400px;\r\n    border: none;\r\n}\r\n\r\n.rs-line {\r\n    display: block;\r\n    background-color: red;   \r\n    border-radius: 15px;\r\n    font-size: 12px;\r\n    padding: 5px;\r\n    color: #fff;\r\n    text-align: center;\r\n}\r\n.rs-line:hover {\r\n    color: #fff;\r\n}\r\n.rs-line--last {\r\n    margin-right: 0;\r\n    border-top-right-radius: 0px;\r\n    border-bottom-right-radius: 0px;\r\n}\r\n.rs-line--first {\r\n    margin-right: 0;\r\n    border-top-left-radius: 0px;\r\n    border-bottom-left-radius: 0px;\r\n}\r\n.table__title {\r\n    font-size: 28px;\r\n    text-align: center;\r\n    position: relative;\r\n    width: 80%;\r\n    line-height: 28px;\r\n}\r\n.rs-type {\r\n    background-color: lightgrey;\r\n}\r\n.rs-objects {\r\n    width: 300px;\r\n}\r\n\r\n.btn--prev {\r\n    float: left;\r\n} \r\n.btn--next {\r\n    float: right;\r\n} \r\n\r\n#table tbody tr:hover {\r\n    background-color: #f1f1f1;\r\n}\r\n\r\n.rs-show-modal{\r\n    text-align: center;\r\n    cursor: pointer;\r\n}\r\n.modal-footer--space {\r\n    justify-content: space-between;\r\n}\r\n.rs-day-column {\r\n    min-width: 25px;\r\n    height: 25px;\r\n    text-align: center;\r\n}\r\n.rs-container {\r\n\tpadding: 0 20px;\r\n\tmax-width: 1200px;\r\n\tmargin: 0 auto;\r\n}\r\ncaption {\r\n\tcaption-side: top!important;\r\n}\r\n.rs-form {\r\n\tdisplay: flex;\r\n\tjustify-content: space-between;\r\n\tmargin-bottom: 20px;\r\n    margin-top: 40px;\r\n    align-items: flex-end;\r\n}\r\n.rs-form__img  h1{\r\n    line-height: 34px;\r\n    color: #0062cc;\r\n}\r\n.rs-form-list {\r\n\tdisplay: flex;\r\n\tflex-wrap: wrap;\r\n\t/*width: 728px;*/\r\n}\r\n.rs-form-item:not(:last-child) {\r\n\tmargin-right: 20px;\r\n}\r\n.rs-form__img img{\r\n\tmax-width: 223px;\r\n}\r\n.rs-green {\r\n    background-color: green;\r\n}\r\n\r\n.rs-red {\r\n    background-color: lightcoral;\r\n}\r\n.rs-grey {\r\n    background-color: lightgrey;\r\n}\r\n.rs-task-deal {\r\n    color: red;\r\n}\r\n\r\n.rs-task-deal a {\r\n    color: #0062cc;\r\n}", ""]);
 
 
 /***/ }),
@@ -734,9 +734,9 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./src/js/create-deal.js":
+/***/ "./src/js/create-task.js":
 /*!*******************************!*\
-  !*** ./src/js/create-deal.js ***!
+  !*** ./src/js/create-task.js ***!
   \*******************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -752,13 +752,13 @@ __webpack_require__.r(__webpack_exports__);
       task_add: ['tasks.task.add', {
         'fields': {
           'TITLE': taskData['task-name'],
-          'RESPONSIBLE_ID': 16,
+          'DESCRIPTION': taskData['comment'],
+          'RESPONSIBLE_ID': taskData['responsible'],
           'START_DATE_PLAN': taskData['date-start'],
           'DEADLINE': taskData['date-end'],
-          'UF_CRM_TASK': [taskData['company-id']]
+          'UF_CRM_TASK': [taskData['company-id'], taskData['deal-id']]
         }
-      }] // get_company_list: ['crm.company.list', {'order': { "UF_CRM_1561620120175": "ASC" }, 'filter': { 'COMPANY_TYPE' : 'SUPPLIER' }, 'select': [ "*", "UF_*",  ] }],
-
+      }]
     }, function (result) {
       return resolve(result);
     });
@@ -865,6 +865,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (function (data) {
   data.DATE = Object(_get_time_js__WEBPACK_IMPORTED_MODULE_0__["default"])(data.MONTH_COUNTER);
   data.TASKS.forEach(function (task) {
+    if (task.deal_id) {
+      task.deal = data.DEALS.find(function (deal) {
+        return deal.ID == task.deal_id;
+      });
+    }
+
     task.busy = [];
     data.DATE.TIMESTAMP.forEach(function (timestamp, index) {
       // Собираем занятые дни к компаниям
@@ -902,34 +908,66 @@ __webpack_require__.r(__webpack_exports__);
           'COMPANY_TYPE': 'SUPPLIER'
         },
         'select': ["*", "UF_*"]
-      }] // get_task_list: ['tasks.task.list', {'filter': {'!UF_CRM_TASK': false}, 'select': [ "*", "UF_*",  ]}]
-
+      }],
+      get_deal_place: ['crm.deal.get', {
+        id: BX24.placement.info().options.ID
+      }]
     }, function (result) {
-      // const typesOfCompany = [];
-      // result.get_company_fields.data().UF_CRM_1561620120175.items.forEach( (elem) => {
-      //     typesOfCompany.push({
-      //         'NAME' : elem.VALUE,
-      //         'COMPANIES' : result.get_company_list.data().filter( (company) => {
-      //                    company.tasks = result.get_task_list.data().tasks.filter((task) => {
-      //                         return task.ufCrmTask[0] == `CO_${company.ID}`;
-      //                    });
-      //             return company.UF_CRM_1561620120175 == elem.ID;
-      //         })
-      //     });
-      // });
-      // result.get_task_list.data().tasks.forEach((task) => {
-      //     task.timestamp_start = +new Date(task.startDatePlan); 
-      //     task.timestamp_end = +new Date(task.deadline);
-      // });
-      // return resolve({
-      //     'MONTH_COUNTER' : 0,
-      //     'TYPES_OF_COMPANY' : typesOfCompany,
-      //     'TASKS': result.get_task_list.data().tasks
-      // });
+      console.log(result);
       return resolve({
+        'deal_place': result.get_deal_place.data(),
         'company_fields': result.get_company_fields.data().UF_CRM_1561620120175.items,
-        'company_list': result.get_company_list.data()
+        'company_list': result.get_company_list.data(),
+        'MONTH_COUNTER': 0
       });
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./src/js/get-deals.js":
+/*!*****************************!*\
+  !*** ./src/js/get-deals.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/**
+ * 
+ */
+var getIds = function getIds(objCompany) {
+  return objCompany.TASKS.map(function (task) {
+    return task.deal_id;
+  });
+};
+/**
+ * 
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (objCompany) {
+  return new Promise(function (resolve) {
+    BX24.callMethod("crm.deal.list", {
+      order: {
+        "STAGE_ID": "ASC"
+      },
+      filter: {
+        "ID": getIds(objCompany)
+      },
+      select: ["*", "UF_*"]
+    }, function (result) {
+      if (result.error()) {
+        return console.error(result.error());
+      }
+
+      if (result.more()) {
+        result.next();
+      }
+
+      return resolve(result.data());
     });
   });
 });
@@ -996,6 +1034,19 @@ var getCompanyType = function getCompanyType(type) {
 var getCompanyName = function getCompanyName(company) {
   return "<td>\n                <a href=\"https://bazaivolga.bitrix24.ru/crm/company/details/".concat(company.ID, "/\" target=\"_blank\">\n                    ").concat(company.TITLE, "\n                </a>\n            </td>\n            <td class=\"rs-show-modal\" data-id=\"").concat(company.ID, "\">\n                <a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#add-deal\" data-company-id=\"CO_").concat(company.ID, "\" data-company-name=\"").concat(company.TITLE, "\"><i class=\"fas fa-user-plus\"></i></a>\n            </td>");
 };
+
+var getColor = function getColor(deal) {
+  if (!deal) {
+    return '';
+  }
+
+  var colors = {
+    '78': 'rs-green',
+    '80': 'rs-red',
+    '82': 'rs-grey'
+  };
+  return colors[deal.UF_CRM_1563514438];
+};
 /**
  * 
  * 
@@ -1020,13 +1071,14 @@ var getDaysTable = function getDaysTable(company, data) {
     }
 
     var task = company.tasks[index];
-    var days = {
+    var day = {
       'start': _i,
       'end': _i + task.busy.length - 1
     };
-    result.push("<td colspan=\"".concat(task.busy.length, "\"><a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#show-task\" data-id=\"").concat(task.id, "\" class=\"rs-line ").concat(isLong(data, task, days).join(' '), "\">").concat(_i, "</a></td>")); //https://bazaivolga.bitrix24.ru/company/personal/user/1/tasks/task/view/${task.id}/
-
-    _i = days.end;
+    var interval = day.start == day.end ? day.start : "".concat(day.start, " - ").concat(day.end);
+    var color = getColor(task.deal);
+    result.push("<td colspan=\"".concat(task.busy.length, "\"><a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#show-task\" data-id=\"").concat(task.id, "\" class=\"").concat(color, " rs-line ").concat(isLong(data, task, day).join(' '), "\">").concat(interval, "</a></td>"));
+    _i = day.end;
     i = _i;
   };
 
@@ -1080,21 +1132,44 @@ var getContent = function getContent(data) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (function () {
+/**
+ * @param {integer}
+ */
+var getStartDate = function getStartDate(month) {
+  var date = new Date();
+  date.setMonth(date.getMonth() + month - 1);
+  date.setDate(1);
+  return date;
+};
+/**
+ * @param {integer}
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (month) {
   return new Promise(function (resolve) {
     BX24.callMethod('tasks.task.list', {
       'filter': {
+        'DATE_START ': getStartDate(month),
         '!UF_CRM_TASK': false
       },
       'select': ["*", "UF_*"]
     }, function (res) {
-      res.answer.result.tasks.forEach(function (task) {
+      var tasks = res.answer.result.tasks.filter(function (task) {
+        return task.ufCrmTask[1];
+      });
+      tasks.forEach(function (task) {
         // Получаем сделку привязанную к компании 
-        task.deal = task.ufCrmTask[1] || false;
+        task.deal_id = task.ufCrmTask[1] || false;
+
+        if (task.deal_id) {
+          task.deal_id = Number(task.deal_id.match(/[0-9]$/g));
+        }
+
         task.timestamp_start = +new Date(task.startDatePlan);
         task.timestamp_end = +new Date(task.deadline);
       });
-      return resolve(res.answer.result.tasks);
+      return resolve(tasks);
     });
   });
 });
@@ -1145,6 +1220,31 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/js/task-update.js":
+/*!*******************************!*\
+  !*** ./src/js/task-update.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (function (data) {
+  return new Promise(function (resolve) {
+    BX24.callMethod('tasks.task.update', {
+      taskId: data.id,
+      fields: {
+        'START_DATE_PLAN': data['date-start'],
+        'DEADLINE': data['date-end']
+      }
+    }, function (res) {
+      return resolve(res.answer.result);
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./src/main.js":
 /*!*********************!*\
   !*** ./src/main.js ***!
@@ -1161,10 +1261,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_get_company_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/get-company.js */ "./src/js/get-company.js");
 /* harmony import */ var _js_get_busy_days_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/get-busy-days.js */ "./src/js/get-busy-days.js");
 /* harmony import */ var _js_get_table__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./js/get-table */ "./src/js/get-table.js");
-/* harmony import */ var _js_create_deal_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./js/create-deal.js */ "./src/js/create-deal.js");
+/* harmony import */ var _js_create_task_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./js/create-task.js */ "./src/js/create-task.js");
 /* harmony import */ var _js_get_tasks_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./js/get-tasks.js */ "./src/js/get-tasks.js");
+/* harmony import */ var _js_get_deals_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./js/get-deals.js */ "./src/js/get-deals.js");
+/* harmony import */ var _js_task_update_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./js/task-update.js */ "./src/js/task-update.js");
 // styles
  // js
+
+
 
 
 
@@ -1181,9 +1285,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var changeMonth = function changeMonth(next) {
     next ? data.MONTH_COUNTER++ : data.MONTH_COUNTER--;
-    Object(_js_get_busy_days_js__WEBPACK_IMPORTED_MODULE_3__["default"])(data);
-    var content = Object(_js_get_table__WEBPACK_IMPORTED_MODULE_4__["default"])(data);
-    document.querySelector("#table").innerHTML = content;
+    applicationStart(data);
   };
   /**
    * Слушатель на таблицу, для изменения месяца
@@ -1207,7 +1309,12 @@ document.addEventListener('DOMContentLoaded', function () {
     modal.find('.modal-title').text("\u0417\u0430\u0431\u0440\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C \xAB".concat(companyName, "\xBB"));
     modal.find('input[name="task-name"]').val("".concat(companyName));
     modal.find('input[name="responsible"]').val("\u0417\u0434\u0435\u0441\u044C \u0431\u0443\u0434\u0435\u0442 \u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0439 \u043F\u0440\u0438\u0432\u044F\u0437\u0430\u043D\u043D\u044B\u0439 \u043A \u0441\u0434\u0435\u043B\u043A\u0435");
-    modal.find('input[name="company-id"]').val(button.data('company-id')); // modal.find('.modal-body input').val(recipient)
+    modal.find('input[name="company-id"]').val(button.data('company-id'));
+    modal.find('#date_timepicker_start').val($('#date_timepicker_find_start').val());
+    modal.find('#date_timepicker_end').val($('#date_timepicker_find_end').val());
+    modal.find('input[name="deal-id"]').val(data.deal_place.ID);
+    modal.find('input[name="deal-name"]').val(data.deal_place.TITLE);
+    modal.find('input[name="responsible"]').val(data.deal_place.ASSIGNED_BY_ID);
   });
   /**
    * Создание задачи
@@ -1224,10 +1331,12 @@ document.addEventListener('DOMContentLoaded', function () {
       'task-name': form.querySelector('input[name="task-name"]').value,
       'responsible': form.querySelector('input[name="responsible"]').value,
       'company-id': form.querySelector('input[name="company-id"]').value,
-      'deal-id': form.querySelector('input[name="deal-id"]').value
+      'deal-id': "D_".concat(form.querySelector('input[name="deal-id"]').value),
+      'comment': form.querySelector('[name="comment"]').value
     };
-    Object(_js_create_deal_js__WEBPACK_IMPORTED_MODULE_5__["default"])(taskData).then(function (resolve) {
-      console.log(resolve);
+    Object(_js_create_task_js__WEBPACK_IMPORTED_MODULE_5__["default"])(taskData).then(function (resolve) {
+      applicationStart(data);
+      $('#add-deal').modal('hide');
     });
   });
   /**
@@ -1238,7 +1347,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var formatDate = function formatDate(date) {
     var year = date.getFullYear();
-    var month = ("0" + date.getMonth()).slice(-2);
+    var month = ("0" + (date.getMonth() + 1)).slice(-2);
     var day = ("0" + date.getDate()).slice(-2);
     return "".concat(year, "/").concat(month, "/").concat(day);
   };
@@ -1256,10 +1365,32 @@ document.addEventListener('DOMContentLoaded', function () {
     var start = new Date(task.timestamp_start);
     var end = new Date(task.timestamp_end);
     modal.find(".modal-title").text(task.title);
+    modal.find("[name=\"task-id\"]").val(task.id);
     modal.find("[name=\"responsible\"]").val(task.responsible.name);
     modal.find("#date_timepicker_task_start").val(formatDate(start));
     modal.find("#date_timepicker_task_end").val(formatDate(end));
     modal.find("#task-detail").attr("href", "https://bazaivolga.bitrix24.ru/company/personal/user/1/tasks/task/view/".concat(task.id, "/"));
+
+    if (task.deal) {
+      modal.find("#deal").html("<a href=\"https://bazaivolga.bitrix24.ru/crm/deal/details/".concat(task.deal_id, "/\" target=\"_blank\">").concat(task.deal.TITLE, "</a>"));
+    } else {
+      modal.find("#deal").text('К задаче не привязана сделка');
+    }
+  });
+  $('#form-task-update').on('submit', function (evt) {
+    evt.preventDefault();
+    var form = evt.target;
+    var dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
+    var dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
+    var taskData = {
+      'id': form.querySelector('input[name="task-id"]').value,
+      'date-start': dateStart,
+      'date-end': dateEnd
+    };
+    Object(_js_task_update_js__WEBPACK_IMPORTED_MODULE_8__["default"])(taskData).then(function (resolve) {
+      applicationStart(data);
+      $('#show-task').modal('hide');
+    });
   });
   /**
    * 
@@ -1272,7 +1403,7 @@ document.addEventListener('DOMContentLoaded', function () {
       typesOfCompany.push({
         'NAME': elem.VALUE,
         'COMPANIES': objCompany.company_list.filter(function (company) {
-          company.tasks = objCompany.task_list.filter(function (task) {
+          company.tasks = objCompany.TASKS.filter(function (task) {
             return task.ufCrmTask[0] == "CO_".concat(company.ID);
           });
           return company.UF_CRM_1561620120175 == elem.ID;
@@ -1280,22 +1411,36 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
     return {
-      'MONTH_COUNTER': 0,
+      'deal_place': objCompany.deal_place,
+      'company_fields': objCompany.company_fields,
+      'company_list': objCompany.company_list,
+      'MONTH_COUNTER': objCompany.MONTH_COUNTER,
       'TYPES_OF_COMPANY': typesOfCompany,
-      'TASKS': objCompany.task_list
+      'TASKS': objCompany.TASKS,
+      'DEALS': objCompany.deals
     };
   };
+  /**
+   * 
+   * @param {object} objCompany 
+   */
 
-  BX24.init(function () {
-    var place = BX24.placement.info();
-    console.log(place);
-    Object(_js_get_company_js__WEBPACK_IMPORTED_MODULE_2__["default"])().then(function (objCompany) {
-      Object(_js_get_tasks_js__WEBPACK_IMPORTED_MODULE_6__["default"])().then(function (tasks) {
-        objCompany['task_list'] = tasks;
+
+  var applicationStart = function applicationStart(objCompany) {
+    Object(_js_get_tasks_js__WEBPACK_IMPORTED_MODULE_6__["default"])(objCompany.MONTH_COUNTER).then(function (tasks) {
+      objCompany['TASKS'] = tasks;
+      Object(_js_get_deals_js__WEBPACK_IMPORTED_MODULE_7__["default"])(objCompany).then(function (deals) {
+        objCompany['deals'] = deals;
         data = Object(_js_get_busy_days_js__WEBPACK_IMPORTED_MODULE_3__["default"])(getData(objCompany));
         var content = Object(_js_get_table__WEBPACK_IMPORTED_MODULE_4__["default"])(data);
         document.querySelector("#table").innerHTML = content;
       });
+    });
+  };
+
+  BX24.init(function () {
+    Object(_js_get_company_js__WEBPACK_IMPORTED_MODULE_2__["default"])().then(function (objCompany) {
+      applicationStart(objCompany);
     });
   });
 });

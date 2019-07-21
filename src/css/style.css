@@ -20,7 +20,7 @@ a:hover {
 
 .rs-line {
     display: block;
-    background-color: lightcoral;   
+    background-color: red;   
     border-radius: 15px;
     font-size: 12px;
     padding: 5px;
@@ -106,4 +106,21 @@ caption {
 }
 .rs-form__img img{
 	max-width: 223px;
+}
+.rs-green {
+    background-color: green;
+}
+
+.rs-red {
+    background-color: lightcoral;
+}
+.rs-grey {
+    background-color: lightgrey;
+}
+.rs-task-deal {
+    color: red;
+}
+
+.rs-task-deal a {
+    color: #0062cc;
 }

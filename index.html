@@ -28,7 +28,7 @@
 <body>
 
 <section>
-	<div class="rs-container" >
+	<div class="" >
 		<form class="rs-form">
 			<div class="rs-form__img"><h1>«Бронирование»</h1></div>
 			
@@ -60,30 +60,38 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<div class="row">
-						<div class="col-md-6">
-							<label for="">Дата начала:</label>
-							<input type="text" class='form-control' name="date-start" id="date_timepicker_task_start" >
-						</div>
-						<div class="col-md-6">
-							<label for="">Дата окончания:</label>
-							<input type="text" class='form-control' name="date-end" id="date_timepicker_task_end" >
+			<form action="" id="form-task-update">
+				<div class="modal-body">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-6">
+								<label for="">Дата начала:</label>
+								<input type="text" class='form-control' name="date-start" id="date_timepicker_task_start" >
+							</div>
+							<div class="col-md-6">
+								<label for="">Дата окончания:</label>
+								<input type="text" class='form-control' name="date-end" id="date_timepicker_task_end" >
+							</div>
 						</div>
 					</div>
-				</div>
+					
+					<div class="form-group">
+						<label for="">Ответственный</label>
+						<input type="text" class='form-control' readonly="readonly" name="responsible">
+					</div>
 
-				<div class="form-group">
-					<label for="">Ответственный</label>
-					<input type="text" class='form-control' readonly="readonly" name="responsible">
-				</div>
+					<div class="form-group">
+						<div class="rs-task-deal" id="deal"></div>
+					</div>
 
-			</div>
-			<div class="modal-footer  modal-footer--space">
-				<a href="" class="btn btn-info" target="_blank" id="task-detail">Перейти к задаче</a>
-				<button type="submit" class="btn btn-primary">Сохранить изменения</button>
-			</div>
+					<input type="hidden" name="task-id">
+
+				</div>
+				<div class="modal-footer  modal-footer--space">
+					<a href="" class="btn btn-info" target="_blank" id="task-detail">Перейти к задаче</a>
+					<button type="submit" id="" class="btn btn-primary">Сохранить изменения</button>
+				</div>
+			</form>
 		</div>
 	</div>		
 </div>
@@ -114,12 +122,20 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="">Название задачи</label>
-							<input type="text" class='form-control' name="task-name" required placeholder=>
+							<label for="">Комментарий</label>
+							<textarea class="form-control" name="comment" id="" cols="" rows="5"></textarea>
 						</div>
 						<div class="form-group">
+							<label for="">Название задачи</label>
+							<input type="text" class='form-control' readonly="readonly" name="task-name" required >
+						</div>
+						<div class="form-group">
+								<label for="">Название сделки</label>
+								<input type="text" class='form-control' readonly="readonly" name="deal-name" required >
+							</div>
+						<div class="form-group">
 							<label for="">Ответственный</label>
-							<input type="text" class='form-control' readonly="readonly" name="responsible" placeholder=>
+							<input type="text" class='form-control' readonly="readonly" name="responsible" >
 						</div>
 						<input type="hidden" name="company-id" >	
 						<input type="hidden" name="deal-id">	

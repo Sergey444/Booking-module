@@ -65,6 +65,16 @@ const getCompanyName = (company) => {
             </td>`;
 }
 
+const getColor = (deal) => {
+    if (!deal) {return '';}
+    const colors = {
+        '78' : 'rs-green',
+        '80' : 'rs-red',
+        '82' : 'rs-grey'
+    }
+    return colors[deal.UF_CRM_1563514438];
+}
+
 /**
  * 
  * 
@@ -81,11 +91,13 @@ const getDaysTable = (company, data) => {
         if (index == -1) {result.push(`<td  class="rs-day-column">${i}</td>`); continue;}
     
         const task = company.tasks[index];
-        const days = {'start': i, 'end': i + task.busy.length - 1 };
-        result.push(`<td colspan="${task.busy.length}"><a href="javascript:void(0)" data-toggle="modal" data-target="#show-task" data-id="${task.id}" class="rs-line ${ isLong(data, task, days).join(' ') }">${i}</a></td>`);
+        const day = {'start': i, 'end': i + task.busy.length - 1 };
+        const interval = day.start == day.end ? day.start : `${day.start} - ${day.end}`;
+         
+        const color = getColor(task.deal);
 
-        //https://bazaivolga.bitrix24.ru/company/personal/user/1/tasks/task/view/${task.id}/
-        i = days.end;
+        result.push(`<td colspan="${task.busy.length}"><a href="javascript:void(0)" data-toggle="modal" data-target="#show-task" data-id="${task.id}" class="${color} rs-line ${ isLong(data, task, day).join(' ') }">${interval}</a></td>`);
+        i = day.end;
     } 
     return result.join('');
 }

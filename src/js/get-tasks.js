@@ -1,19 +1,38 @@
-export default () => {
+/**
+ * @param {integer}
+ */
+const getStartDate = (month) => {
+    const date = new Date();
+          date.setMonth(date.getMonth() + month - 1); 
+          date.setDate(1);  
+    return date;
+}
+
+/**
+ * @param {integer}
+ */
+export default (month) => {
+    
     return new Promise ( (resolve) => {	
         BX24.callMethod(
             'tasks.task.list', 
-            {'filter': {'!UF_CRM_TASK': false}, 'select': [ "*", "UF_*",  ] }, 
+            {'filter': {'DATE_START ': getStartDate(month), '!UF_CRM_TASK': false}, 'select': [ "*", "UF_*",  ] }, 
            
             function(res){
 
-                res.answer.result.tasks.forEach((task) => {
+                const tasks = res.answer.result.tasks.filter( (task) => task.ufCrmTask[1] );
+
+                tasks.forEach((task) => {
                     // Получаем сделку привязанную к компании 
-                    task.deal = task.ufCrmTask[1] || false;
+                    task.deal_id = task.ufCrmTask[1] || false;
+                    if (task.deal_id) {
+                        task.deal_id = Number(task.deal_id.match(/[0-9]$/g));
+                    }
                     task.timestamp_start = +new Date(task.startDatePlan); 
                     task.timestamp_end = +new Date(task.deadline);
                 });
-
-                return resolve(res.answer.result.tasks);
+                
+                return resolve( tasks );
             }
         );
     });
