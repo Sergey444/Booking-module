@@ -743,41 +743,35 @@ if(false) {}
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _get_busy_days_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-busy-days.js */ "./src/js/get-busy-days.js");
-/* harmony import */ var _get_table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./get-table */ "./src/js/get-table.js");
-/* harmony import */ var _get_tasks_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./get-tasks.js */ "./src/js/get-tasks.js");
-/* harmony import */ var _get_deals_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./get-deals.js */ "./src/js/get-deals.js");
+/* harmony import */ var _get_table__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-table */ "./src/js/get-table.js");
+/* harmony import */ var _get_tasks_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./get-tasks.js */ "./src/js/get-tasks.js");
+/* harmony import */ var _get_deals_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./get-deals.js */ "./src/js/get-deals.js");
+/* harmony import */ var _get_time_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./get-time.js */ "./src/js/get-time.js");
 
 
 
 
 /**
  * 
- * @param {object} objCompany 
+ * @param {object} obj 
  */
 
-var getData = function getData(objCompany) {
-  var typesOfCompany = [];
-  objCompany.company_fields.forEach(function (elem) {
-    typesOfCompany.push({
-      'NAME': elem.VALUE,
-      'COMPANIES': objCompany.company_list.filter(function (company) {
-        company.tasks = objCompany.TASKS.filter(function (task) {
-          return task.ufCrmTask[0] == "CO_".concat(company.ID);
-        });
-        return company.UF_CRM_1561620120175 == elem.ID;
-      })
+var getBusyDays = function getBusyDays(obj) {
+  obj.TASKS.forEach(function (task) {
+    if (task.deal_id) {
+      task.deal = obj.DEALS.find(function (deal) {
+        return deal.ID == task.deal_id;
+      });
+    }
+
+    task.busy = [];
+    obj.DATE.TIMESTAMP.forEach(function (timestamp, index) {
+      if (task.timestamp_end >= timestamp && task.timestamp_start <= timestamp) {
+        task.busy.push(index);
+      }
     });
   });
-  return {
-    'deal_place': objCompany.deal_place,
-    'company_fields': objCompany.company_fields,
-    'company_list': objCompany.company_list,
-    'MONTH_COUNTER': objCompany.MONTH_COUNTER,
-    'TYPES_OF_COMPANY': typesOfCompany,
-    'TASKS': objCompany.TASKS,
-    'DEALS': objCompany.deals
-  };
+  return obj;
 };
 /**
  * 
@@ -785,13 +779,36 @@ var getData = function getData(objCompany) {
  */
 
 
-/* harmony default export */ __webpack_exports__["default"] = (function (objCompany) {
-  Object(_get_tasks_js__WEBPACK_IMPORTED_MODULE_2__["default"])(objCompany.MONTH_COUNTER).then(function (tasks) {
-    objCompany['TASKS'] = tasks;
-    Object(_get_deals_js__WEBPACK_IMPORTED_MODULE_3__["default"])(objCompany).then(function (deals) {
-      objCompany['deals'] = deals;
-      data = Object(_get_busy_days_js__WEBPACK_IMPORTED_MODULE_0__["default"])(getData(objCompany));
-      var content = Object(_get_table__WEBPACK_IMPORTED_MODULE_1__["default"])(data);
+var getTypesOfCompany = function getTypesOfCompany(obj) {
+  var typesOfCompany = [];
+  obj.company_fields.forEach(function (elem) {
+    typesOfCompany.push({
+      'NAME': elem.VALUE,
+      'COMPANIES': obj.company_list.filter(function (company) {
+        company.tasks = obj.TASKS.filter(function (task) {
+          return task.ufCrmTask[0] == "CO_".concat(company.ID);
+        });
+        return company.UF_CRM_1561620120175 == elem.ID;
+      })
+    });
+  });
+  return typesOfCompany;
+};
+/**
+ * 
+ * @param {object} objCompany 
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (obj) {
+  Object(_get_tasks_js__WEBPACK_IMPORTED_MODULE_1__["default"])(obj).then(function (tasks) {
+    obj['TASKS'] = tasks;
+    Object(_get_deals_js__WEBPACK_IMPORTED_MODULE_2__["default"])(obj).then(function (deals) {
+      obj['DATE'] = Object(_get_time_js__WEBPACK_IMPORTED_MODULE_3__["default"])(obj.MONTH_COUNTER);
+      obj['DEALS'] = deals;
+      obj['TYPES_OF_COMPANY'] = getTypesOfCompany(obj);
+      data = getBusyDays(obj);
+      var content = Object(_get_table__WEBPACK_IMPORTED_MODULE_0__["default"])(data);
       document.querySelector("#table").innerHTML = content;
     });
   });
@@ -942,43 +959,6 @@ $('#date_timepicker_task_end').datetimepicker({
 
 /***/ }),
 
-/***/ "./src/js/get-busy-days.js":
-/*!*********************************!*\
-  !*** ./src/js/get-busy-days.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _get_time_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-time.js */ "./src/js/get-time.js");
-
-/**
- * @param {array} 
- */
-
-/* harmony default export */ __webpack_exports__["default"] = (function (data) {
-  data.DATE = Object(_get_time_js__WEBPACK_IMPORTED_MODULE_0__["default"])(data.MONTH_COUNTER);
-  data.TASKS.forEach(function (task) {
-    if (task.deal_id) {
-      task.deal = data.DEALS.find(function (deal) {
-        return deal.ID == task.deal_id;
-      });
-    }
-
-    task.busy = [];
-    data.DATE.TIMESTAMP.forEach(function (timestamp, index) {
-      // Собираем занятые дни к компаниям
-      if (task.timestamp_end >= timestamp && task.timestamp_start <= timestamp) {
-        task.busy.push(index);
-      }
-    });
-  });
-  return data;
-});
-
-/***/ }),
-
 /***/ "./src/js/get-company.js":
 /*!*******************************!*\
   !*** ./src/js/get-company.js ***!
@@ -1008,7 +988,6 @@ __webpack_require__.r(__webpack_exports__);
         id: BX24.placement.info().options.ID
       }]
     }, function (result) {
-      console.log(result);
       return resolve({
         'deal_place': result.get_deal_place.data(),
         'company_fields': result.get_company_fields.data().UF_CRM_1561620120175.items,
@@ -1237,15 +1216,15 @@ var getStartDate = function getStartDate(month) {
   return date;
 };
 /**
- * @param {integer}
+ * @param {object}
  */
 
 
-/* harmony default export */ __webpack_exports__["default"] = (function (month) {
+/* harmony default export */ __webpack_exports__["default"] = (function (obj) {
   return new Promise(function (resolve) {
     BX24.callMethod('tasks.task.list', {
       'filter': {
-        '>START_DATE_PLAN': getStartDate(month),
+        '>START_DATE_PLAN': getStartDate(obj.MONTH_COUNTER),
         '!UF_CRM_TASK': false
       },
       'select': ["*", "UF_*"]
@@ -1503,8 +1482,8 @@ __webpack_require__.r(__webpack_exports__);
 document.addEventListener('DOMContentLoaded', function () {
   window.data = {};
   BX24.init(function () {
-    Object(_js_get_company_js__WEBPACK_IMPORTED_MODULE_3__["default"])().then(function (objCompany) {
-      Object(_js_application_start__WEBPACK_IMPORTED_MODULE_4__["default"])(objCompany);
+    Object(_js_get_company_js__WEBPACK_IMPORTED_MODULE_3__["default"])().then(function (obj) {
+      Object(_js_application_start__WEBPACK_IMPORTED_MODULE_4__["default"])(obj);
     });
   });
 });

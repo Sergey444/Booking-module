@@ -12,8 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
     window.data = {};
 
     BX24.init(() => {
-        getCompany().then( (objCompany) => {
-            applicationStart(objCompany);
+        getCompany().then( (obj) => {
+            applicationStart(obj);
         });
     });
+
 });		

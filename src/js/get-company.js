@@ -10,7 +10,6 @@ export default () => {
         }, 
 
         (result) => {
-            console.log(result);
             return resolve({
                 'deal_place': result.get_deal_place.data(),
                 'company_fields': result.get_company_fields.data().UF_CRM_1561620120175.items,
