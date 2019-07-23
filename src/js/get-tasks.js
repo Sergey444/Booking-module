@@ -16,10 +16,9 @@ export default (month) => {
     return new Promise ( (resolve) => {	
         BX24.callMethod(
             'tasks.task.list', 
-            {'filter': {'DATE_START ': getStartDate(month), '!UF_CRM_TASK': false}, 'select': [ "*", "UF_*",  ] }, 
+            {'filter': {'>START_DATE_PLAN': getStartDate(month), '!UF_CRM_TASK': false}, 'select': [ "*", "UF_*",  ] }, 
            
             function(res){
-
                 const tasks = res.answer.result.tasks.filter( (task) => task.ufCrmTask[1] );
 
                 tasks.forEach((task) => {

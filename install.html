@@ -10,42 +10,35 @@
     <script src="//api.bitrix24.com/api/v1/"></script>
 </head>
 <body>
-    <form action="" id="rs-install-form">
-        <div class="form-group">
-            <label for="">Укажите ссылку на приложение, для встраивания в карточку CRM</label>
-            <input type="text" name="url" class="form-control" >
-        </div>
-        <div class="form-group">        
-            <button type="submit" class="btn">Сохранить</button>
-        </div>
-    </form>
+    <section class="container">
+        <form action="" id="rs-install-form">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="">Укажите ссылку на приложение, для встраивания в карточку CRM</label>
+                    <input type="text" name="url" id="url" class="form-control" >
+                </div>
+            </div>
+            
+            <div class="form-group">        
+                <button type="submit" id="save" class="btn">Сохранить</button>
+            </div>
+        </form>
+    </section>
 
 
     <script>
 
-        const form = document.querySelector('#rs-install-form')
-              form.addEventListener('submit', function (evt) {
-                    // const url = prompt('Введите ссылку на приложение', 100);
-                    const url = form.querySelector('input[name="url"]').value;
-                    BX24.callMethod('placement.bind', { 'PLACEMENT': 'CRM_DEAL_DETAIL_TAB', 'HANDLER' : url, 'TITLE': 'Модуль «Бронирование»'}, function (result) {
-                        console.log(result);
-                        console.log('step 1');
-                        BX24.installFinish();
-                    });
-              });
+        const save = document.querySelector('#save');
+        const url = document.querySelector('#url').value;
 
-        BX24.init(function() {
-
-            let url = prompt("Введите url", '');
-
+        save.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            const url = document.querySelector('#url').value;
             BX24.callMethod('placement.bind', { 'PLACEMENT': 'CRM_DEAL_DETAIL_TAB', 'HANDLER' : url, 'TITLE': 'Модуль «Бронирование»'}, function (result) {
-                console.log(result);
-                console.log('step 2');
                 BX24.installFinish();
             });
+        })
 
-            BX24.installFinish();
-        }); 
     </script>
 </body>
 </html>

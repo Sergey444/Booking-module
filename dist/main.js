@@ -734,6 +734,94 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./src/js/application-start.js":
+/*!*************************************!*\
+  !*** ./src/js/application-start.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _get_busy_days_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-busy-days.js */ "./src/js/get-busy-days.js");
+/* harmony import */ var _get_table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./get-table */ "./src/js/get-table.js");
+/* harmony import */ var _get_tasks_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./get-tasks.js */ "./src/js/get-tasks.js");
+/* harmony import */ var _get_deals_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./get-deals.js */ "./src/js/get-deals.js");
+
+
+
+
+/**
+ * 
+ * @param {object} objCompany 
+ */
+
+var getData = function getData(objCompany) {
+  var typesOfCompany = [];
+  objCompany.company_fields.forEach(function (elem) {
+    typesOfCompany.push({
+      'NAME': elem.VALUE,
+      'COMPANIES': objCompany.company_list.filter(function (company) {
+        company.tasks = objCompany.TASKS.filter(function (task) {
+          return task.ufCrmTask[0] == "CO_".concat(company.ID);
+        });
+        return company.UF_CRM_1561620120175 == elem.ID;
+      })
+    });
+  });
+  return {
+    'deal_place': objCompany.deal_place,
+    'company_fields': objCompany.company_fields,
+    'company_list': objCompany.company_list,
+    'MONTH_COUNTER': objCompany.MONTH_COUNTER,
+    'TYPES_OF_COMPANY': typesOfCompany,
+    'TASKS': objCompany.TASKS,
+    'DEALS': objCompany.deals
+  };
+};
+/**
+ * 
+ * @param {object} objCompany 
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (objCompany) {
+  Object(_get_tasks_js__WEBPACK_IMPORTED_MODULE_2__["default"])(objCompany.MONTH_COUNTER).then(function (tasks) {
+    objCompany['TASKS'] = tasks;
+    Object(_get_deals_js__WEBPACK_IMPORTED_MODULE_3__["default"])(objCompany).then(function (deals) {
+      objCompany['deals'] = deals;
+      data = Object(_get_busy_days_js__WEBPACK_IMPORTED_MODULE_0__["default"])(getData(objCompany));
+      var content = Object(_get_table__WEBPACK_IMPORTED_MODULE_1__["default"])(data);
+      document.querySelector("#table").innerHTML = content;
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./src/js/change-month.js":
+/*!********************************!*\
+  !*** ./src/js/change-month.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _application_start__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./application-start */ "./src/js/application-start.js");
+
+/**
+ * 
+ * @param {boolean} next 
+ */
+
+/* harmony default export */ __webpack_exports__["default"] = (function (next) {
+  next ? data.MONTH_COUNTER++ : data.MONTH_COUNTER--;
+  Object(_application_start__WEBPACK_IMPORTED_MODULE_0__["default"])(data);
+});
+
+/***/ }),
+
 /***/ "./src/js/create-task.js":
 /*!*******************************!*\
   !*** ./src/js/create-task.js ***!
@@ -756,7 +844,14 @@ __webpack_require__.r(__webpack_exports__);
           'RESPONSIBLE_ID': taskData['responsible'],
           'START_DATE_PLAN': taskData['date-start'],
           'DEADLINE': taskData['date-end'],
-          'UF_CRM_TASK': [taskData['company-id'], taskData['deal-id']]
+          'UF_CRM_TASK': [taskData['company-id'], taskData['crm-deal-id']]
+        }
+      }],
+      deal_update: ['crm.deal.update', {
+        'id': taskData['deal-id'],
+        'fields': {
+          'UF_CRM_1563776654352': taskData['date-start'],
+          'UF_CRM_1563776665746': taskData['date-end']
         }
       }]
     }, function (result) {
@@ -1150,7 +1245,7 @@ var getStartDate = function getStartDate(month) {
   return new Promise(function (resolve) {
     BX24.callMethod('tasks.task.list', {
       'filter': {
-        'DATE_START ': getStartDate(month),
+        '>START_DATE_PLAN': getStartDate(month),
         '!UF_CRM_TASK': false
       },
       'select': ["*", "UF_*"]
@@ -1220,6 +1315,134 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/js/listener.js":
+/*!****************************!*\
+  !*** ./src/js/listener.js ***!
+  \****************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _task_update_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./task-update.js */ "./src/js/task-update.js");
+/* harmony import */ var _create_task_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create-task.js */ "./src/js/create-task.js");
+/* harmony import */ var _change_month_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./change-month.js */ "./src/js/change-month.js");
+/* harmony import */ var _application_start__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./application-start */ "./src/js/application-start.js");
+
+
+
+
+/**
+ * Слушатель на таблицу, для изменения месяца
+ */
+
+document.querySelector('#table').addEventListener('click', function (evt) {
+  if (evt.target.closest('[data-name="control"]')) {
+    var target = evt.target.closest('[data-name="control"]');
+    target.id == 'next' ? Object(_change_month_js__WEBPACK_IMPORTED_MODULE_2__["default"])(true) : Object(_change_month_js__WEBPACK_IMPORTED_MODULE_2__["default"])(false);
+  }
+});
+/**
+ * Форма bootstrap 4 - забронировать время
+ */
+
+$('#add-deal').on('show.bs.modal', function (evt) {
+  var button = $(evt.relatedTarget);
+  var modal = $(evt.target);
+  var companyName = button.data('company-name');
+  modal.find('.modal-title').text("\u0417\u0430\u0431\u0440\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C \xAB".concat(companyName, "\xBB"));
+  modal.find('input[name="task-name"]').val("".concat(companyName));
+  modal.find('input[name="responsible"]').val("\u0417\u0434\u0435\u0441\u044C \u0431\u0443\u0434\u0435\u0442 \u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0439 \u043F\u0440\u0438\u0432\u044F\u0437\u0430\u043D\u043D\u044B\u0439 \u043A \u0441\u0434\u0435\u043B\u043A\u0435");
+  modal.find('input[name="company-id"]').val(button.data('company-id'));
+  modal.find('#date_timepicker_start').val($('#date_timepicker_find_start').val());
+  modal.find('#date_timepicker_end').val($('#date_timepicker_find_end').val());
+  modal.find('input[name="deal-id"]').val(data.deal_place.ID);
+  modal.find('input[name="deal-name"]').val(data.deal_place.TITLE);
+  modal.find('input[name="responsible"]').val(data.deal_place.ASSIGNED_BY_ID);
+});
+/**
+ * Создание задачи
+ */
+
+$('#rs-add-task-form').on('submit', function (evt) {
+  evt.preventDefault();
+  var form = evt.target;
+  var dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
+  var dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
+  var taskData = {
+    'date-start': dateStart,
+    'date-end': dateEnd,
+    'task-name': form.querySelector('input[name="task-name"]').value,
+    'responsible': form.querySelector('input[name="responsible"]').value,
+    'company-id': form.querySelector('input[name="company-id"]').value,
+    'crm-deal-id': "D_".concat(form.querySelector('input[name="deal-id"]').value),
+    'deal-id': form.querySelector('input[name="deal-id"]').value,
+    'comment': form.querySelector('[name="comment"]').value
+  };
+  Object(_create_task_js__WEBPACK_IMPORTED_MODULE_1__["default"])(taskData).then(function (resolve) {
+    Object(_application_start__WEBPACK_IMPORTED_MODULE_3__["default"])(data);
+    console.log(resolve);
+    $('#add-deal').modal('hide');
+  });
+});
+/**
+ * 
+ * @param {object} date 
+ * @return {string} 
+ */
+
+var formatDate = function formatDate(date) {
+  var year = date.getFullYear();
+  var month = ("0" + (date.getMonth() + 1)).slice(-2);
+  var day = ("0" + date.getDate()).slice(-2);
+  return "".concat(year, "/").concat(month, "/").concat(day);
+};
+/**
+ * Просмотр задачи
+ */
+
+
+$('#show-task').on('show.bs.modal', function (evt) {
+  var button = $(evt.relatedTarget);
+  var modal = $(evt.target);
+  var task = data.TASKS.find(function (element) {
+    return element.id == button.data("id");
+  });
+  var start = new Date(task.timestamp_start);
+  var end = new Date(task.timestamp_end);
+  modal.find(".modal-title").text(task.title);
+  modal.find("[name=\"task-id\"]").val(task.id);
+  modal.find("[name=\"responsible\"]").val(task.responsible.name);
+  modal.find("#date_timepicker_task_start").val(formatDate(start));
+  modal.find("#date_timepicker_task_end").val(formatDate(end));
+  modal.find("#task-detail").attr("href", "https://bazaivolga.bitrix24.ru/company/personal/user/1/tasks/task/view/".concat(task.id, "/"));
+  modal.find('input[name="deal-id"]').val(task.deal.ID);
+
+  if (task.deal) {
+    modal.find("#deal").html("<a href=\"https://bazaivolga.bitrix24.ru/crm/deal/details/".concat(task.deal_id, "/\" target=\"_blank\">").concat(task.deal.TITLE, "</a>"));
+  } else {
+    modal.find("#deal").text('К задаче не привязана сделка');
+  }
+});
+$('#form-task-update').on('submit', function (evt) {
+  evt.preventDefault();
+  var form = evt.target;
+  var dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
+  var dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
+  var taskData = {
+    'id': form.querySelector('input[name="task-id"]').value,
+    'date-start': dateStart,
+    'date-end': dateEnd,
+    'deal-id': form.querySelector('input[name="deal-id"]').value
+  };
+  Object(_task_update_js__WEBPACK_IMPORTED_MODULE_0__["default"])(taskData).then(function (resolve) {
+    Object(_application_start__WEBPACK_IMPORTED_MODULE_3__["default"])(data);
+    $('#show-task').modal('hide');
+  });
+});
+
+/***/ }),
+
 /***/ "./src/js/task-update.js":
 /*!*******************************!*\
   !*** ./src/js/task-update.js ***!
@@ -1231,14 +1454,23 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (function (data) {
   return new Promise(function (resolve) {
-    BX24.callMethod('tasks.task.update', {
-      taskId: data.id,
-      fields: {
-        'START_DATE_PLAN': data['date-start'],
-        'DEADLINE': data['date-end']
-      }
-    }, function (res) {
-      return resolve(res.answer.result);
+    BX24.callBatch({
+      task_add: ['tasks.task.update', {
+        'taskId': data.id,
+        'fields': {
+          'START_DATE_PLAN': data['date-start'],
+          'DEADLINE': data['date-end']
+        }
+      }],
+      deal_update: ['crm.deal.update', {
+        'id': data['deal-id'],
+        'fields': {
+          'UF_CRM_1563776654352': data['date-start'],
+          'UF_CRM_1563776665746': data['date-end']
+        }
+      }]
+    }, function (result) {
+      return resolve(result);
     });
   });
 });
@@ -1258,13 +1490,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_style_css__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _js_datetimepicker_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/datetimepicker.js */ "./src/js/datetimepicker.js");
 /* harmony import */ var _js_datetimepicker_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_js_datetimepicker_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _js_get_company_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/get-company.js */ "./src/js/get-company.js");
-/* harmony import */ var _js_get_busy_days_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/get-busy-days.js */ "./src/js/get-busy-days.js");
-/* harmony import */ var _js_get_table__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./js/get-table */ "./src/js/get-table.js");
-/* harmony import */ var _js_create_task_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./js/create-task.js */ "./src/js/create-task.js");
-/* harmony import */ var _js_get_tasks_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./js/get-tasks.js */ "./src/js/get-tasks.js");
-/* harmony import */ var _js_get_deals_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./js/get-deals.js */ "./src/js/get-deals.js");
-/* harmony import */ var _js_task_update_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./js/task-update.js */ "./src/js/task-update.js");
+/* harmony import */ var _js_listener_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/listener.js */ "./src/js/listener.js");
+/* harmony import */ var _js_get_company_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/get-company.js */ "./src/js/get-company.js");
+/* harmony import */ var _js_application_start__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./js/application-start */ "./src/js/application-start.js");
 // styles
  // js
 
@@ -1272,175 +1500,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
 document.addEventListener('DOMContentLoaded', function () {
-  var data = {};
-  /**
-   * 
-   * @param {boolean} next 
-   */
-
-  var changeMonth = function changeMonth(next) {
-    next ? data.MONTH_COUNTER++ : data.MONTH_COUNTER--;
-    applicationStart(data);
-  };
-  /**
-   * Слушатель на таблицу, для изменения месяца
-   */
-
-
-  document.querySelector('#table').addEventListener('click', function (evt) {
-    if (evt.target.closest('[data-name="control"]')) {
-      var target = evt.target.closest('[data-name="control"]');
-      target.id == 'next' ? changeMonth(true) : changeMonth(false);
-    }
-  });
-  /**
-   * Форма bootstrap 4 - забронировать время
-   */
-
-  $('#add-deal').on('show.bs.modal', function (evt) {
-    var button = $(evt.relatedTarget);
-    var modal = $(evt.target);
-    var companyName = button.data('company-name');
-    modal.find('.modal-title').text("\u0417\u0430\u0431\u0440\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C \xAB".concat(companyName, "\xBB"));
-    modal.find('input[name="task-name"]').val("".concat(companyName));
-    modal.find('input[name="responsible"]').val("\u0417\u0434\u0435\u0441\u044C \u0431\u0443\u0434\u0435\u0442 \u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0439 \u043F\u0440\u0438\u0432\u044F\u0437\u0430\u043D\u043D\u044B\u0439 \u043A \u0441\u0434\u0435\u043B\u043A\u0435");
-    modal.find('input[name="company-id"]').val(button.data('company-id'));
-    modal.find('#date_timepicker_start').val($('#date_timepicker_find_start').val());
-    modal.find('#date_timepicker_end').val($('#date_timepicker_find_end').val());
-    modal.find('input[name="deal-id"]').val(data.deal_place.ID);
-    modal.find('input[name="deal-name"]').val(data.deal_place.TITLE);
-    modal.find('input[name="responsible"]').val(data.deal_place.ASSIGNED_BY_ID);
-  });
-  /**
-   * Создание задачи
-   */
-
-  $('#rs-add-task-form').on('submit', function (evt) {
-    evt.preventDefault();
-    var form = evt.target;
-    var dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
-    var dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
-    var taskData = {
-      'date-start': dateStart,
-      'date-end': dateEnd,
-      'task-name': form.querySelector('input[name="task-name"]').value,
-      'responsible': form.querySelector('input[name="responsible"]').value,
-      'company-id': form.querySelector('input[name="company-id"]').value,
-      'deal-id': "D_".concat(form.querySelector('input[name="deal-id"]').value),
-      'comment': form.querySelector('[name="comment"]').value
-    };
-    Object(_js_create_task_js__WEBPACK_IMPORTED_MODULE_5__["default"])(taskData).then(function (resolve) {
-      applicationStart(data);
-      $('#add-deal').modal('hide');
-    });
-  });
-  /**
-   * 
-   * @param {object} date 
-   * @return {string} 
-   */
-
-  var formatDate = function formatDate(date) {
-    var year = date.getFullYear();
-    var month = ("0" + (date.getMonth() + 1)).slice(-2);
-    var day = ("0" + date.getDate()).slice(-2);
-    return "".concat(year, "/").concat(month, "/").concat(day);
-  };
-  /**
-   * Просмотр задачи
-   */
-
-
-  $('#show-task').on('show.bs.modal', function (evt) {
-    var button = $(evt.relatedTarget);
-    var modal = $(evt.target);
-    var task = data.TASKS.find(function (element) {
-      return element.id == button.data("id");
-    });
-    var start = new Date(task.timestamp_start);
-    var end = new Date(task.timestamp_end);
-    modal.find(".modal-title").text(task.title);
-    modal.find("[name=\"task-id\"]").val(task.id);
-    modal.find("[name=\"responsible\"]").val(task.responsible.name);
-    modal.find("#date_timepicker_task_start").val(formatDate(start));
-    modal.find("#date_timepicker_task_end").val(formatDate(end));
-    modal.find("#task-detail").attr("href", "https://bazaivolga.bitrix24.ru/company/personal/user/1/tasks/task/view/".concat(task.id, "/"));
-
-    if (task.deal) {
-      modal.find("#deal").html("<a href=\"https://bazaivolga.bitrix24.ru/crm/deal/details/".concat(task.deal_id, "/\" target=\"_blank\">").concat(task.deal.TITLE, "</a>"));
-    } else {
-      modal.find("#deal").text('К задаче не привязана сделка');
-    }
-  });
-  $('#form-task-update').on('submit', function (evt) {
-    evt.preventDefault();
-    var form = evt.target;
-    var dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
-    var dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
-    var taskData = {
-      'id': form.querySelector('input[name="task-id"]').value,
-      'date-start': dateStart,
-      'date-end': dateEnd
-    };
-    Object(_js_task_update_js__WEBPACK_IMPORTED_MODULE_8__["default"])(taskData).then(function (resolve) {
-      applicationStart(data);
-      $('#show-task').modal('hide');
-    });
-  });
-  /**
-   * 
-   * @param {object} objCompany 
-   */
-
-  var getData = function getData(objCompany) {
-    var typesOfCompany = [];
-    objCompany.company_fields.forEach(function (elem) {
-      typesOfCompany.push({
-        'NAME': elem.VALUE,
-        'COMPANIES': objCompany.company_list.filter(function (company) {
-          company.tasks = objCompany.TASKS.filter(function (task) {
-            return task.ufCrmTask[0] == "CO_".concat(company.ID);
-          });
-          return company.UF_CRM_1561620120175 == elem.ID;
-        })
-      });
-    });
-    return {
-      'deal_place': objCompany.deal_place,
-      'company_fields': objCompany.company_fields,
-      'company_list': objCompany.company_list,
-      'MONTH_COUNTER': objCompany.MONTH_COUNTER,
-      'TYPES_OF_COMPANY': typesOfCompany,
-      'TASKS': objCompany.TASKS,
-      'DEALS': objCompany.deals
-    };
-  };
-  /**
-   * 
-   * @param {object} objCompany 
-   */
-
-
-  var applicationStart = function applicationStart(objCompany) {
-    Object(_js_get_tasks_js__WEBPACK_IMPORTED_MODULE_6__["default"])(objCompany.MONTH_COUNTER).then(function (tasks) {
-      objCompany['TASKS'] = tasks;
-      Object(_js_get_deals_js__WEBPACK_IMPORTED_MODULE_7__["default"])(objCompany).then(function (deals) {
-        objCompany['deals'] = deals;
-        data = Object(_js_get_busy_days_js__WEBPACK_IMPORTED_MODULE_3__["default"])(getData(objCompany));
-        var content = Object(_js_get_table__WEBPACK_IMPORTED_MODULE_4__["default"])(data);
-        document.querySelector("#table").innerHTML = content;
-      });
-    });
-  };
-
+  window.data = {};
   BX24.init(function () {
-    Object(_js_get_company_js__WEBPACK_IMPORTED_MODULE_2__["default"])().then(function (objCompany) {
-      applicationStart(objCompany);
+    Object(_js_get_company_js__WEBPACK_IMPORTED_MODULE_3__["default"])().then(function (objCompany) {
+      Object(_js_application_start__WEBPACK_IMPORTED_MODULE_4__["default"])(objCompany);
     });
   });
 });
