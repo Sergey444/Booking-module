@@ -744,10 +744,8 @@ if(false) {}
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _get_table__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-table */ "./src/js/get-table.js");
-/* harmony import */ var _get_tasks_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./get-tasks.js */ "./src/js/get-tasks.js");
-/* harmony import */ var _get_deals_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./get-deals.js */ "./src/js/get-deals.js");
-/* harmony import */ var _get_time_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./get-time.js */ "./src/js/get-time.js");
-
+/* harmony import */ var _get_deals_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./get-deals.js */ "./src/js/get-deals.js");
+/* harmony import */ var _get_time_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./get-time.js */ "./src/js/get-time.js");
 
 
 
@@ -757,17 +755,11 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 var getBusyDays = function getBusyDays(obj) {
-  obj.TASKS.forEach(function (task) {
-    if (task.deal_id) {
-      task.deal = obj.DEALS.find(function (deal) {
-        return deal.ID == task.deal_id;
-      });
-    }
-
-    task.busy = [];
+  obj.DEALS.forEach(function (deal) {
+    deal.busy = [];
     obj.DATE.TIMESTAMP.forEach(function (timestamp, index) {
-      if (task.timestamp_end >= timestamp && task.timestamp_start <= timestamp) {
-        task.busy.push(index);
+      if (deal.timestamp_end >= timestamp && deal.timestamp_start <= timestamp) {
+        deal.busy.push(index);
       }
     });
   });
@@ -775,7 +767,7 @@ var getBusyDays = function getBusyDays(obj) {
 };
 /**
  * 
- * @param {object} objCompany 
+ * @param {object} obj
  */
 
 
@@ -785,8 +777,8 @@ var getTypesOfCompany = function getTypesOfCompany(obj) {
     typesOfCompany.push({
       'NAME': elem.VALUE,
       'COMPANIES': obj.company_list.filter(function (company) {
-        company.tasks = obj.TASKS.filter(function (task) {
-          return task.ufCrmTask[0] == "CO_".concat(company.ID);
+        company.deals = obj.DEALS.filter(function (deal) {
+          return deal.UF_CRM_1563881923 == company.ID;
         });
         return company.UF_CRM_1561620120175 == elem.ID;
       })
@@ -796,21 +788,19 @@ var getTypesOfCompany = function getTypesOfCompany(obj) {
 };
 /**
  * 
- * @param {object} objCompany 
+ * @param {object} obj
  */
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (obj) {
-  Object(_get_tasks_js__WEBPACK_IMPORTED_MODULE_1__["default"])(obj).then(function (tasks) {
-    obj['TASKS'] = tasks;
-    Object(_get_deals_js__WEBPACK_IMPORTED_MODULE_2__["default"])(obj).then(function (deals) {
-      obj['DATE'] = Object(_get_time_js__WEBPACK_IMPORTED_MODULE_3__["default"])(obj.MONTH_COUNTER);
-      obj['DEALS'] = deals;
-      obj['TYPES_OF_COMPANY'] = getTypesOfCompany(obj);
-      data = getBusyDays(obj);
-      var content = Object(_get_table__WEBPACK_IMPORTED_MODULE_0__["default"])(data);
-      document.querySelector("#table").innerHTML = content;
-    });
+  Object(_get_deals_js__WEBPACK_IMPORTED_MODULE_1__["default"])(obj).then(function (deals) {
+    obj['DEALS'] = deals;
+    obj['DATE'] = Object(_get_time_js__WEBPACK_IMPORTED_MODULE_2__["default"])(obj.MONTH_COUNTER);
+    obj['TYPES_OF_COMPANY'] = getTypesOfCompany(obj);
+    data = getBusyDays(obj);
+    var content = Object(_get_table__WEBPACK_IMPORTED_MODULE_0__["default"])(data);
+    document.querySelector("#table").innerHTML = content;
+    console.log(data);
   });
 });
 
@@ -835,46 +825,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (function (next) {
   next ? data.MONTH_COUNTER++ : data.MONTH_COUNTER--;
   Object(_application_start__WEBPACK_IMPORTED_MODULE_0__["default"])(data);
-});
-
-/***/ }),
-
-/***/ "./src/js/create-task.js":
-/*!*******************************!*\
-  !*** ./src/js/create-task.js ***!
-  \*******************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/**
- * @param {object}
- */
-/* harmony default export */ __webpack_exports__["default"] = (function (taskData) {
-  return new Promise(function (resolve) {
-    BX24.callBatch({
-      task_add: ['tasks.task.add', {
-        'fields': {
-          'TITLE': taskData['task-name'],
-          'DESCRIPTION': taskData['comment'],
-          'RESPONSIBLE_ID': taskData['responsible'],
-          'START_DATE_PLAN': taskData['date-start'],
-          'DEADLINE': taskData['date-end'],
-          'UF_CRM_TASK': [taskData['company-id'], taskData['crm-deal-id']]
-        }
-      }],
-      deal_update: ['crm.deal.update', {
-        'id': taskData['deal-id'],
-        'fields': {
-          'UF_CRM_1563776654352': taskData['date-start'],
-          'UF_CRM_1563776665746': taskData['date-end']
-        }
-      }]
-    }, function (result) {
-      return resolve(result);
-    });
-  });
 });
 
 /***/ }),
@@ -934,28 +884,54 @@ $('#date_timepicker_find_end').datetimepicker({
   },
   timepicker: false
 });
-$('#date_timepicker_task_start').datetimepicker({
+$('#date_timepicker_deal_start').datetimepicker({
   format: 'Y/m/d',
   dayOfWeekStart: 1,
   value: '',
   onShow: function onShow(ct) {
     this.setOptions({
-      maxDate: $('#date_timepicker_task_end').val() ? $('#date_timepicker_task_end').val() : false
+      maxDate: $('#date_timepicker_deal_end').val() ? $('#date_timepicker_deal_end').val() : false
     });
   },
   timepicker: false
 });
-$('#date_timepicker_task_end').datetimepicker({
+$('#date_timepicker_deal_end').datetimepicker({
   format: 'Y/m/d',
   dayOfWeekStart: 1,
   value: '',
   onShow: function onShow(ct) {
     this.setOptions({
-      minDate: $('#date_timepicker_task_start').val() ? $('#date_timepicker_task_start').val() : false
+      minDate: $('#date_timepicker_deal_start').val() ? $('#date_timepicker_deal_start').val() : false
     });
   },
   timepicker: false
 }); //----- /datetimepicker -----//
+
+/***/ }),
+
+/***/ "./src/js/deal-update.js":
+/*!*******************************!*\
+  !*** ./src/js/deal-update.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/**
+ * @param {object} filter
+ */
+/* harmony default export */ __webpack_exports__["default"] = (function (filter) {
+  return new Promise(function (resolve) {
+    BX24.callMethod("crm.deal.update", filter, function (result) {
+      if (result.error()) {
+        return console.error(result.error());
+      }
+
+      return resolve(result);
+    });
+  });
+});
 
 /***/ }),
 
@@ -1009,27 +985,31 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/**
- * 
- */
-var getIds = function getIds(objCompany) {
-  return objCompany.TASKS.map(function (task) {
-    return task.deal_id;
-  });
+var getStartDate = function getStartDate(month) {
+  var date = new Date();
+  date.setMonth(date.getMonth() + month - 1);
+  date.setDate(1);
+  return date;
 };
 /**
  * 
+ * 
+ * UF_CRM_1563776654352 - date_start
+ * UF_CRM_1563776665746 - date_end
+ * UF_CRM_1563881923 - object
  */
 
 
-/* harmony default export */ __webpack_exports__["default"] = (function (objCompany) {
+/* harmony default export */ __webpack_exports__["default"] = (function (obj) {
+  var deals = [];
   return new Promise(function (resolve) {
     BX24.callMethod("crm.deal.list", {
       order: {
         "STAGE_ID": "ASC"
       },
       filter: {
-        "ID": getIds(objCompany)
+        ">=UF_CRM_1563776654352": getStartDate(obj.MONTH_COUNTER),
+        '!UF_CRM_1563881923': false
       },
       select: ["*", "UF_*"]
     }, function (result) {
@@ -1037,11 +1017,17 @@ var getIds = function getIds(objCompany) {
         return console.error(result.error());
       }
 
+      deals = deals.concat(result.data());
+
       if (result.more()) {
-        result.next();
+        return result.next();
       }
 
-      return resolve(result.data());
+      deals.forEach(function (deal) {
+        deal.timestamp_start = +new Date(deal.UF_CRM_1563776654352);
+        deal.timestamp_end = +new Date(deal.UF_CRM_1563776665746);
+      });
+      return resolve(deals);
     });
   });
 });
@@ -1060,19 +1046,19 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * 
  * @param {object} data 
- * @param {object} task 
+ * @param {object} deal 
  * @param {object} days 
  * @return {array}
  */
-var isLong = function isLong(data, task, days) {
+var isLong = function isLong(data, deal, days) {
   var className = []; // Если задача с прошлого месяца
 
-  if (days.start == 1 && task.timestamp_start < data.DATE.TIMESTAMP[days.start] - 3600 * 4 * 1000) {
+  if (days.start == 1 && deal.timestamp_start < data.DATE.TIMESTAMP[days.start] - 3600 * 4 * 1000) {
     className.push('rs-line--first');
   } // Если задача закончится в следующем месяце 
 
 
-  if (days.end == data.DATE.COUNT_DAY && task.timestamp_end > data.DATE.TIMESTAMP[days.end]) {
+  if (days.end == data.DATE.COUNT_DAY && deal.timestamp_end > data.DATE.TIMESTAMP[days.end]) {
     className.push('rs-line--last');
   }
 
@@ -1106,14 +1092,10 @@ var getCompanyType = function getCompanyType(type) {
 
 
 var getCompanyName = function getCompanyName(company) {
-  return "<td>\n                <a href=\"https://bazaivolga.bitrix24.ru/crm/company/details/".concat(company.ID, "/\" target=\"_blank\">\n                    ").concat(company.TITLE, "\n                </a>\n            </td>\n            <td class=\"rs-show-modal\" data-id=\"").concat(company.ID, "\">\n                <a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#add-deal\" data-company-id=\"CO_").concat(company.ID, "\" data-company-name=\"").concat(company.TITLE, "\"><i class=\"fas fa-user-plus\"></i></a>\n            </td>");
+  return "<td>\n                <a href=\"https://bazaivolga.bitrix24.ru/crm/company/details/".concat(company.ID, "/\" target=\"_blank\">\n                    ").concat(company.TITLE, "\n                </a>\n            </td>\n            <td class=\"rs-show-modal\" data-id=\"").concat(company.ID, "\">\n                <a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#add-deal\" data-company-id=\"").concat(company.ID, "\" data-company-name=\"").concat(company.TITLE, "\"><i class=\"fas fa-user-plus\"></i></a>\n            </td>");
 };
 
 var getColor = function getColor(deal) {
-  if (!deal) {
-    return '';
-  }
-
   var colors = {
     '78': 'rs-green',
     '80': 'rs-red',
@@ -1134,8 +1116,8 @@ var getDaysTable = function getDaysTable(company, data) {
   var result = [];
 
   var _loop = function _loop(_i) {
-    var index = company.tasks.findIndex(function (task) {
-      return task.busy[0] == _i;
+    var index = company.deals.findIndex(function (deal) {
+      return deal.busy[0] == _i;
     }); // Текущий день не занят
 
     if (index == -1) {
@@ -1144,14 +1126,14 @@ var getDaysTable = function getDaysTable(company, data) {
       return "continue";
     }
 
-    var task = company.tasks[index];
+    var deal = company.deals[index];
     var day = {
       'start': _i,
-      'end': _i + task.busy.length - 1
+      'end': _i + deal.busy.length - 1
     };
     var interval = day.start == day.end ? day.start : "".concat(day.start, " - ").concat(day.end);
-    var color = getColor(task.deal);
-    result.push("<td colspan=\"".concat(task.busy.length, "\"><a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#show-task\" data-id=\"").concat(task.id, "\" class=\"").concat(color, " rs-line ").concat(isLong(data, task, day).join(' '), "\">").concat(interval, "</a></td>"));
+    var color = getColor(deal);
+    result.push("<td colspan=\"".concat(deal.busy.length, "\"><a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#show-deal\" data-id=\"").concat(deal.ID, "\" class=\"").concat(color, " rs-line ").concat(isLong(data, deal, day).join(' '), "\">").concat(interval, "</a></td>"));
     _i = day.end;
     i = _i;
   };
@@ -1197,59 +1179,6 @@ var getContent = function getContent(data) {
 
 /***/ }),
 
-/***/ "./src/js/get-tasks.js":
-/*!*****************************!*\
-  !*** ./src/js/get-tasks.js ***!
-  \*****************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/**
- * @param {integer}
- */
-var getStartDate = function getStartDate(month) {
-  var date = new Date();
-  date.setMonth(date.getMonth() + month - 1);
-  date.setDate(1);
-  return date;
-};
-/**
- * @param {object}
- */
-
-
-/* harmony default export */ __webpack_exports__["default"] = (function (obj) {
-  return new Promise(function (resolve) {
-    BX24.callMethod('tasks.task.list', {
-      'filter': {
-        '>START_DATE_PLAN': getStartDate(obj.MONTH_COUNTER),
-        '!UF_CRM_TASK': false
-      },
-      'select': ["*", "UF_*"]
-    }, function (res) {
-      var tasks = res.answer.result.tasks.filter(function (task) {
-        return task.ufCrmTask[1];
-      });
-      tasks.forEach(function (task) {
-        // Получаем сделку привязанную к компании 
-        task.deal_id = task.ufCrmTask[1] || false;
-
-        if (task.deal_id) {
-          task.deal_id = Number(task.deal_id.match(/[0-9]$/g));
-        }
-
-        task.timestamp_start = +new Date(task.startDatePlan);
-        task.timestamp_end = +new Date(task.deadline);
-      });
-      return resolve(tasks);
-    });
-  });
-});
-
-/***/ }),
-
 /***/ "./src/js/get-time.js":
 /*!****************************!*\
   !*** ./src/js/get-time.js ***!
@@ -1276,7 +1205,8 @@ __webpack_require__.r(__webpack_exports__);
   var head = "";
 
   for (var i = 1; i <= countDay; i++) {
-    var time = +new Date(date.getFullYear(), date.getMonth(), i) + 3600 * 2 * 1000;
+    var time = +new Date(date.getFullYear(), date.getMonth(), i) + 3600 * 5 * 1000; // Временная зона +5 часов
+
     head += "<td  class=\"rs-day-column\">".concat(days[new Date(time).getDay()], "</td>");
     timestamp.push(time);
   }
@@ -1303,11 +1233,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _task_update_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./task-update.js */ "./src/js/task-update.js");
-/* harmony import */ var _create_task_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create-task.js */ "./src/js/create-task.js");
-/* harmony import */ var _change_month_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./change-month.js */ "./src/js/change-month.js");
-/* harmony import */ var _application_start__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./application-start */ "./src/js/application-start.js");
-
+/* harmony import */ var _deal_update_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./deal-update.js */ "./src/js/deal-update.js");
+/* harmony import */ var _change_month_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./change-month.js */ "./src/js/change-month.js");
+/* harmony import */ var _application_start__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./application-start */ "./src/js/application-start.js");
 
 
 
@@ -1318,8 +1246,55 @@ __webpack_require__.r(__webpack_exports__);
 document.querySelector('#table').addEventListener('click', function (evt) {
   if (evt.target.closest('[data-name="control"]')) {
     var target = evt.target.closest('[data-name="control"]');
-    target.id == 'next' ? Object(_change_month_js__WEBPACK_IMPORTED_MODULE_2__["default"])(true) : Object(_change_month_js__WEBPACK_IMPORTED_MODULE_2__["default"])(false);
+    target.id == 'next' ? Object(_change_month_js__WEBPACK_IMPORTED_MODULE_1__["default"])(true) : Object(_change_month_js__WEBPACK_IMPORTED_MODULE_1__["default"])(false);
   }
+});
+/**
+ * 
+ * @param {object} filter 
+ */
+
+var onUpdateDeal = function onUpdateDeal(filter) {
+  Object(_deal_update_js__WEBPACK_IMPORTED_MODULE_0__["default"])(filter).then(function (resolve) {
+    Object(_application_start__WEBPACK_IMPORTED_MODULE_2__["default"])(data);
+    console.log(resolve);
+    $('.modal').modal('hide');
+  });
+};
+/**
+ * 
+ * @param {object} date 
+ * @return {string} 
+ */
+
+
+var formatDate = function formatDate(date) {
+  var year = date.getFullYear();
+  var month = ("0" + (date.getMonth() + 1)).slice(-2);
+  var day = ("0" + date.getDate()).slice(-2);
+  return "".concat(year, "/").concat(month, "/").concat(day);
+};
+/**
+ * Просмотр сделки
+ * 
+ * @param {object} -global data
+ */
+
+
+$('#show-deal').on('show.bs.modal', function (evt) {
+  var button = $(evt.relatedTarget);
+  var modal = $(evt.target);
+  var deal = data.DEALS.find(function (element) {
+    return element.ID == button.data("id");
+  });
+  var start = new Date(deal.timestamp_start);
+  var end = new Date(deal.timestamp_end);
+  modal.find(".modal-title").text(deal.TITLE);
+  modal.find("[name=\"deal-id\"]").val(deal.ID);
+  modal.find("[name=\"responsible\"]").val(deal.ASSIGNED_BY_ID);
+  modal.find("#date_timepicker_deal_start").val(formatDate(start));
+  modal.find("#date_timepicker_deal_end").val(formatDate(end));
+  modal.find("#deal-detail").attr("href", "https://bazaivolga.bitrix24.ru/crm/deal/details/".concat(deal.ID, "/"));
 });
 /**
  * Форма bootstrap 4 - забронировать время
@@ -1329,129 +1304,51 @@ $('#add-deal').on('show.bs.modal', function (evt) {
   var button = $(evt.relatedTarget);
   var modal = $(evt.target);
   var companyName = button.data('company-name');
+  modal.find('input[name="deal-name"]').val(data.deal_place.TITLE);
   modal.find('.modal-title').text("\u0417\u0430\u0431\u0440\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C \xAB".concat(companyName, "\xBB"));
-  modal.find('input[name="task-name"]').val("".concat(companyName));
-  modal.find('input[name="responsible"]').val("\u0417\u0434\u0435\u0441\u044C \u0431\u0443\u0434\u0435\u0442 \u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0439 \u043F\u0440\u0438\u0432\u044F\u0437\u0430\u043D\u043D\u044B\u0439 \u043A \u0441\u0434\u0435\u043B\u043A\u0435");
   modal.find('input[name="company-id"]').val(button.data('company-id'));
   modal.find('#date_timepicker_start').val($('#date_timepicker_find_start').val());
   modal.find('#date_timepicker_end').val($('#date_timepicker_find_end').val());
   modal.find('input[name="deal-id"]').val(data.deal_place.ID);
-  modal.find('input[name="deal-name"]').val(data.deal_place.TITLE);
   modal.find('input[name="responsible"]').val(data.deal_place.ASSIGNED_BY_ID);
 });
 /**
- * Создание задачи
+ * Обновление сделки
  */
 
-$('#rs-add-task-form').on('submit', function (evt) {
+$('#rs-add-deal-form').on('submit', function (evt) {
+  evt.preventDefault();
+  var form = evt.target;
+  var id = form.querySelector('input[name="deal-id"]').value;
+  var dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
+  var dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
+  var filter = {
+    'id': id,
+    'fields': {
+      'UF_CRM_1563776654352': dateStart,
+      'UF_CRM_1563776665746': dateEnd,
+      'UF_CRM_1563881923': form.querySelector('input[name="company-id"]').value
+    }
+  };
+  return onUpdateDeal(filter);
+});
+/**
+ * Обновление сделки
+ */
+
+$('#form-deal-update').on('submit', function (evt) {
   evt.preventDefault();
   var form = evt.target;
   var dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
   var dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
-  var taskData = {
-    'date-start': dateStart,
-    'date-end': dateEnd,
-    'task-name': form.querySelector('input[name="task-name"]').value,
-    'responsible': form.querySelector('input[name="responsible"]').value,
-    'company-id': form.querySelector('input[name="company-id"]').value,
-    'crm-deal-id': "D_".concat(form.querySelector('input[name="deal-id"]').value),
-    'deal-id': form.querySelector('input[name="deal-id"]').value,
-    'comment': form.querySelector('[name="comment"]').value
+  var filter = {
+    'id': form.querySelector('input[name="deal-id"]').value,
+    'fields': {
+      'UF_CRM_1563776654352': dateStart,
+      'UF_CRM_1563776665746': dateEnd
+    }
   };
-  Object(_create_task_js__WEBPACK_IMPORTED_MODULE_1__["default"])(taskData).then(function (resolve) {
-    Object(_application_start__WEBPACK_IMPORTED_MODULE_3__["default"])(data);
-    console.log(resolve);
-    $('#add-deal').modal('hide');
-  });
-});
-/**
- * 
- * @param {object} date 
- * @return {string} 
- */
-
-var formatDate = function formatDate(date) {
-  var year = date.getFullYear();
-  var month = ("0" + (date.getMonth() + 1)).slice(-2);
-  var day = ("0" + date.getDate()).slice(-2);
-  return "".concat(year, "/").concat(month, "/").concat(day);
-};
-/**
- * Просмотр задачи
- */
-
-
-$('#show-task').on('show.bs.modal', function (evt) {
-  var button = $(evt.relatedTarget);
-  var modal = $(evt.target);
-  var task = data.TASKS.find(function (element) {
-    return element.id == button.data("id");
-  });
-  var start = new Date(task.timestamp_start);
-  var end = new Date(task.timestamp_end);
-  modal.find(".modal-title").text(task.title);
-  modal.find("[name=\"task-id\"]").val(task.id);
-  modal.find("[name=\"responsible\"]").val(task.responsible.name);
-  modal.find("#date_timepicker_task_start").val(formatDate(start));
-  modal.find("#date_timepicker_task_end").val(formatDate(end));
-  modal.find("#task-detail").attr("href", "https://bazaivolga.bitrix24.ru/company/personal/user/1/tasks/task/view/".concat(task.id, "/"));
-  modal.find('input[name="deal-id"]').val(task.deal.ID);
-
-  if (task.deal) {
-    modal.find("#deal").html("<a href=\"https://bazaivolga.bitrix24.ru/crm/deal/details/".concat(task.deal_id, "/\" target=\"_blank\">").concat(task.deal.TITLE, "</a>"));
-  } else {
-    modal.find("#deal").text('К задаче не привязана сделка');
-  }
-});
-$('#form-task-update').on('submit', function (evt) {
-  evt.preventDefault();
-  var form = evt.target;
-  var dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
-  var dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
-  var taskData = {
-    'id': form.querySelector('input[name="task-id"]').value,
-    'date-start': dateStart,
-    'date-end': dateEnd,
-    'deal-id': form.querySelector('input[name="deal-id"]').value
-  };
-  Object(_task_update_js__WEBPACK_IMPORTED_MODULE_0__["default"])(taskData).then(function (resolve) {
-    Object(_application_start__WEBPACK_IMPORTED_MODULE_3__["default"])(data);
-    $('#show-task').modal('hide');
-  });
-});
-
-/***/ }),
-
-/***/ "./src/js/task-update.js":
-/*!*******************************!*\
-  !*** ./src/js/task-update.js ***!
-  \*******************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (function (data) {
-  return new Promise(function (resolve) {
-    BX24.callBatch({
-      task_add: ['tasks.task.update', {
-        'taskId': data.id,
-        'fields': {
-          'START_DATE_PLAN': data['date-start'],
-          'DEADLINE': data['date-end']
-        }
-      }],
-      deal_update: ['crm.deal.update', {
-        'id': data['deal-id'],
-        'fields': {
-          'UF_CRM_1563776654352': data['date-start'],
-          'UF_CRM_1563776665746': data['date-end']
-        }
-      }]
-    }, function (result) {
-      return resolve(result);
-    });
-  });
+  return onUpdateDeal(filter);
 });
 
 /***/ }),

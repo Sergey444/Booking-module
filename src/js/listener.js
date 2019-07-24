@@ -1,5 +1,4 @@
-import updateTask from './task-update.js';
-import createTask from './create-task.js';
+import updateDeal from './deal-update.js';
 import changeMonth from'./change-month.js';
 import applicationStart from './application-start';
 
@@ -14,50 +13,16 @@ document.querySelector('#table').addEventListener('click', (evt)=> {
 });
 
 /**
- * Форма bootstrap 4 - забронировать время
+ * 
+ * @param {object} filter 
  */
-$('#add-deal').on('show.bs.modal',  (evt)  => {
-    const button = $(evt.relatedTarget) 
-    const modal = $(evt.target);
-
-    const companyName = button.data('company-name');
-    modal.find('.modal-title').text(`Забронировать «${companyName}»`);
-    modal.find('input[name="task-name"]').val(`${companyName}`);
-    modal.find('input[name="responsible"]').val(`Здесь будет ответственный привязанный к сделке`);
-    modal.find('input[name="company-id"]').val(button.data('company-id'));
-    modal.find('#date_timepicker_start').val($('#date_timepicker_find_start').val());
-    modal.find('#date_timepicker_end').val($('#date_timepicker_find_end').val());
-    modal.find('input[name="deal-id"]').val(data.deal_place.ID);
-    modal.find('input[name="deal-name"]').val(data.deal_place.TITLE);
-    modal.find('input[name="responsible"]').val(data.deal_place.ASSIGNED_BY_ID);
-
-});
-
-/**
- * Создание задачи
- */
-$('#rs-add-task-form').on('submit', (evt)=> {
-    evt.preventDefault();
-    const form = evt.target;
-    const dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
-    const dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
-    const taskData = {
-        'date-start': dateStart,
-        'date-end': dateEnd,
-        'task-name' : form.querySelector('input[name="task-name"]').value,
-        'responsible': form.querySelector('input[name="responsible"]').value,
-        'company-id': form.querySelector('input[name="company-id"]').value,
-        'crm-deal-id': `D_${form.querySelector('input[name="deal-id"]').value}`,
-        'deal-id': form.querySelector('input[name="deal-id"]').value,
-        'comment': form.querySelector('[name="comment"]').value
-    }
-
-    createTask(taskData).then((resolve) => {
+const onUpdateDeal = (filter) => {
+    updateDeal(filter).then((resolve) => {
         applicationStart(data);
         console.log(resolve);
-        $('#add-deal').modal('hide');
+        $('.modal').modal('hide');
     });
-});
+}
 
 /**
  * 
@@ -72,44 +37,78 @@ const formatDate = (date) => {
 }
 
 /**
- * Просмотр задачи
+ * Просмотр сделки
+ * 
+ * @param {object} -global data
  */
-$('#show-task').on('show.bs.modal',  (evt)  => {
-
+$('#show-deal').on('show.bs.modal',  (evt)  => {
     const button = $(evt.relatedTarget) 
     const modal = $(evt.target);
-    const task = data.TASKS.find((element) => element.id == button.data(`id`));
-    const start = new Date(task.timestamp_start);
-    const end = new Date(task.timestamp_end);
+    const deal = data.DEALS.find((element) => element.ID == button.data(`id`));
+    const start = new Date(deal.timestamp_start);
+    const end = new Date(deal.timestamp_end);
 
-    modal.find(`.modal-title`).text(task.title);
-    modal.find(`[name="task-id"]`).val(task.id);
-    modal.find(`[name="responsible"]`).val(task.responsible.name);
-    modal.find(`#date_timepicker_task_start`).val(formatDate(start));
-    modal.find(`#date_timepicker_task_end`).val(formatDate(end));
-    modal.find(`#task-detail`).attr(`href`, `https://bazaivolga.bitrix24.ru/company/personal/user/1/tasks/task/view/${task.id}/`);
-    modal.find('input[name="deal-id"]').val(task.deal.ID);
-
-    if (task.deal) {
-        modal.find(`#deal`).html(`<a href="https://bazaivolga.bitrix24.ru/crm/deal/details/${task.deal_id}/" target="_blank">${task.deal.TITLE}</a>`);
-    } else {
-        modal.find(`#deal`).text('К задаче не привязана сделка');
-    }
+    modal.find(`.modal-title`).text(deal.TITLE);
+    modal.find(`[name="deal-id"]`).val(deal.ID);
+    modal.find(`[name="responsible"]`).val(deal.ASSIGNED_BY_ID);
+    modal.find(`#date_timepicker_deal_start`).val(formatDate(start));
+    modal.find(`#date_timepicker_deal_end`).val(formatDate(end));
+    modal.find(`#deal-detail`).attr(`href`, `https://bazaivolga.bitrix24.ru/crm/deal/details/${deal.ID}/`);
 });
 
-$('#form-task-update').on('submit', (evt) => {
+/**
+ * Форма bootstrap 4 - забронировать время
+ */
+$('#add-deal').on('show.bs.modal',  (evt)  => {
+    const button = $(evt.relatedTarget) 
+    const modal = $(evt.target);
+    const companyName = button.data('company-name');
+
+    modal.find('input[name="deal-name"]').val(data.deal_place.TITLE);
+    modal.find('.modal-title').text(`Забронировать «${companyName}»`);
+    modal.find('input[name="company-id"]').val(button.data('company-id'));
+    modal.find('#date_timepicker_start').val($('#date_timepicker_find_start').val());
+    modal.find('#date_timepicker_end').val($('#date_timepicker_find_end').val());
+    modal.find('input[name="deal-id"]').val(data.deal_place.ID);
+    modal.find('input[name="responsible"]').val(data.deal_place.ASSIGNED_BY_ID);
+});
+
+/**
+ * Обновление сделки
+ */
+$('#rs-add-deal-form').on('submit', (evt)=> {
+    evt.preventDefault();
+    const form = evt.target;
+    const id= form.querySelector('input[name="deal-id"]').value;
+    const dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
+    const dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
+  
+    const filter = {
+        'id': id,
+        'fields' : {
+            'UF_CRM_1563776654352': dateStart,
+            'UF_CRM_1563776665746': dateEnd,
+            'UF_CRM_1563881923': form.querySelector('input[name="company-id"]').value
+        }
+    }
+    return onUpdateDeal(filter);
+});
+
+/**
+ * Обновление сделки
+ */
+$('#form-deal-update').on('submit', (evt) => {
     evt.preventDefault();
     const form = evt.target;
     const dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
     const dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
-    const taskData = {
-        'id': form.querySelector('input[name="task-id"]').value,
-        'date-start': dateStart,
-        'date-end': dateEnd,
-        'deal-id': form.querySelector('input[name="deal-id"]').value
+    
+    const filter = {
+        'id': form.querySelector('input[name="deal-id"]').value,
+        'fields': {
+            'UF_CRM_1563776654352': dateStart,
+            'UF_CRM_1563776665746': dateEnd
+        }
     }
-    updateTask(taskData).then((resolve) => {
-        applicationStart(data);
-        $('#show-task').modal('hide');
-    });
+    return onUpdateDeal(filter);
 });

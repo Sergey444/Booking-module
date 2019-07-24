@@ -48,24 +48,24 @@ $('#date_timepicker_find_end').datetimepicker({
     timepicker: false,
 });
 
-$('#date_timepicker_task_start').datetimepicker({
+$('#date_timepicker_deal_start').datetimepicker({
     format: 'Y/m/d',
     dayOfWeekStart: 1,
     value: '',
     onShow: function(ct) {
         this.setOptions({
-            maxDate: $('#date_timepicker_task_end').val() ? $('#date_timepicker_task_end').val() : false
+            maxDate: $('#date_timepicker_deal_end').val() ? $('#date_timepicker_deal_end').val() : false
         })
     },
     timepicker: false
 });
-$('#date_timepicker_task_end').datetimepicker({
+$('#date_timepicker_deal_end').datetimepicker({
     format: 'Y/m/d',
     dayOfWeekStart: 1,
     value: '',
     onShow: function(ct) {
         this.setOptions({
-            minDate: $('#date_timepicker_task_start').val() ? $('#date_timepicker_task_start').val()  : false
+            minDate: $('#date_timepicker_deal_start').val() ? $('#date_timepicker_deal_start').val()  : false
         })
     },
     timepicker: false,

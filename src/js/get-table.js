@@ -1,18 +1,18 @@
 /**
  * 
  * @param {object} data 
- * @param {object} task 
+ * @param {object} deal 
  * @param {object} days 
  * @return {array}
  */
-const isLong = (data, task, days) => {
+const isLong = (data, deal, days) => {
     const className = [];
      // Если задача с прошлого месяца
-    if (days.start == 1 && task.timestamp_start < data.DATE.TIMESTAMP[days.start] - 3600 * 4 * 1000) {
+    if (days.start == 1 && deal.timestamp_start < data.DATE.TIMESTAMP[days.start] - 3600 * 4 * 1000) {
         className.push('rs-line--first');
     }
     // Если задача закончится в следующем месяце 
-    if (days.end == data.DATE.COUNT_DAY && task.timestamp_end > data.DATE.TIMESTAMP[days.end] ) {
+    if (days.end == data.DATE.COUNT_DAY && deal.timestamp_end > data.DATE.TIMESTAMP[days.end] ) {
         className.push('rs-line--last');
     }
     return className;
@@ -61,12 +61,11 @@ const getCompanyName = (company) => {
                 </a>
             </td>
             <td class="rs-show-modal" data-id="${company.ID}">
-                <a href="javascript:void(0)" data-toggle="modal" data-target="#add-deal" data-company-id="CO_${company.ID}" data-company-name="${company.TITLE}"><i class="fas fa-user-plus"></i></a>
+                <a href="javascript:void(0)" data-toggle="modal" data-target="#add-deal" data-company-id="${company.ID}" data-company-name="${company.TITLE}"><i class="fas fa-user-plus"></i></a>
             </td>`;
 }
 
 const getColor = (deal) => {
-    if (!deal) {return '';}
     const colors = {
         '78' : 'rs-green',
         '80' : 'rs-red',
@@ -86,17 +85,17 @@ const getDaysTable = (company, data) => {
 
     const result = [];
     for (let i = 1; i <= data.DATE.COUNT_DAY; i++) { 
-        const index = company.tasks.findIndex((task) => task.busy[0] == i );
+        const index = company.deals.findIndex((deal) => deal.busy[0] == i );
         // Текущий день не занят
         if (index == -1) {result.push(`<td  class="rs-day-column">${i}</td>`); continue;}
     
-        const task = company.tasks[index];
-        const day = {'start': i, 'end': i + task.busy.length - 1 };
+        const deal = company.deals[index];
+        const day = {'start': i, 'end': i + deal.busy.length - 1 };
         const interval = day.start == day.end ? day.start : `${day.start} - ${day.end}`;
          
-        const color = getColor(task.deal);
+        const color = getColor(deal);
 
-        result.push(`<td colspan="${task.busy.length}"><a href="javascript:void(0)" data-toggle="modal" data-target="#show-task" data-id="${task.id}" class="${color} rs-line ${ isLong(data, task, day).join(' ') }">${interval}</a></td>`);
+        result.push(`<td colspan="${deal.busy.length}"><a href="javascript:void(0)" data-toggle="modal" data-target="#show-deal" data-id="${deal.ID}" class="${color} rs-line ${ isLong(data, deal, day).join(' ') }">${interval}</a></td>`);
         i = day.end;
     } 
     return result.join('');

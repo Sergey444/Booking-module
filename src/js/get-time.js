@@ -15,7 +15,7 @@ export default (month) => {
     let head = ``;
 
     for (let i = 1; i <= countDay; i++) {
-        const time = +new Date(date.getFullYear(), date.getMonth(), i) + 3600 * 2 * 1000 ;
+        const time = +new Date(date.getFullYear(), date.getMonth(), i) + 3600 * 5 * 1000 ; // Временная зона +5 часов
         head += `<td  class="rs-day-column">${days[new Date(time).getDay()]}</td>`;
         timestamp.push( time ) ;
     }

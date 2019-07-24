@@ -51,7 +51,8 @@
 
 <table id="table" class=""></table>
 
-<div class="modal fade" id="show-task" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+<!-- show deal -->
+<div class="modal fade" id="show-deal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -60,17 +61,17 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="" id="form-task-update">
+			<form action="" id="form-deal-update">
 				<div class="modal-body">
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-6">
 								<label for="">Дата начала:</label>
-								<input type="text" class='form-control' name="date-start" id="date_timepicker_task_start" >
+								<input type="text" class='form-control' name="date-start" id="date_timepicker_deal_start" >
 							</div>
 							<div class="col-md-6">
 								<label for="">Дата окончания:</label>
-								<input type="text" class='form-control' name="date-end" id="date_timepicker_task_end" >
+								<input type="text" class='form-control' name="date-end" id="date_timepicker_deal_end" >
 							</div>
 						</div>
 					</div>
@@ -79,23 +80,17 @@
 						<label for="">Ответственный</label>
 						<input type="text" class='form-control' readonly="readonly" name="responsible">
 					</div>
-
-					<div class="form-group">
-						<div class="rs-task-deal" id="deal"></div>
-					</div>
 					<input type="hidden" name="deal-id">	
-					<input type="hidden" name="task-id">
-
 				</div>
 				<div class="modal-footer  modal-footer--space">
-					<a href="" class="btn btn-info" target="_blank" id="task-detail">Перейти к задаче</a>
+					<a href="" class="btn btn-info" target="_blank" id="deal-detail">Перейти к сделке</a>
 					<button type="submit" id="" class="btn btn-primary">Сохранить изменения</button>
 				</div>
 			</form>
 		</div>
 	</div>		
 </div>
-
+<!-- /show deal -->
 
 <!-- booking modal -->
 <div class="modal fade" id="add-deal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -107,8 +102,13 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="" id="rs-add-task-form">
+			<form action="" id="rs-add-deal-form">
 				<div class="modal-body">
+						<div class="form-group">
+							<label for="">Название сделки</label>
+							<input type="text" class='form-control' readonly="readonly" name="deal-name" required >
+						</div>
+
 						<div class="form-group">
 							<div class="row">
 								<div class="col-md-6">
@@ -121,25 +121,19 @@
 								</div>
 							</div>
 						</div>
+
 						<div class="form-group">
 							<label for="">Комментарий</label>
 							<textarea class="form-control" name="comment" id="" cols="" rows="5"></textarea>
 						</div>
-						<div class="form-group">
-							<label for="">Название задачи</label>
-							<input type="text" class='form-control' readonly="readonly" name="task-name" required >
-						</div>
-						<div class="form-group">
-								<label for="">Название сделки</label>
-								<input type="text" class='form-control' readonly="readonly" name="deal-name" required >
-							</div>
+						
 						<div class="form-group">
 							<label for="">Ответственный</label>
 							<input type="text" class='form-control' readonly="readonly" name="responsible" >
 						</div>
+
 						<input type="hidden" name="company-id" >	
 						<input type="hidden" name="deal-id">	
-					
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary">Забронировать</button>
