@@ -39,15 +39,25 @@ const getTypesOfCompany = (obj) => {
     return typesOfCompany;
 }
 
+// const getFreeCompanies = (obj) => {
+//     // console.log(obj['DEALS']);
+// }
+
 /**
  * 
  * @param {object} obj
  */
 export default (obj) => {
+    // obj['FREE'] = document.querySelector('#free').checked
+
     getDeals(obj).then((deals) => {
         obj['DEALS'] = deals;
         obj['DATE'] = getTime(obj.MONTH_COUNTER);
-        obj['TYPES_OF_COMPANY'] = getTypesOfCompany(obj);  
+        obj['TYPES_OF_COMPANY'] = getTypesOfCompany(obj); 
+        
+        // if (obj['FREE']) {
+            // getFreeCompanies(obj);
+        // }
 
         data = getBusyDays(obj);
         const content = getTable(data); 

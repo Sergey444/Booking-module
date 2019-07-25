@@ -124,3 +124,10 @@ caption {
 .rs-task-deal a {
     color: #0062cc;
 }
+
+.weekend {
+    color: red;
+}
+.touday { 
+    background-color: #fffc98;
+}

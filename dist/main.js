@@ -95,7 +95,7 @@
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "table {\r\n    border-collapse: collapse;\r\n    width: 100%;\r\n}\r\ntd {\r\n    border: 1px solid #ced4da;\r\n    padding: 5px;\r\n}\r\na {\r\n    color: black;\r\n}\r\na:hover {\r\n    text-decoration: none;\r\n    color: inherit;\r\n}\r\n.task {\r\n    width: 400px;\r\n    border: none;\r\n}\r\n\r\n.rs-line {\r\n    display: block;\r\n    background-color: red;   \r\n    border-radius: 15px;\r\n    font-size: 12px;\r\n    padding: 5px;\r\n    color: #fff;\r\n    text-align: center;\r\n}\r\n.rs-line:hover {\r\n    color: #fff;\r\n}\r\n.rs-line--last {\r\n    margin-right: 0;\r\n    border-top-right-radius: 0px;\r\n    border-bottom-right-radius: 0px;\r\n}\r\n.rs-line--first {\r\n    margin-right: 0;\r\n    border-top-left-radius: 0px;\r\n    border-bottom-left-radius: 0px;\r\n}\r\n.table__title {\r\n    font-size: 28px;\r\n    text-align: center;\r\n    position: relative;\r\n    width: 80%;\r\n    line-height: 28px;\r\n}\r\n.rs-type {\r\n    background-color: lightgrey;\r\n}\r\n.rs-objects {\r\n    width: 300px;\r\n}\r\n\r\n.btn--prev {\r\n    float: left;\r\n} \r\n.btn--next {\r\n    float: right;\r\n} \r\n\r\n#table tbody tr:hover {\r\n    background-color: #f1f1f1;\r\n}\r\n\r\n.rs-show-modal{\r\n    text-align: center;\r\n    cursor: pointer;\r\n}\r\n.modal-footer--space {\r\n    justify-content: space-between;\r\n}\r\n.rs-day-column {\r\n    min-width: 25px;\r\n    height: 25px;\r\n    text-align: center;\r\n}\r\n.rs-container {\r\n\tpadding: 0 20px;\r\n\tmax-width: 1200px;\r\n\tmargin: 0 auto;\r\n}\r\ncaption {\r\n\tcaption-side: top!important;\r\n}\r\n.rs-form {\r\n\tdisplay: flex;\r\n\tjustify-content: space-between;\r\n\tmargin-bottom: 20px;\r\n    margin-top: 40px;\r\n    align-items: flex-end;\r\n}\r\n.rs-form__img  h1{\r\n    line-height: 34px;\r\n    color: #0062cc;\r\n}\r\n.rs-form-list {\r\n\tdisplay: flex;\r\n\tflex-wrap: wrap;\r\n\t/*width: 728px;*/\r\n}\r\n.rs-form-item:not(:last-child) {\r\n\tmargin-right: 20px;\r\n}\r\n.rs-form__img img{\r\n\tmax-width: 223px;\r\n}\r\n.rs-green {\r\n    background-color: green;\r\n}\r\n\r\n.rs-red {\r\n    background-color: lightcoral;\r\n}\r\n.rs-grey {\r\n    background-color: lightgrey;\r\n}\r\n.rs-task-deal {\r\n    color: red;\r\n}\r\n\r\n.rs-task-deal a {\r\n    color: #0062cc;\r\n}", ""]);
+exports.push([module.i, "table {\r\n    border-collapse: collapse;\r\n    width: 100%;\r\n}\r\ntd {\r\n    border: 1px solid #ced4da;\r\n    padding: 5px;\r\n}\r\na {\r\n    color: black;\r\n}\r\na:hover {\r\n    text-decoration: none;\r\n    color: inherit;\r\n}\r\n.task {\r\n    width: 400px;\r\n    border: none;\r\n}\r\n\r\n.rs-line {\r\n    display: block;\r\n    background-color: red;   \r\n    border-radius: 15px;\r\n    font-size: 12px;\r\n    padding: 5px;\r\n    color: #fff;\r\n    text-align: center;\r\n}\r\n.rs-line:hover {\r\n    color: #fff;\r\n}\r\n.rs-line--last {\r\n    margin-right: 0;\r\n    border-top-right-radius: 0px;\r\n    border-bottom-right-radius: 0px;\r\n}\r\n.rs-line--first {\r\n    margin-right: 0;\r\n    border-top-left-radius: 0px;\r\n    border-bottom-left-radius: 0px;\r\n}\r\n.table__title {\r\n    font-size: 28px;\r\n    text-align: center;\r\n    position: relative;\r\n    width: 80%;\r\n    line-height: 28px;\r\n}\r\n.rs-type {\r\n    background-color: lightgrey;\r\n}\r\n.rs-objects {\r\n    width: 300px;\r\n}\r\n\r\n.btn--prev {\r\n    float: left;\r\n} \r\n.btn--next {\r\n    float: right;\r\n} \r\n\r\n#table tbody tr:hover {\r\n    background-color: #f1f1f1;\r\n}\r\n\r\n.rs-show-modal{\r\n    text-align: center;\r\n    cursor: pointer;\r\n}\r\n.modal-footer--space {\r\n    justify-content: space-between;\r\n}\r\n.rs-day-column {\r\n    min-width: 25px;\r\n    height: 25px;\r\n    text-align: center;\r\n}\r\n.rs-container {\r\n\tpadding: 0 20px;\r\n\tmax-width: 1200px;\r\n\tmargin: 0 auto;\r\n}\r\ncaption {\r\n\tcaption-side: top!important;\r\n}\r\n.rs-form {\r\n\tdisplay: flex;\r\n\tjustify-content: space-between;\r\n\tmargin-bottom: 20px;\r\n    margin-top: 40px;\r\n    align-items: flex-end;\r\n}\r\n.rs-form__img  h1{\r\n    line-height: 34px;\r\n    color: #0062cc;\r\n}\r\n.rs-form-list {\r\n\tdisplay: flex;\r\n\tflex-wrap: wrap;\r\n\t/*width: 728px;*/\r\n}\r\n.rs-form-item:not(:last-child) {\r\n\tmargin-right: 20px;\r\n}\r\n.rs-form__img img{\r\n\tmax-width: 223px;\r\n}\r\n.rs-green {\r\n    background-color: green;\r\n}\r\n\r\n.rs-red {\r\n    background-color: lightcoral;\r\n}\r\n.rs-grey {\r\n    background-color: lightgrey;\r\n}\r\n.rs-task-deal {\r\n    color: red;\r\n}\r\n\r\n.rs-task-deal a {\r\n    color: #0062cc;\r\n}\r\n\r\n.weekend {\r\n    color: red;\r\n}\r\n.touday { \r\n    background-color: #fffc98;\r\n}", ""]);
 
 
 /***/ }),
@@ -785,7 +785,10 @@ var getTypesOfCompany = function getTypesOfCompany(obj) {
     });
   });
   return typesOfCompany;
-};
+}; // const getFreeCompanies = (obj) => {
+//     // console.log(obj['DEALS']);
+// }
+
 /**
  * 
  * @param {object} obj
@@ -793,10 +796,14 @@ var getTypesOfCompany = function getTypesOfCompany(obj) {
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (obj) {
+  // obj['FREE'] = document.querySelector('#free').checked
   Object(_get_deals_js__WEBPACK_IMPORTED_MODULE_1__["default"])(obj).then(function (deals) {
     obj['DEALS'] = deals;
     obj['DATE'] = Object(_get_time_js__WEBPACK_IMPORTED_MODULE_2__["default"])(obj.MONTH_COUNTER);
-    obj['TYPES_OF_COMPANY'] = getTypesOfCompany(obj);
+    obj['TYPES_OF_COMPANY'] = getTypesOfCompany(obj); // if (obj['FREE']) {
+    // getFreeCompanies(obj);
+    // }
+
     data = getBusyDays(obj);
     var content = Object(_get_table__WEBPACK_IMPORTED_MODULE_0__["default"])(data);
     document.querySelector("#table").innerHTML = content;
@@ -844,6 +851,7 @@ $('#date_timepicker_start').datetimepicker({
   format: 'Y/m/d',
   dayOfWeekStart: 1,
   value: new Date(),
+  scrollMonth: false,
   onShow: function onShow(ct) {
     this.setOptions({
       maxDate: $('#date_timepicker_end').val() ? $('#date_timepicker_end').val() : false
@@ -855,6 +863,7 @@ $('#date_timepicker_end').datetimepicker({
   format: 'Y/m/d',
   dayOfWeekStart: 1,
   value: new Date(),
+  scrollMonth: false,
   onShow: function onShow(ct) {
     this.setOptions({
       minDate: $('#date_timepicker_start').val() ? $('#date_timepicker_start').val() : false
@@ -862,10 +871,16 @@ $('#date_timepicker_end').datetimepicker({
   },
   timepicker: false
 });
+var currentTime = new Date();
+var minDate = new Date(currentTime.getFullYear(), currentTime.getMonth(), +1); //one day next before month
+
+var maxDate = new Date(currentTime.getFullYear(), currentTime.getMonth() + 1, +0); // one day before next month
+
 $('#date_timepicker_find_start').datetimepicker({
   format: 'Y/m/d',
   dayOfWeekStart: 1,
   value: new Date(),
+  scrollMonth: false,
   onShow: function onShow(ct) {
     this.setOptions({
       maxDate: $('#date_timepicker_find_end').val() ? $('#date_timepicker_find_end').val() : false
@@ -877,6 +892,7 @@ $('#date_timepicker_find_end').datetimepicker({
   format: 'Y/m/d',
   dayOfWeekStart: 1,
   value: new Date(),
+  scrollMonth: false,
   onShow: function onShow(ct) {
     this.setOptions({
       minDate: $('#date_timepicker_find_start').val() ? $('#date_timepicker_find_start').val() : false
@@ -888,6 +904,7 @@ $('#date_timepicker_deal_start').datetimepicker({
   format: 'Y/m/d',
   dayOfWeekStart: 1,
   value: '',
+  scrollMonth: false,
   onShow: function onShow(ct) {
     this.setOptions({
       maxDate: $('#date_timepicker_deal_end').val() ? $('#date_timepicker_deal_end').val() : false
@@ -899,6 +916,7 @@ $('#date_timepicker_deal_end').datetimepicker({
   format: 'Y/m/d',
   dayOfWeekStart: 1,
   value: '',
+  scrollMonth: false,
   onShow: function onShow(ct) {
     this.setOptions({
       minDate: $('#date_timepicker_deal_start').val() ? $('#date_timepicker_deal_start').val() : false
@@ -1115,14 +1133,26 @@ var getColor = function getColor(deal) {
 var getDaysTable = function getDaysTable(company, data) {
   var result = [];
 
-  var _loop = function _loop(_i) {
+  var _loop = function _loop(_i, _j) {
+    if (_j == 7) {
+      _j = 0;
+    } // Подсветка текущего дня
+
+
+    var classTouday = "";
+
+    if (data.DATE.TOUDAY == _i) {
+      classTouday = 'touday';
+    }
+
     var index = company.deals.findIndex(function (deal) {
       return deal.busy[0] == _i;
     }); // Текущий день не занят
 
     if (index == -1) {
-      result.push("<td  class=\"rs-day-column\">".concat(_i, "</td>"));
+      result.push("<td  class=\"rs-day-column ".concat(data.DATE.WEEKEND[_j], " ").concat(classTouday, " \">").concat(_i, "</td>"));
       i = _i;
+      j = _j;
       return "continue";
     }
 
@@ -1135,11 +1165,13 @@ var getDaysTable = function getDaysTable(company, data) {
     var color = getColor(deal);
     result.push("<td colspan=\"".concat(deal.busy.length, "\"><a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#show-deal\" data-id=\"").concat(deal.ID, "\" class=\"").concat(color, " rs-line ").concat(isLong(data, deal, day).join(' '), "\">").concat(interval, "</a></td>"));
     _i = day.end;
+    _j = _j + deal.busy.length % 7 - 1;
     i = _i;
+    j = _j;
   };
 
-  for (var i = 1; i <= data.DATE.COUNT_DAY; i++) {
-    var _ret = _loop(i);
+  for (var i = 1, j = data.DATE.START_WEEK_DAY; i <= data.DATE.COUNT_DAY; i++, j++) {
+    var _ret = _loop(i, j);
 
     if (_ret === "continue") continue;
   }
@@ -1188,30 +1220,51 @@ var getContent = function getContent(data) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/**
+ * Считаем количество дней в месяце
+ */
+Date.prototype.daysInMonth = function () {
+  return 33 - new Date(this.getFullYear(), this.getMonth(), 33).getDate();
+};
+
 /* harmony default export */ __webpack_exports__["default"] = (function (month) {
   var days = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
+  var weekend = ['weekend', '', '', '', '', '', 'weekend'];
   var date = new Date();
   date.setMonth(date.getMonth() + month);
-  /**
-   * Считаем количество дней в месяце
-   */
+  var touday = "";
 
-  Date.prototype.daysInMonth = function () {
-    return 33 - new Date(this.getFullYear(), this.getMonth(), 33).getDate();
-  };
+  if (month == 0) {
+    touday = date.getDate();
+  }
 
+  date.setDate(1);
+  var startWeekDay = date.getDay();
   var countDay = date.daysInMonth();
   var timestamp = [0];
   var head = "";
 
-  for (var i = 1; i <= countDay; i++) {
+  for (var i = 1, j = startWeekDay; i <= countDay; i++, j++) {
+    if (j == 7) {
+      j = 0;
+    }
+
+    var classTouday = "";
+
+    if (i == touday) {
+      classTouday = "touday";
+    }
+
     var time = +new Date(date.getFullYear(), date.getMonth(), i) + 3600 * 5 * 1000; // Временная зона +5 часов
 
-    head += "<td  class=\"rs-day-column\">".concat(days[new Date(time).getDay()], "</td>");
+    head += "<td  class=\"rs-day-column ".concat(weekend[j], " ").concat(classTouday, "\">").concat(days[j], "</td>");
     timestamp.push(time);
   }
 
   return {
+    'TOUDAY': touday,
+    'WEEKEND': weekend,
+    'START_WEEK_DAY': startWeekDay,
     'COUNT_DAY': countDay,
     'MONTH': date.toLocaleString('ru', {
       'month': 'long',
@@ -1304,13 +1357,16 @@ $('#add-deal').on('show.bs.modal', function (evt) {
   var button = $(evt.relatedTarget);
   var modal = $(evt.target);
   var companyName = button.data('company-name');
-  modal.find('input[name="deal-name"]').val(data.deal_place.TITLE);
+  console.log(data.deal_place); // modal.find('input[name="deal-name"]').val(data.deal_place.TITLE);
+
   modal.find('.modal-title').text("\u0417\u0430\u0431\u0440\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C \xAB".concat(companyName, "\xBB"));
   modal.find('input[name="company-id"]').val(button.data('company-id'));
   modal.find('#date_timepicker_start').val($('#date_timepicker_find_start').val());
   modal.find('#date_timepicker_end').val($('#date_timepicker_find_end').val());
-  modal.find('input[name="deal-id"]').val(data.deal_place.ID);
-  modal.find('input[name="responsible"]').val(data.deal_place.ASSIGNED_BY_ID);
+  modal.find('input[name="deal-id"]').val(data.deal_place.ID); // modal.find('input[name="responsible"]').val(data.deal_place.ASSIGNED_BY_ID);
+
+  modal.find('input[name="sum-deal"]').val(data.deal_place.OPPORTUNITY);
+  modal.find('input[name="prepaid-deal"]').val(data.deal_place.UF_CRM_1561618933585);
 });
 /**
  * Обновление сделки

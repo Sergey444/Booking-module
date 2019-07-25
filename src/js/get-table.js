@@ -84,19 +84,28 @@ const getColor = (deal) => {
 const getDaysTable = (company, data) => {
 
     const result = [];
-    for (let i = 1; i <= data.DATE.COUNT_DAY; i++) { 
+    for (let i = 1, j = data.DATE.START_WEEK_DAY; i <= data.DATE.COUNT_DAY; i++, j++) { 
+        
+        if (j == 7) {j = 0;}
+        // Подсветка текущего дня
+        let classTouday = ``;
+        if (data.DATE.TOUDAY == i) {classTouday = 'touday';}
+
+
+        
         const index = company.deals.findIndex((deal) => deal.busy[0] == i );
         // Текущий день не занят
-        if (index == -1) {result.push(`<td  class="rs-day-column">${i}</td>`); continue;}
+        if (index == -1) {result.push(`<td  class="rs-day-column ${data.DATE.WEEKEND[j]} ${classTouday} ">${i}</td>`); continue;}
     
         const deal = company.deals[index];
         const day = {'start': i, 'end': i + deal.busy.length - 1 };
         const interval = day.start == day.end ? day.start : `${day.start} - ${day.end}`;
-         
+      
         const color = getColor(deal);
 
         result.push(`<td colspan="${deal.busy.length}"><a href="javascript:void(0)" data-toggle="modal" data-target="#show-deal" data-id="${deal.ID}" class="${color} rs-line ${ isLong(data, deal, day).join(' ') }">${interval}</a></td>`);
         i = day.end;
+        j = j + deal.busy.length % 7 - 1;
     } 
     return result.join('');
 }

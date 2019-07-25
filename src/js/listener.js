@@ -12,6 +12,7 @@ document.querySelector('#table').addEventListener('click', (evt)=> {
     }
 });
 
+
 /**
  * 
  * @param {object} filter 
@@ -64,13 +65,18 @@ $('#add-deal').on('show.bs.modal',  (evt)  => {
     const modal = $(evt.target);
     const companyName = button.data('company-name');
 
-    modal.find('input[name="deal-name"]').val(data.deal_place.TITLE);
+    console.log(data.deal_place);
+
+    // modal.find('input[name="deal-name"]').val(data.deal_place.TITLE);
     modal.find('.modal-title').text(`Забронировать «${companyName}»`);
     modal.find('input[name="company-id"]').val(button.data('company-id'));
     modal.find('#date_timepicker_start').val($('#date_timepicker_find_start').val());
     modal.find('#date_timepicker_end').val($('#date_timepicker_find_end').val());
     modal.find('input[name="deal-id"]').val(data.deal_place.ID);
-    modal.find('input[name="responsible"]').val(data.deal_place.ASSIGNED_BY_ID);
+    // modal.find('input[name="responsible"]').val(data.deal_place.ASSIGNED_BY_ID);
+    modal.find('input[name="sum-deal"]').val(data.deal_place.OPPORTUNITY);
+    modal.find('input[name="prepaid-deal"]').val(data.deal_place.UF_CRM_1561618933585);
+    
 });
 
 /**
@@ -86,6 +92,7 @@ $('#rs-add-deal-form').on('submit', (evt)=> {
     const filter = {
         'id': id,
         'fields' : {
+
             'UF_CRM_1563776654352': dateStart,
             'UF_CRM_1563776665746': dateEnd,
             'UF_CRM_1563881923': form.querySelector('input[name="company-id"]').value
@@ -99,6 +106,7 @@ $('#rs-add-deal-form').on('submit', (evt)=> {
  */
 $('#form-deal-update').on('submit', (evt) => {
     evt.preventDefault();
+
     const form = evt.target;
     const dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
     const dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
@@ -112,3 +120,5 @@ $('#form-deal-update').on('submit', (evt) => {
     }
     return onUpdateDeal(filter);
 });
+
+
