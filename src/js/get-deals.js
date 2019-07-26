@@ -23,9 +23,11 @@ export default (obj) => {
                 filter: { ">=UF_CRM_1563776654352": getStartDate(obj.MONTH_COUNTER), '!UF_CRM_1563881923': false, },
                 select: [ "*", "UF_*" ] 	
             },function(result)  { 
-                if(result.error()) {			
+                if(result.error()) {
+                    alert('Произошла ошибка получения сделки...');			
                     return console.error(result.error()); 	
                 }	
+
                 deals = deals.concat(result.data());
                 if(result.more()) {
                    return result.next();

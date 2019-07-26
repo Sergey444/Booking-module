@@ -57,7 +57,7 @@ $('#date_timepicker_find_end').datetimepicker({
 });
 
 $('#date_timepicker_deal_start').datetimepicker({
-    format: 'd/m/Y',
+    format: 'Y/m/d',
     dayOfWeekStart: 1,
     value: '',
     scrollMonth: false,
@@ -69,7 +69,7 @@ $('#date_timepicker_deal_start').datetimepicker({
     timepicker: false
 });
 $('#date_timepicker_deal_end').datetimepicker({
-    format: 'd/m/Y',
+    format: 'Y/m/d',
     dayOfWeekStart: 1,
     value: '',
     scrollMonth: false,

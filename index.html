@@ -41,15 +41,11 @@
 					<label for="">Дата конца</label>
 					<input type="text" id="date_timepicker_find_end" name="time_end" class="form-control">
 				</div>
-				<!-- <div class="rs-form-item">
-					<button type="submit" class="btn btn-primary"  style="margin-top: 30px;" id="findTasks">Показать</button>
-				</div> -->
-				<!-- <div class="form-group">
-					<label for="free"><input type="checkbox" name="free" id="free">Показывать только свободные компании</label>
-				</div> -->
+				<div class="rs-form-item">
+					<button type="submit" class="btn btn-primary"  style="margin-top: 30px;" id="findTasks">Найти</button>
+				</div>
 			</div>
 			
-
 		</form>	
 	</div>
 </section>
@@ -68,7 +64,12 @@
 			</div>
 			<form action="" id="form-deal-update">
 				<div class="modal-body">
-					<!-- <div class="form-group">
+					<div class="form-group">
+						<label for="">Имя контакта</label>
+						<input type="text" class='form-control' name="contact-name"  placeholder="Не указан">
+					</div>
+
+					<div class="form-group">
 						<div class="row">
 							<div class="col-md-6">
 								<label for="">Дата начала:</label>
@@ -80,60 +81,38 @@
 							</div>
 						</div>
 					</div>
-					
+						
 					<div class="form-group">
-						<label for="">Ответственный</label>
-						<input type="text" class='form-control' readonly="readonly" name="responsible">
-					</div> -->
-
-						<div class="form-group">
-							<label for="">Имя клиента</label>
-							<input type="text" class='form-control' name="contact-name" required>
-						</div>
-
-						<div class="form-group">
-							<div class="row">
-								<div class="col-md-6">
-									<label for="">Дата начала:</label>
-									<input type="text" class='form-control' name="date-start" id="date_timepicker_deal_start" >
-								</div>
-								<div class="col-md-6">
-									<label for="">Дата окончания:</label>
-									<input type="text" class='form-control' name="date-end" id="date_timepicker_deal_end" >
-								</div>
+						<div class="row">
+							<div class="col-md-6">
+								<label for="">Сумма сделки</label>
+								<input class='form-control' type="text" name="sum-deal">
+							</div>
+							<div class="col-md-6">
+								<label for="">Сумма аванса</label>
+								<input class='form-control' type="text" name="prepaid-deal">
 							</div>
 						</div>
-							
+					</div>
 
-						<div class="form-group">
-							<div class="row">
-								<div class="col-md-6">
-									<label for="">Сумма сделки</label>
-									<input class='form-control' type="text" name="sum-deal">
-								</div>
-								<div class="col-md-6">
-									<label for="">Сумма аванса</label>
-									<input class='form-control' type="text" name="prepaid-deal">
-								</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-6">
+								<label for="">Колличество человек</label>
+								<input type="text" class='form-control' name="count-people" placeholder="Не указано" required>
+							</div>
+							<div class="col-md-6">
+								<label for="">Статус оплаты</label>
+								<select type="text" class="form-control" name="status-deal">
+									<option value="0">Не выбран</option>
+								</select>
 							</div>
 						</div>
-
-						<div class="form-group">
-							<div class="row">
-								<div class="col-md-6">
-									<label for="">Колличество человек</label>
-									<input type="text" class='form-control' name="count-people" placeholder="Не указано" required>
-								</div>
-								<div class="col-md-6">
-									<label for="">Статус оплаты</label>
-									<select type="text" class="form-control" name="status-deal">
-										<option value="0">Не выбран</option>
-									</select>
-								</div>
-							</div>
-						</div>	
+					</div>	
 
 					<input type="hidden" name="deal-id">	
+					<input type="hidden" name="contact-id">	
+					<input type="hidden" name="company-id">	
 				</div>
 				<div class="modal-footer  modal-footer--space">
 					<a href="" class="btn btn-info" target="_blank" id="deal-detail">Перейти к сделке</a>
@@ -146,7 +125,8 @@
 <!-- /show deal -->
 
 <!-- booking modal -->
-<div class="modal fade" id="add-deal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<!-- <div class="modal fade" id="add-deal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -158,10 +138,6 @@
 			<form action="" id="rs-add-deal-form">
 				<div class="modal-body">
 
-						<!-- <div class="form-group">
-							<label for="">Название сделки</label>
-							<input type="text" class='form-control' readonly="readonly" name="deal-name" required >
-						</div> -->
 						<div class="form-group">
 							<label for="">Имя клиента</label>
 							<input type="text" class='form-control' name="contact-name" required>
@@ -208,16 +184,6 @@
 							</div>
 						</div>
 
-						<!-- <div class="form-group">
-							<label for="">Комментарий</label>
-							<textarea class="form-control" name="comment" id="" cols="" rows="5"></textarea>
-						</div> -->
-						
-						<!-- <div class="form-group">
-							<label for="">Ответственный</label>
-							<input type="text" class='form-control' readonly="readonly" name="responsible" >
-						</div> -->
-
 						<input type="hidden" name="company-id" >	
 						<input type="hidden" name="deal-id">	
 				</div>
@@ -227,7 +193,7 @@
 			</form>
 		</div>
 	</div>
-</div>
+</div> -->
 <!-- /booking modal -->
 
 <script type="text/javascript" src="./dist/main.js"></script>

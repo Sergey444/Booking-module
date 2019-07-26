@@ -1,6 +1,7 @@
-import updateDeal from './deal-update.js';
+import updateDeal from './update-deal.js';
 import changeMonth from'./change-month.js';
-import applicationStart from './application-start';
+import applicationStart from './application-start.js';
+import getContact from './get-contact.js';
 
 /**
  * Слушатель на таблицу, для изменения месяца
@@ -17,10 +18,9 @@ document.querySelector('#table').addEventListener('click', (evt)=> {
  * 
  * @param {object} filter 
  */
-const onUpdateDeal = (filter) => {
-    updateDeal(filter).then((resolve) => {
+const onUpdateDeal = (filter, contact = false) => {
+    updateDeal(filter, contact).then((resolve) => {
         applicationStart(data);
-        console.log(resolve);
         $('.modal').modal('hide');
     });
 }
@@ -42,78 +42,54 @@ const formatDate = (date) => {
  * 
  * @param {object} -global data
  */
-$('#show-deal').on('show.bs.modal',  (evt)  => {
-    const button = $(evt.relatedTarget) 
-    const modal = $(evt.target);
-    const deal = data.DEALS.find((element) => element.ID == button.data(`id`));
-    const start = new Date(deal.timestamp_start);
-    const end = new Date(deal.timestamp_end);
+$('#show-deal').on('show.bs.modal', (evt) => {
+    const button = evt.relatedTarget 
+    let deal = {};
+    let companyId = ``;
 
-    const sum = parseInt(deal.UF_CRM_1561618989990) || 0;
+    if ( button.hasAttribute('data-company-id') ) {  
+        deal = data.deal_place;
+        companyId = button.getAttribute('data-company-id');
+    } else {
+        deal = data.DEALS.find((element) => element.ID == button.getAttribute(`data-id`));
+        companyId = deal.COMPANY_ID;
+    }
+
+    const modal = evt.target;
+    
+    const start = new Date(deal.UF_CRM_1563776654352); 
+    const end = new Date(deal.UF_CRM_1563776665746);
+    const sum = parseInt(deal.OPPORTUNITY) || 0;
     const prepaid = parseInt(deal.UF_CRM_1561618933585) || 0;
+    const contactInput = modal.querySelector(`input[name="contact-name"]`);
+          contactInput.value = '';
+          contactInput.setAttribute('disabled', 'disabled');
 
-    console.log(deal);
+    if ( deal.CONTACT_ID ) {
+        contactInput.removeAttribute('disabled');
+        contactInput.setAttribute('placeholder', 'Получаю контакт...');
+        getContact(deal.CONTACT_ID).then((contact) => {
+           contactInput.value = contact.NAME;
+           contactInput.setAttribute('placeholder', 'Не указан');
+        });
+    }
 
-    modal.find(`.modal-title`).text(deal.TITLE);
-    modal.find(`[name="deal-id"]`).val(deal.ID);
-    modal.find(`[name="responsible"]`).val(deal.ASSIGNED_BY_ID);
-    modal.find(`#date_timepicker_deal_start`).val(formatDate(start));
-    modal.find(`#date_timepicker_deal_end`).val(formatDate(end));
-    modal.find(`#deal-detail`).attr(`href`, `https://bazaivolga.bitrix24.ru/crm/deal/details/${deal.ID}/`);
-    modal.find(`input[name="sum-deal"]`).val(sum);
-    modal.find(`input[name="prepaid-deal"]`).val(prepaid);
-    modal.find(`input[name="count-people"]`).val(deal.UF_CRM_1561535444028);
+    modal.querySelector(`.modal-title`).textContent = deal.TITLE;
+    modal.querySelector(`[name="deal-id"]`).value = deal.ID;
+    modal.querySelector(`[name="contact-id"]`).value = deal.CONTACT_ID;
+    modal.querySelector(`#date_timepicker_deal_start`).value = formatDate(start);
+    modal.querySelector(`#date_timepicker_deal_end`).value = formatDate(end);
+    modal.querySelector(`#deal-detail`).setAttribute(`href`, `https://bazaivolga.bitrix24.ru/crm/deal/details/${deal.ID}/`);
+    modal.querySelector(`input[name="sum-deal"]`).value = sum;
+    modal.querySelector(`input[name="prepaid-deal"]`).value = prepaid;
+    modal.querySelector(`input[name="count-people"]`).value = deal.UF_CRM_1561535444028;
+    modal.querySelector('input[name="company-id"]').value = companyId;
 
     const status = data.deal_fields.map((field) => {
         const selected = deal.UF_CRM_1563514438 == field.ID ? `selected` : ``;
         return `<option value="${field.ID}" ${selected}>${field.VALUE}</option>`;
     });
-    modal.find(`select[name="status-deal"]`).html(`<option value="0">Не выбран</option>${status.join('')}`) ;
-
-});
-
-/**
- * Форма bootstrap 4 - забронировать время
- */
-$('#add-deal').on('show.bs.modal',  (evt)  => {
-    const button = $(evt.relatedTarget) 
-    const modal = $(evt.target);
-    const companyName = button.data('company-name');
-
-    console.log(data.deal_place);
-
-    // modal.find('input[name="deal-name"]').val(data.deal_place.TITLE);
-    modal.find('.modal-title').text(`Забронировать «${companyName}»`);
-    modal.find('input[name="company-id"]').val(button.data('company-id'));
-    modal.find('#date_timepicker_start').val($('#date_timepicker_find_start').val());
-    modal.find('#date_timepicker_end').val($('#date_timepicker_find_end').val());
-    modal.find('input[name="deal-id"]').val(data.deal_place.ID);
-    // modal.find('input[name="responsible"]').val(data.deal_place.ASSIGNED_BY_ID);
-    modal.find('input[name="sum-deal"]').val(data.deal_place.OPPORTUNITY);
-    modal.find('input[name="prepaid-deal"]').val(data.deal_place.UF_CRM_1561618933585);
-    
-});
-
-/**
- * Обновление сделки
- */
-$('#rs-add-deal-form').on('submit', (evt)=> {
-    evt.preventDefault();
-    const form = evt.target;
-    const id= form.querySelector('input[name="deal-id"]').value;
-    const dateStart = form.querySelector('input[name="date-start"]').value.split('/').join('.');
-    const dateEnd = form.querySelector('input[name="date-end"]').value.split('/').join('.');
-  
-    const filter = {
-        'id': id,
-        'fields' : {
-
-            'UF_CRM_1563776654352': dateStart,
-            'UF_CRM_1563776665746': dateEnd,
-            'UF_CRM_1563881923': form.querySelector('input[name="company-id"]').value
-        }
-    }
-    return onUpdateDeal(filter);
+    modal.querySelector(`select[name="status-deal"]`).innerHTML = `<option value="0">Не выбран</option>${status.join('')}`;
 });
 
 /**
@@ -123,17 +99,28 @@ $('#form-deal-update').on('submit', (evt) => {
     evt.preventDefault();
 
     const form = evt.target;
-    const dateStart = form.querySelector('input[name="date-start"]').value.split('/').join('.');
-    const dateEnd = form.querySelector('input[name="date-end"]').value.split('/').join('.');
+    const dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
+    const dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
     
     const filter = {
         'id': form.querySelector('input[name="deal-id"]').value,
         'fields': {
+            'OPPORTUNITY': form.querySelector('input[name="sum-deal"]').value,
+            'UF_CRM_1563514438': form.querySelector('select[name="status-deal"]').value,
+            'UF_CRM_1561618933585': form.querySelector('input[name="prepaid-deal"]').value,
+            'UF_CRM_1561535444028': form.querySelector('input[name="count-people"]').value,
             'UF_CRM_1563776654352': dateStart,
             'UF_CRM_1563776665746': dateEnd
         }
     }
-    return onUpdateDeal(filter);
+
+    const contact = {
+        'id': form.querySelector('input[name="contact-id"]'),
+        'name': form.querySelector('input[name="contact-name"]')
+    }
+    return onUpdateDeal(filter, contact);
 });
+
+
 
 

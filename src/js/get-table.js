@@ -61,7 +61,7 @@ const getCompanyName = (company) => {
                 </a>
             </td>
             <td class="rs-show-modal" data-id="${company.ID}">
-                <a href="javascript:void(0)" data-toggle="modal" data-target="#add-deal" data-company-id="${company.ID}" data-company-name="${company.TITLE}"><i class="fas fa-user-plus"></i></a>
+                <a href="javascript:void(0)" data-toggle="modal" data-target="#show-deal" data-company-id="${company.ID}" data-company-name="${company.TITLE}"><i class="fas fa-user-plus"></i></a>
             </td>`;
 }
 
