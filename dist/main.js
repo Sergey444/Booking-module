@@ -848,7 +848,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 $.datetimepicker.setLocale('ru');
 $('#date_timepicker_start').datetimepicker({
-  format: 'Y/m/d',
+  format: 'd/m/Y',
   dayOfWeekStart: 1,
   value: new Date(),
   scrollMonth: false,
@@ -860,7 +860,7 @@ $('#date_timepicker_start').datetimepicker({
   timepicker: false
 });
 $('#date_timepicker_end').datetimepicker({
-  format: 'Y/m/d',
+  format: 'd/m/Y',
   dayOfWeekStart: 1,
   value: new Date(),
   scrollMonth: false,
@@ -870,14 +870,12 @@ $('#date_timepicker_end').datetimepicker({
     });
   },
   timepicker: false
-});
-var currentTime = new Date();
-var minDate = new Date(currentTime.getFullYear(), currentTime.getMonth(), +1); //one day next before month
-
-var maxDate = new Date(currentTime.getFullYear(), currentTime.getMonth() + 1, +0); // one day before next month
+}); // const currentTime = new Date();
+// const minDate = new Date(currentTime.getFullYear(), currentTime.getMonth(), +1); //one day next before month
+// const maxDate =  new Date(currentTime.getFullYear(), currentTime.getMonth() +1, +0); // one day before next month
 
 $('#date_timepicker_find_start').datetimepicker({
-  format: 'Y/m/d',
+  format: 'd/m/Y',
   dayOfWeekStart: 1,
   value: new Date(),
   scrollMonth: false,
@@ -889,7 +887,7 @@ $('#date_timepicker_find_start').datetimepicker({
   timepicker: false
 });
 $('#date_timepicker_find_end').datetimepicker({
-  format: 'Y/m/d',
+  format: 'd/m/Y',
   dayOfWeekStart: 1,
   value: new Date(),
   scrollMonth: false,
@@ -901,7 +899,7 @@ $('#date_timepicker_find_end').datetimepicker({
   timepicker: false
 });
 $('#date_timepicker_deal_start').datetimepicker({
-  format: 'Y/m/d',
+  format: 'd/m/Y',
   dayOfWeekStart: 1,
   value: '',
   scrollMonth: false,
@@ -913,7 +911,7 @@ $('#date_timepicker_deal_start').datetimepicker({
   timepicker: false
 });
 $('#date_timepicker_deal_end').datetimepicker({
-  format: 'Y/m/d',
+  format: 'd/m/Y',
   dayOfWeekStart: 1,
   value: '',
   scrollMonth: false,
@@ -968,6 +966,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   return new Promise(function (resolve) {
     BX24.callBatch({
+      get_deal_fields: ['crm.deal.fields', {}],
       get_company_fields: ['crm.company.fields', {}],
       get_company_list: ['crm.company.list', {
         'order': {
@@ -984,6 +983,7 @@ __webpack_require__.r(__webpack_exports__);
     }, function (result) {
       return resolve({
         'deal_place': result.get_deal_place.data(),
+        'deal_fields': result.get_deal_fields.data().UF_CRM_1563514438.items,
         'company_fields': result.get_company_fields.data().UF_CRM_1561620120175.items,
         'company_list': result.get_company_list.data(),
         'MONTH_COUNTER': 0
@@ -1342,12 +1342,23 @@ $('#show-deal').on('show.bs.modal', function (evt) {
   });
   var start = new Date(deal.timestamp_start);
   var end = new Date(deal.timestamp_end);
+  var sum = parseInt(deal.UF_CRM_1561618989990) || 0;
+  var prepaid = parseInt(deal.UF_CRM_1561618933585) || 0;
+  console.log(deal);
   modal.find(".modal-title").text(deal.TITLE);
   modal.find("[name=\"deal-id\"]").val(deal.ID);
   modal.find("[name=\"responsible\"]").val(deal.ASSIGNED_BY_ID);
   modal.find("#date_timepicker_deal_start").val(formatDate(start));
   modal.find("#date_timepicker_deal_end").val(formatDate(end));
   modal.find("#deal-detail").attr("href", "https://bazaivolga.bitrix24.ru/crm/deal/details/".concat(deal.ID, "/"));
+  modal.find("input[name=\"sum-deal\"]").val(sum);
+  modal.find("input[name=\"prepaid-deal\"]").val(prepaid);
+  modal.find("input[name=\"count-people\"]").val(deal.UF_CRM_1561535444028);
+  var status = data.deal_fields.map(function (field) {
+    var selected = deal.UF_CRM_1563514438 == field.ID ? "selected" : "";
+    return "<option value=\"".concat(field.ID, "\" ").concat(selected, ">").concat(field.VALUE, "</option>");
+  });
+  modal.find("select[name=\"status-deal\"]").html("<option value=\"0\">\u041D\u0435 \u0432\u044B\u0431\u0440\u0430\u043D</option>".concat(status.join('')));
 });
 /**
  * Форма bootstrap 4 - забронировать время
@@ -1376,8 +1387,8 @@ $('#rs-add-deal-form').on('submit', function (evt) {
   evt.preventDefault();
   var form = evt.target;
   var id = form.querySelector('input[name="deal-id"]').value;
-  var dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
-  var dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
+  var dateStart = form.querySelector('input[name="date-start"]').value.split('/').join('.');
+  var dateEnd = form.querySelector('input[name="date-end"]').value.split('/').join('.');
   var filter = {
     'id': id,
     'fields': {
@@ -1395,8 +1406,8 @@ $('#rs-add-deal-form').on('submit', function (evt) {
 $('#form-deal-update').on('submit', function (evt) {
   evt.preventDefault();
   var form = evt.target;
-  var dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
-  var dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
+  var dateStart = form.querySelector('input[name="date-start"]').value.split('/').join('.');
+  var dateEnd = form.querySelector('input[name="date-end"]').value.split('/').join('.');
   var filter = {
     'id': form.querySelector('input[name="deal-id"]').value,
     'fields': {

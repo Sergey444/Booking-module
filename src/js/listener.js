@@ -49,12 +49,27 @@ $('#show-deal').on('show.bs.modal',  (evt)  => {
     const start = new Date(deal.timestamp_start);
     const end = new Date(deal.timestamp_end);
 
+    const sum = parseInt(deal.UF_CRM_1561618989990) || 0;
+    const prepaid = parseInt(deal.UF_CRM_1561618933585) || 0;
+
+    console.log(deal);
+
     modal.find(`.modal-title`).text(deal.TITLE);
     modal.find(`[name="deal-id"]`).val(deal.ID);
     modal.find(`[name="responsible"]`).val(deal.ASSIGNED_BY_ID);
     modal.find(`#date_timepicker_deal_start`).val(formatDate(start));
     modal.find(`#date_timepicker_deal_end`).val(formatDate(end));
     modal.find(`#deal-detail`).attr(`href`, `https://bazaivolga.bitrix24.ru/crm/deal/details/${deal.ID}/`);
+    modal.find(`input[name="sum-deal"]`).val(sum);
+    modal.find(`input[name="prepaid-deal"]`).val(prepaid);
+    modal.find(`input[name="count-people"]`).val(deal.UF_CRM_1561535444028);
+
+    const status = data.deal_fields.map((field) => {
+        const selected = deal.UF_CRM_1563514438 == field.ID ? `selected` : ``;
+        return `<option value="${field.ID}" ${selected}>${field.VALUE}</option>`;
+    });
+    modal.find(`select[name="status-deal"]`).html(`<option value="0">Не выбран</option>${status.join('')}`) ;
+
 });
 
 /**
@@ -86,8 +101,8 @@ $('#rs-add-deal-form').on('submit', (evt)=> {
     evt.preventDefault();
     const form = evt.target;
     const id= form.querySelector('input[name="deal-id"]').value;
-    const dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
-    const dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
+    const dateStart = form.querySelector('input[name="date-start"]').value.split('/').join('.');
+    const dateEnd = form.querySelector('input[name="date-end"]').value.split('/').join('.');
   
     const filter = {
         'id': id,
@@ -108,8 +123,8 @@ $('#form-deal-update').on('submit', (evt) => {
     evt.preventDefault();
 
     const form = evt.target;
-    const dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
-    const dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
+    const dateStart = form.querySelector('input[name="date-start"]').value.split('/').join('.');
+    const dateEnd = form.querySelector('input[name="date-end"]').value.split('/').join('.');
     
     const filter = {
         'id': form.querySelector('input[name="deal-id"]').value,

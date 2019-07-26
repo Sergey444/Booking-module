@@ -3,7 +3,7 @@
  */
 $.datetimepicker.setLocale('ru');
 $('#date_timepicker_start').datetimepicker({
-    format: 'Y/m/d',
+    format: 'd/m/Y',
     dayOfWeekStart: 1,
     value: new Date(),
     scrollMonth: false,
@@ -15,7 +15,7 @@ $('#date_timepicker_start').datetimepicker({
     timepicker: false
 });
 $('#date_timepicker_end').datetimepicker({
-    format: 'Y/m/d',
+    format: 'd/m/Y',
     dayOfWeekStart: 1,
     value: new Date(),
     scrollMonth: false,
@@ -27,13 +27,12 @@ $('#date_timepicker_end').datetimepicker({
     timepicker: false,
 });
 
-const currentTime = new Date();
-const minDate = new Date(currentTime.getFullYear(), currentTime.getMonth(), +1); //one day next before month
-const maxDate =  new Date(currentTime.getFullYear(), currentTime.getMonth() +1, +0); // one day before next month
-
+// const currentTime = new Date();
+// const minDate = new Date(currentTime.getFullYear(), currentTime.getMonth(), +1); //one day next before month
+// const maxDate =  new Date(currentTime.getFullYear(), currentTime.getMonth() +1, +0); // one day before next month
 
 $('#date_timepicker_find_start').datetimepicker({
-    format: 'Y/m/d',
+    format: 'd/m/Y',
     dayOfWeekStart: 1,
     value: new Date(),
     scrollMonth: false,
@@ -45,7 +44,7 @@ $('#date_timepicker_find_start').datetimepicker({
     timepicker: false
 });
 $('#date_timepicker_find_end').datetimepicker({
-    format: 'Y/m/d',
+    format: 'd/m/Y',
     dayOfWeekStart: 1,
     value: new Date(),
     scrollMonth: false,
@@ -58,7 +57,7 @@ $('#date_timepicker_find_end').datetimepicker({
 });
 
 $('#date_timepicker_deal_start').datetimepicker({
-    format: 'Y/m/d',
+    format: 'd/m/Y',
     dayOfWeekStart: 1,
     value: '',
     scrollMonth: false,
@@ -70,7 +69,7 @@ $('#date_timepicker_deal_start').datetimepicker({
     timepicker: false
 });
 $('#date_timepicker_deal_end').datetimepicker({
-    format: 'Y/m/d',
+    format: 'd/m/Y',
     dayOfWeekStart: 1,
     value: '',
     scrollMonth: false,
