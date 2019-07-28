@@ -775,6 +775,7 @@ var getTypesOfCompany = function getTypesOfCompany(obj) {
   var typesOfCompany = [];
   obj.company_fields.forEach(function (elem) {
     typesOfCompany.push({
+      'ID': elem.ID,
       'NAME': elem.VALUE,
       'COMPANIES': obj.company_list.filter(function (company) {
         company.deals = obj.DEALS.filter(function (deal) {
@@ -836,37 +837,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-/**
- * datetimepicker
- */
 $.datetimepicker.setLocale('ru');
-$('#date_timepicker_start').datetimepicker({
-  format: 'd/m/Y',
-  dayOfWeekStart: 1,
-  value: new Date(),
-  scrollMonth: false,
-  onShow: function onShow(ct) {
-    this.setOptions({
-      maxDate: $('#date_timepicker_end').val() ? $('#date_timepicker_end').val() : false
-    });
-  },
-  timepicker: false
-});
-$('#date_timepicker_end').datetimepicker({
-  format: 'd/m/Y',
-  dayOfWeekStart: 1,
-  value: new Date(),
-  scrollMonth: false,
-  onShow: function onShow(ct) {
-    this.setOptions({
-      minDate: $('#date_timepicker_start').val() ? $('#date_timepicker_start').val() : false
-    });
-  },
-  timepicker: false
-}); // const currentTime = new Date();
-// const minDate = new Date(currentTime.getFullYear(), currentTime.getMonth(), +1); //one day next before month
-// const maxDate =  new Date(currentTime.getFullYear(), currentTime.getMonth() +1, +0); // one day before next month
-
 $('#date_timepicker_find_start').datetimepicker({
   format: 'd/m/Y',
   dayOfWeekStart: 1,
@@ -874,7 +845,7 @@ $('#date_timepicker_find_start').datetimepicker({
   scrollMonth: false,
   onShow: function onShow(ct) {
     this.setOptions({
-      maxDate: $('#date_timepicker_find_end').val() ? $('#date_timepicker_find_end').val() : false
+      maxDate: $('#date_timepicker_find_end').val() ? $('#date_timepicker_find_end').val().split('/').reverse().join('/') : false
     });
   },
   timepicker: false
@@ -886,35 +857,77 @@ $('#date_timepicker_find_end').datetimepicker({
   scrollMonth: false,
   onShow: function onShow(ct) {
     this.setOptions({
-      minDate: $('#date_timepicker_find_start').val() ? $('#date_timepicker_find_start').val() : false
+      minDate: $('#date_timepicker_find_start').val() ? $('#date_timepicker_find_start').val().split('/').reverse().join('/') : false
     });
   },
   timepicker: false
 });
 $('#date_timepicker_deal_start').datetimepicker({
-  format: 'Y/m/d',
+  format: 'd/m/Y',
   dayOfWeekStart: 1,
   value: '',
   scrollMonth: false,
   onShow: function onShow(ct) {
-    this.setOptions({
-      maxDate: $('#date_timepicker_deal_end').val() ? $('#date_timepicker_deal_end').val() : false
-    });
+    this.setOptions({});
   },
   timepicker: false
 });
 $('#date_timepicker_deal_end').datetimepicker({
-  format: 'Y/m/d',
+  format: 'd/m/Y',
   dayOfWeekStart: 1,
   value: '',
   scrollMonth: false,
   onShow: function onShow(ct) {
     this.setOptions({
-      minDate: $('#date_timepicker_deal_start').val() ? $('#date_timepicker_deal_start').val() : false
+      minDate: $('#date_timepicker_deal_start').val() ? $('#date_timepicker_deal_start').val().split('/').reverse().join('/') : false // Странный эффект, если не reverse(), то не работает
+
     });
   },
   timepicker: false
 }); //----- /datetimepicker -----//
+
+/***/ }),
+
+/***/ "./src/js/find-free-company.js":
+/*!*************************************!*\
+  !*** ./src/js/find-free-company.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (function (date) {
+  var busyCompany = [];
+  return new Promise(function (resolve) {
+    BX24.callBatch({
+      first: ['crm.deal.list', {
+        'filter': {
+          ">=UF_CRM_1563776665746": date.start,
+          '<=UF_CRM_1563776665746': date.end,
+          '!UF_CRM_1563881923': false
+        },
+        'select': ["UF_CRM_1563881923"]
+      }],
+      second: ['crm.deal.list', {
+        'filter': {
+          "<=UF_CRM_1563776654352": date.start,
+          '>=UF_CRM_1563776665746': date.end,
+          '!UF_CRM_1563881923': false
+        },
+        'select': ["UF_CRM_1563881923"]
+      }]
+    }, function (result) {
+      result.first.data().forEach(function (deal) {
+        busyCompany.push(deal.UF_CRM_1563881923);
+      });
+      result.second.data().forEach(function (deal) {
+        busyCompany.push(deal.UF_CRM_1563881923);
+      });
+      return resolve(busyCompany);
+    });
+  });
+});
 
 /***/ }),
 
@@ -983,7 +996,6 @@ __webpack_require__.r(__webpack_exports__);
         return console.error(result.error());
       }
 
-      console.log(result.data());
       return resolve(result.data());
     });
   });
@@ -1108,7 +1120,7 @@ var getCompanyType = function getCompanyType(type) {
 
 
 var getCompanyName = function getCompanyName(company) {
-  return "<td>\n                <a href=\"https://bazaivolga.bitrix24.ru/crm/company/details/".concat(company.ID, "/\" target=\"_blank\">\n                    ").concat(company.TITLE, "\n                </a>\n            </td>\n            <td class=\"rs-show-modal\" data-id=\"").concat(company.ID, "\">\n                <a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#show-deal\" data-company-id=\"").concat(company.ID, "\" data-company-name=\"").concat(company.TITLE, "\"><i class=\"fas fa-user-plus\"></i></a>\n            </td>");
+  return "<td>\n                <a href=\"https://bazaivolga.bitrix24.ru/crm/company/details/".concat(company.ID, "/\" target=\"_blank\">\n                    ").concat(company.TITLE, "\n                </a>\n            </td>\n            <td class=\"rs-show-modal rs-hidden\" data-id=\"").concat(company.ID, "\">\n                <a href=\"javascript:void(0)\" data-toggle=\"modal\" data-target=\"#show-deal\" data-company-id=\"").concat(company.ID, "\" data-company-name=\"").concat(company.TITLE, "\"><i class=\"fas fa-user-plus\"></i></a>\n            </td>");
 };
 
 var getColor = function getColor(deal) {
@@ -1192,6 +1204,18 @@ var getContent = function getContent(data) {
 
     content.push(getCompanyType(type));
     type.COMPANIES.forEach(function (company) {
+      // Для фильтра
+      if (data.busy_companies) {
+        var test = data.busy_companies.some(function (id) {
+          return id == company.ID;
+        });
+
+        if (test) {
+          return false;
+        }
+      }
+
+      ;
       content.push("<tr>".concat(getCompanyName(company), " ").concat(getDaysTable(company, data), "</tr>"));
     });
   });
@@ -1288,10 +1312,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _change_month_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./change-month.js */ "./src/js/change-month.js");
 /* harmony import */ var _application_start_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./application-start.js */ "./src/js/application-start.js");
 /* harmony import */ var _get_contact_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./get-contact.js */ "./src/js/get-contact.js");
+/* harmony import */ var _find_free_company_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./find-free-company.js */ "./src/js/find-free-company.js");
 
 
 
 
+
+/**
+ * Фильтр для занятых компаний
+ */
+
+document.querySelector('#findTasks').addEventListener('click', function (evt) {
+  evt.preventDefault();
+  var date = {
+    start: new Date(+new Date(document.querySelector('#date_timepicker_find_start').value.split('/').reverse().join('/')) + 1000 * 3600 * 3),
+    end: new Date(+new Date(document.querySelector('#date_timepicker_find_end').value.split('/').reverse().join('/')) + 1000 * 3600 * 3)
+  };
+  Object(_find_free_company_js__WEBPACK_IMPORTED_MODULE_4__["default"])(date).then(function (resolve) {
+    data.busy_companies = resolve;
+    Object(_application_start_js__WEBPACK_IMPORTED_MODULE_2__["default"])(data);
+  });
+});
 /**
  * Слушатель на таблицу, для изменения месяца
  */
@@ -1325,7 +1366,7 @@ var formatDate = function formatDate(date) {
   var year = date.getFullYear();
   var month = ("0" + (date.getMonth() + 1)).slice(-2);
   var day = ("0" + date.getDate()).slice(-2);
-  return "".concat(year, "/").concat(month, "/").concat(day);
+  return "".concat(day, "/").concat(month, "/").concat(year);
 };
 /**
  * Просмотр сделки
@@ -1346,12 +1387,12 @@ $('#show-deal').on('show.bs.modal', function (evt) {
     deal = data.DEALS.find(function (element) {
       return element.ID == button.getAttribute("data-id");
     });
-    companyId = deal.COMPANY_ID;
+    companyId = deal.UF_CRM_1563881923;
   }
 
   var modal = evt.target;
-  var start = new Date(deal.UF_CRM_1563776654352);
-  var end = new Date(deal.UF_CRM_1563776665746);
+  var start = deal.UF_CRM_1563776654352 ? new Date(deal.UF_CRM_1563776654352) : false;
+  var end = deal.UF_CRM_1563776665746 ? new Date(deal.UF_CRM_1563776665746) : false;
   var sum = parseInt(deal.OPPORTUNITY) || 0;
   var prepaid = parseInt(deal.UF_CRM_1561618933585) || 0;
   var contactInput = modal.querySelector("input[name=\"contact-name\"]");
@@ -1370,8 +1411,8 @@ $('#show-deal').on('show.bs.modal', function (evt) {
   modal.querySelector(".modal-title").textContent = deal.TITLE;
   modal.querySelector("[name=\"deal-id\"]").value = deal.ID;
   modal.querySelector("[name=\"contact-id\"]").value = deal.CONTACT_ID;
-  modal.querySelector("#date_timepicker_deal_start").value = formatDate(start);
-  modal.querySelector("#date_timepicker_deal_end").value = formatDate(end);
+  modal.querySelector("#date_timepicker_deal_start").value = start ? formatDate(start) : document.querySelector('#date_timepicker_find_start').value;
+  modal.querySelector("#date_timepicker_deal_end").value = end ? formatDate(end) : document.querySelector('#date_timepicker_find_end').value;
   modal.querySelector("#deal-detail").setAttribute("href", "https://bazaivolga.bitrix24.ru/crm/deal/details/".concat(deal.ID, "/"));
   modal.querySelector("input[name=\"sum-deal\"]").value = sum;
   modal.querySelector("input[name=\"prepaid-deal\"]").value = prepaid;
@@ -1390,22 +1431,24 @@ $('#show-deal').on('show.bs.modal', function (evt) {
 $('#form-deal-update').on('submit', function (evt) {
   evt.preventDefault();
   var form = evt.target;
-  var dateStart = form.querySelector('input[name="date-start"]').value.split('/').reverse().join('.');
-  var dateEnd = form.querySelector('input[name="date-end"]').value.split('/').reverse().join('.');
+  var status = form.querySelector('select[name="status-deal"]').value;
+  var dateStart = status == 120 ? '' : form.querySelector('input[name="date-start"]').value.split('/').join('.');
+  var dateEnd = status == 120 ? '' : form.querySelector('input[name="date-end"]').value.split('/').join('.');
   var filter = {
     'id': form.querySelector('input[name="deal-id"]').value,
     'fields': {
       'OPPORTUNITY': form.querySelector('input[name="sum-deal"]').value,
-      'UF_CRM_1563514438': form.querySelector('select[name="status-deal"]').value,
+      'UF_CRM_1563514438': status,
       'UF_CRM_1561618933585': form.querySelector('input[name="prepaid-deal"]').value,
       'UF_CRM_1561535444028': form.querySelector('input[name="count-people"]').value,
       'UF_CRM_1563776654352': dateStart,
-      'UF_CRM_1563776665746': dateEnd
+      'UF_CRM_1563776665746': dateEnd,
+      'UF_CRM_1563881923': form.querySelector('input[name="company-id"]').value
     }
   };
   var contact = {
-    'id': form.querySelector('input[name="contact-id"]'),
-    'name': form.querySelector('input[name="contact-name"]')
+    'id': form.querySelector('input[name="contact-id"]').value,
+    'name': form.querySelector('input[name="contact-name"]').value
   };
   return onUpdateDeal(filter, contact);
 });
@@ -1448,7 +1491,7 @@ var updateContact = function updateContact(contact) {
 /* harmony default export */ __webpack_exports__["default"] = (function (filter) {
   var contact = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-  if (contact) {
+  if (contact.id) {
     updateContact(contact);
   }
 

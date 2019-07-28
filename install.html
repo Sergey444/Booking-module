@@ -27,13 +27,13 @@
 
 
     <script>
-
         const save = document.querySelector('#save');
         const url = document.querySelector('#url').value;
 
         save.addEventListener('click', (evt) => {
             evt.preventDefault();
             const url = document.querySelector('#url').value;
+            
             BX24.callMethod('placement.bind', { 'PLACEMENT': 'CRM_DEAL_DETAIL_TAB', 'HANDLER' : url, 'TITLE': 'Модуль «Бронирование»'}, function (result) {
                 BX24.installFinish();
             });

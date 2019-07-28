@@ -12,7 +12,6 @@ export default (id) => {
                     alert('Произошла ошибка получения контакта...');	
                     return console.error(result.error());
                 }
-                console.log(result.data());
                 return resolve(result.data());
 			}
 		);	

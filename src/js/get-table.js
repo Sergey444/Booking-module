@@ -55,14 +55,16 @@ const getCompanyType = (type) => {
  * @return {string}
  */
 const getCompanyName = (company) => {
+    
     return  `<td>
                 <a href="https://bazaivolga.bitrix24.ru/crm/company/details/${company.ID}/" target="_blank">
                     ${company.TITLE}
                 </a>
             </td>
-            <td class="rs-show-modal" data-id="${company.ID}">
+            <td class="rs-show-modal rs-hidden" data-id="${company.ID}">
                 <a href="javascript:void(0)" data-toggle="modal" data-target="#show-deal" data-company-id="${company.ID}" data-company-name="${company.TITLE}"><i class="fas fa-user-plus"></i></a>
             </td>`;
+
 }
 
 const getColor = (deal) => {
@@ -119,9 +121,18 @@ const getContent = (data) => {
     const content = [];
     data.TYPES_OF_COMPANY.forEach((type) => {
         if (!type.COMPANIES.length) {return false ;}
+        
             
         content.push(getCompanyType(type));
         type.COMPANIES.forEach((company) => {
+            // Для фильтра
+            if (data.busy_companies ) {
+                const test = data.busy_companies.some((id) => id == company.ID);
+                if (test) {
+                    return false;
+                }
+            };
+
             content.push(`<tr>${getCompanyName(company)} ${getDaysTable(company, data)}</tr>`);  
         });
     });

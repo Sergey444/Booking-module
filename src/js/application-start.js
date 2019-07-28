@@ -26,6 +26,7 @@ const getTypesOfCompany = (obj) => {
     const typesOfCompany = [];
     obj.company_fields.forEach( (elem) => {
         typesOfCompany.push({
+            'ID' : elem.ID,
             'NAME' : elem.VALUE,
             'COMPANIES' : obj.company_list.filter( (company) => {
                         company.deals = obj.DEALS.filter((deal) => {

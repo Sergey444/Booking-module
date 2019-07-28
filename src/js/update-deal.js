@@ -20,7 +20,7 @@ const updateContact = (contact) => {
  * @param {object} filter
  */
 export default (filter, contact = false) =>  {
-    if (contact) { updateContact(contact); }
+    if (contact.id) { updateContact(contact); }
     return new Promise ( function (resolve) {	
         BX24.callMethod( "crm.deal.update",  filter, function(result) {
                 if(result.error()) {

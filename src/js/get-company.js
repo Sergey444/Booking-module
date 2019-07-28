@@ -10,7 +10,7 @@ export default () => {
             get_deal_place: ['crm.deal.get', { id: BX24.placement.info().options.ID }], 
         }, 
         (result) => {
-            
+
             return resolve({
                 'deal_place': result.get_deal_place.data(),
                 'deal_fields': result.get_deal_fields.data().UF_CRM_1563514438.items,
