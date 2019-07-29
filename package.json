@@ -4,7 +4,9 @@
   "description": "Модуль бронирования домиков",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --watch --info-verbosity verbose"
+    "dev": "webpack --watch --info-verbosity verbose",
+    "build": "babel src -d dist --presets es2015",
+    "watch": "babel src -d dist --presets es2015 -w"
   },
   "repository": {
     "type": "git",

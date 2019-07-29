@@ -897,8 +897,13 @@ $('#date_timepicker_deal_end').datetimepicker({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/**
+ * В BX24 не реализован фильтр со сложной логикой
+ * Приходится делать batch запрос
+ * 
+ * @param {object} date
+ */
 /* harmony default export */ __webpack_exports__["default"] = (function (date) {
-  var busyCompany = [];
   return new Promise(function (resolve) {
     BX24.callBatch({
       first: ['crm.deal.list', {
@@ -918,13 +923,8 @@ __webpack_require__.r(__webpack_exports__);
         'select': ["UF_CRM_1563881923"]
       }]
     }, function (result) {
-      result.first.data().forEach(function (deal) {
-        busyCompany.push(deal.UF_CRM_1563881923);
-      });
-      result.second.data().forEach(function (deal) {
-        busyCompany.push(deal.UF_CRM_1563881923);
-      });
-      return resolve(busyCompany);
+      var deals = result.first.data().concat(result.second.data());
+      return resolve(deals);
     });
   });
 });
@@ -1329,7 +1329,9 @@ document.querySelector('#findTasks').addEventListener('click', function (evt) {
     end: new Date(+new Date(document.querySelector('#date_timepicker_find_end').value.split('/').reverse().join('/')) + 1000 * 3600 * 3)
   };
   Object(_find_free_company_js__WEBPACK_IMPORTED_MODULE_4__["default"])(date).then(function (resolve) {
-    data.busy_companies = resolve;
+    data.busy_companies = resolve.map(function (deal) {
+      return deal.UF_CRM_1563881923;
+    });
     Object(_application_start_js__WEBPACK_IMPORTED_MODULE_2__["default"])(data);
   });
 });
@@ -1432,8 +1434,13 @@ $('#form-deal-update').on('submit', function (evt) {
   evt.preventDefault();
   var form = evt.target;
   var status = form.querySelector('select[name="status-deal"]').value;
-  var dateStart = status == 120 ? '' : form.querySelector('input[name="date-start"]').value.split('/').join('.');
-  var dateEnd = status == 120 ? '' : form.querySelector('input[name="date-end"]').value.split('/').join('.');
+  var date = {
+    'start': status == 120 ? '' : form.querySelector('input[name="date-start"]').value.split('/').join('.'),
+    'end': status == 120 ? '' : form.querySelector('input[name="date-end"]').value.split('/').join('.') // const dateStart = status == 120 ? '' : form.querySelector('input[name="date-start"]').value.split('/').join('.');
+    // const dateEnd = status == 120 ? '' : form.querySelector('input[name="date-end"]').value.split('/').join('.');
+
+  };
+  var company_id = form.querySelector('input[name="company-id"]').value;
   var filter = {
     'id': form.querySelector('input[name="deal-id"]').value,
     'fields': {
@@ -1441,16 +1448,21 @@ $('#form-deal-update').on('submit', function (evt) {
       'UF_CRM_1563514438': status,
       'UF_CRM_1561618933585': form.querySelector('input[name="prepaid-deal"]').value,
       'UF_CRM_1561535444028': form.querySelector('input[name="count-people"]').value,
-      'UF_CRM_1563776654352': dateStart,
-      'UF_CRM_1563776665746': dateEnd,
-      'UF_CRM_1563881923': form.querySelector('input[name="company-id"]').value
+      'UF_CRM_1563776654352': date.start,
+      //dateStart,
+      'UF_CRM_1563776665746': date.end,
+      //dateEnd,
+      'UF_CRM_1563881923': company_id //form.querySelector('input[name="company-id"]').value,
+
     }
   };
   var contact = {
     'id': form.querySelector('input[name="contact-id"]').value,
-    'name': form.querySelector('input[name="contact-name"]').value
+    'name': form.querySelector('input[name="contact-name"]').value // findFreeCompany(date, company_id).then((resolve) => {
+    //     console.log(resolve);
+
   };
-  return onUpdateDeal(filter, contact);
+  return onUpdateDeal(filter, contact); // });
 });
 
 /***/ }),

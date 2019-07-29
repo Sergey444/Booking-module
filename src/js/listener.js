@@ -2,7 +2,6 @@ import updateDeal from './update-deal.js';
 import changeMonth from'./change-month.js';
 import applicationStart from './application-start.js';
 import getContact from './get-contact.js';
-
 import findFreeCompany from './find-free-company.js';
 
 
@@ -16,7 +15,7 @@ document.querySelector('#findTasks').addEventListener('click', (evt) => {
         end : new Date(+new Date(document.querySelector('#date_timepicker_find_end').value.split('/').reverse().join('/')) + 1000 * 3600 * 3)
     }
     findFreeCompany(date).then((resolve) => {
-        data.busy_companies = resolve;
+        data.busy_companies = resolve.map((deal) => deal.UF_CRM_1563881923 );  
         applicationStart(data);
     });
 });
@@ -121,9 +120,14 @@ $('#form-deal-update').on('submit', (evt) => {
 
     const form = evt.target;
     const status = form.querySelector('select[name="status-deal"]').value;
-    const dateStart = status == 120 ? '' : form.querySelector('input[name="date-start"]').value.split('/').join('.');
-    const dateEnd = status == 120 ? '' : form.querySelector('input[name="date-end"]').value.split('/').join('.');
-    
+    const date = {
+        'start': status == 120 ? '' : form.querySelector('input[name="date-start"]').value.split('/').join('.'),
+        'end': status == 120 ? '' : form.querySelector('input[name="date-end"]').value.split('/').join('.')
+    }
+    // const dateStart = status == 120 ? '' : form.querySelector('input[name="date-start"]').value.split('/').join('.');
+    // const dateEnd = status == 120 ? '' : form.querySelector('input[name="date-end"]').value.split('/').join('.');
+    const company_id = form.querySelector('input[name="company-id"]').value;
+
     const filter = {
         'id': form.querySelector('input[name="deal-id"]').value,
         'fields': {
@@ -131,18 +135,25 @@ $('#form-deal-update').on('submit', (evt) => {
             'UF_CRM_1563514438': status,
             'UF_CRM_1561618933585': form.querySelector('input[name="prepaid-deal"]').value,
             'UF_CRM_1561535444028': form.querySelector('input[name="count-people"]').value,
-            'UF_CRM_1563776654352': dateStart,
-            'UF_CRM_1563776665746': dateEnd,
-            'UF_CRM_1563881923' : form.querySelector('input[name="company-id"]').value,
+            'UF_CRM_1563776654352': date.start, //dateStart,
+            'UF_CRM_1563776665746': date.end,   //dateEnd,
+            'UF_CRM_1563881923' : company_id //form.querySelector('input[name="company-id"]').value,
         }
     }
+
 
     const contact = {
         'id': form.querySelector('input[name="contact-id"]').value,
         'name': form.querySelector('input[name="contact-name"]').value
     }
-    return onUpdateDeal(filter, contact);
+
+    // findFreeCompany(date, company_id).then((resolve) => {
+    //     console.log(resolve);
+        
+        return onUpdateDeal(filter, contact);
+    // });
 });
+
 
 
 
