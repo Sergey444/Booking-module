@@ -25,18 +25,22 @@ export default (month) => {
     const timestamp = [0];
     
     let head = ``;
+    const timeZone = Math.abs( new Date().getTimezoneOffset() ) / 60;
 
     for (let i = 1, j = startWeekDay; i <= countDay; i++, j++) {
         if (j == 7) {j = 0;}
         let classTouday = ``;
         if (i == touday) {classTouday = `touday`;}
 
-        const time = +new Date(date.getFullYear(), date.getMonth(), i) + 3600 * 5 * 1000 ; // Временная зона +5 часов
+        
+
+        const time = +new Date(date.getFullYear(), date.getMonth(), i) + 3600 * timeZone * 1000 ; 
         head += `<td  class="rs-day-column ${weekend[j]} ${classTouday}">${days[j]}</td>`;
         timestamp.push( time ) ;
     }
 
     return  {
+                'TIME_ZONE': timeZone,
                 'TOUDAY': touday,
                 'WEEKEND': weekend,
                 'START_WEEK_DAY': startWeekDay,

@@ -11,8 +11,8 @@ import findFreeCompany from './find-free-company.js';
 document.querySelector('#findTasks').addEventListener('click', (evt) => {
     evt.preventDefault();
     const date = {
-        start: new Date(+new Date (document.querySelector('#date_timepicker_find_start').value.split('/').reverse().join('/')) + 1000 * 3600 * 3),
-        end : new Date(+new Date(document.querySelector('#date_timepicker_find_end').value.split('/').reverse().join('/')) + 1000 * 3600 * 3)
+        start: new Date(+new Date (document.querySelector('#date_timepicker_find_start').value.split('/').reverse().join('/')) + 1000 * 3600 * data.DATE.TIME_ZONE),
+        end : new Date(+new Date(document.querySelector('#date_timepicker_find_end').value.split('/').reverse().join('/')) + 1000 * 3600 * data.DATE.TIME_ZONE)
     }
     findFreeCompany(date).then((resolve) => {
         data.busy_companies = resolve.map((deal) => deal.UF_CRM_1563881923 );  
@@ -124,8 +124,6 @@ $('#form-deal-update').on('submit', (evt) => {
         'start': status == 120 ? '' : form.querySelector('input[name="date-start"]').value.split('/').join('.'),
         'end': status == 120 ? '' : form.querySelector('input[name="date-end"]').value.split('/').join('.')
     }
-    // const dateStart = status == 120 ? '' : form.querySelector('input[name="date-start"]').value.split('/').join('.');
-    // const dateEnd = status == 120 ? '' : form.querySelector('input[name="date-end"]').value.split('/').join('.');
     const company_id = form.querySelector('input[name="company-id"]').value;
 
     const filter = {
@@ -135,23 +133,17 @@ $('#form-deal-update').on('submit', (evt) => {
             'UF_CRM_1563514438': status,
             'UF_CRM_1561618933585': form.querySelector('input[name="prepaid-deal"]').value,
             'UF_CRM_1561535444028': form.querySelector('input[name="count-people"]').value,
-            'UF_CRM_1563776654352': date.start, //dateStart,
-            'UF_CRM_1563776665746': date.end,   //dateEnd,
-            'UF_CRM_1563881923' : company_id //form.querySelector('input[name="company-id"]').value,
+            'UF_CRM_1563776654352': date.start, 
+            'UF_CRM_1563776665746': date.end,   
+            'UF_CRM_1563881923' : company_id 
         }
     }
-
 
     const contact = {
         'id': form.querySelector('input[name="contact-id"]').value,
         'name': form.querySelector('input[name="contact-name"]').value
-    }
-
-    // findFreeCompany(date, company_id).then((resolve) => {
-    //     console.log(resolve);
-        
-        return onUpdateDeal(filter, contact);
-    // });
+    } 
+    return onUpdateDeal(filter, contact);
 });
 
 

@@ -1265,6 +1265,7 @@ Date.prototype.daysInMonth = function () {
   var countDay = date.daysInMonth();
   var timestamp = [0];
   var head = "";
+  var timeZone = Math.abs(new Date().getTimezoneOffset()) / 60;
 
   for (var i = 1, j = startWeekDay; i <= countDay; i++, j++) {
     if (j == 7) {
@@ -1277,13 +1278,13 @@ Date.prototype.daysInMonth = function () {
       classTouday = "touday";
     }
 
-    var time = +new Date(date.getFullYear(), date.getMonth(), i) + 3600 * 5 * 1000; // Временная зона +5 часов
-
+    var time = +new Date(date.getFullYear(), date.getMonth(), i) + 3600 * timeZone * 1000;
     head += "<td  class=\"rs-day-column ".concat(weekend[j], " ").concat(classTouday, "\">").concat(days[j], "</td>");
     timestamp.push(time);
   }
 
   return {
+    'TIME_ZONE': timeZone,
     'TOUDAY': touday,
     'WEEKEND': weekend,
     'START_WEEK_DAY': startWeekDay,
@@ -1325,8 +1326,8 @@ __webpack_require__.r(__webpack_exports__);
 document.querySelector('#findTasks').addEventListener('click', function (evt) {
   evt.preventDefault();
   var date = {
-    start: new Date(+new Date(document.querySelector('#date_timepicker_find_start').value.split('/').reverse().join('/')) + 1000 * 3600 * 3),
-    end: new Date(+new Date(document.querySelector('#date_timepicker_find_end').value.split('/').reverse().join('/')) + 1000 * 3600 * 3)
+    start: new Date(+new Date(document.querySelector('#date_timepicker_find_start').value.split('/').reverse().join('/')) + 1000 * 3600 * data.DATE.TIME_ZONE),
+    end: new Date(+new Date(document.querySelector('#date_timepicker_find_end').value.split('/').reverse().join('/')) + 1000 * 3600 * data.DATE.TIME_ZONE)
   };
   Object(_find_free_company_js__WEBPACK_IMPORTED_MODULE_4__["default"])(date).then(function (resolve) {
     data.busy_companies = resolve.map(function (deal) {
@@ -1436,9 +1437,7 @@ $('#form-deal-update').on('submit', function (evt) {
   var status = form.querySelector('select[name="status-deal"]').value;
   var date = {
     'start': status == 120 ? '' : form.querySelector('input[name="date-start"]').value.split('/').join('.'),
-    'end': status == 120 ? '' : form.querySelector('input[name="date-end"]').value.split('/').join('.') // const dateStart = status == 120 ? '' : form.querySelector('input[name="date-start"]').value.split('/').join('.');
-    // const dateEnd = status == 120 ? '' : form.querySelector('input[name="date-end"]').value.split('/').join('.');
-
+    'end': status == 120 ? '' : form.querySelector('input[name="date-end"]').value.split('/').join('.')
   };
   var company_id = form.querySelector('input[name="company-id"]').value;
   var filter = {
@@ -1449,20 +1448,15 @@ $('#form-deal-update').on('submit', function (evt) {
       'UF_CRM_1561618933585': form.querySelector('input[name="prepaid-deal"]').value,
       'UF_CRM_1561535444028': form.querySelector('input[name="count-people"]').value,
       'UF_CRM_1563776654352': date.start,
-      //dateStart,
       'UF_CRM_1563776665746': date.end,
-      //dateEnd,
-      'UF_CRM_1563881923': company_id //form.querySelector('input[name="company-id"]').value,
-
+      'UF_CRM_1563881923': company_id
     }
   };
   var contact = {
     'id': form.querySelector('input[name="contact-id"]').value,
-    'name': form.querySelector('input[name="contact-name"]').value // findFreeCompany(date, company_id).then((resolve) => {
-    //     console.log(resolve);
-
+    'name': form.querySelector('input[name="contact-name"]').value
   };
-  return onUpdateDeal(filter, contact); // });
+  return onUpdateDeal(filter, contact);
 });
 
 /***/ }),
