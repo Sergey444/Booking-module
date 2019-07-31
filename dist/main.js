@@ -95,7 +95,7 @@
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "table {\r\n    border-collapse: collapse;\r\n    width: 100%;\r\n}\r\ntd {\r\n    border: 1px solid #ced4da;\r\n    padding: 5px;\r\n}\r\na {\r\n    color: black;\r\n}\r\na:hover {\r\n    text-decoration: none;\r\n    color: inherit;\r\n}\r\n.task {\r\n    width: 400px;\r\n    border: none;\r\n}\r\n\r\n.rs-line {\r\n    display: block;\r\n    background-color: red;   \r\n    border-radius: 15px;\r\n    font-size: 12px;\r\n    padding: 5px;\r\n    color: #fff;\r\n    text-align: center;\r\n}\r\n.rs-line:hover {\r\n    color: #fff;\r\n}\r\n.rs-line--last {\r\n    margin-right: 0;\r\n    border-top-right-radius: 0px;\r\n    border-bottom-right-radius: 0px;\r\n}\r\n.rs-line--first {\r\n    margin-right: 0;\r\n    border-top-left-radius: 0px;\r\n    border-bottom-left-radius: 0px;\r\n}\r\n.table__title {\r\n    font-size: 28px;\r\n    text-align: center;\r\n    position: relative;\r\n    width: 80%;\r\n    line-height: 28px;\r\n}\r\n.rs-type {\r\n    background-color: lightgrey;\r\n}\r\n.rs-objects {\r\n    width: 300px;\r\n}\r\n\r\n.btn--prev {\r\n    float: left;\r\n} \r\n.btn--next {\r\n    float: right;\r\n} \r\n\r\n#table tbody tr:hover {\r\n    background-color: #f1f1f1;\r\n}\r\n\r\n.rs-show-modal{\r\n    text-align: center;\r\n    cursor: pointer;\r\n}\r\n.modal-footer--space {\r\n    justify-content: space-between;\r\n}\r\n.rs-day-column {\r\n    min-width: 25px;\r\n    height: 25px;\r\n    text-align: center;\r\n}\r\n.rs-container {\r\n\tpadding: 0 20px;\r\n\tmax-width: 1200px;\r\n\tmargin: 0 auto;\r\n}\r\ncaption {\r\n\tcaption-side: top!important;\r\n}\r\n.rs-form {\r\n\tdisplay: flex;\r\n\tjustify-content: space-between;\r\n\tmargin-bottom: 20px;\r\n    margin-top: 40px;\r\n    align-items: flex-end;\r\n}\r\n.rs-form__img  h1{\r\n    line-height: 34px;\r\n    color: #0062cc;\r\n}\r\n.rs-form-list {\r\n\tdisplay: flex;\r\n\tflex-wrap: wrap;\r\n\t/*width: 728px;*/\r\n}\r\n.rs-form-item:not(:last-child) {\r\n\tmargin-right: 20px;\r\n}\r\n.rs-form__img img{\r\n\tmax-width: 223px;\r\n}\r\n.rs-green {\r\n    background-color: green;\r\n}\r\n\r\n.rs-red {\r\n    background-color: lightcoral;\r\n}\r\n.rs-grey {\r\n    background-color: lightgrey;\r\n}\r\n.rs-task-deal {\r\n    color: red;\r\n}\r\n\r\n.rs-task-deal a {\r\n    color: #0062cc;\r\n}\r\n\r\n.weekend {\r\n    color: red;\r\n}\r\n.touday { \r\n    background-color: #fffc98;\r\n}", ""]);
+exports.push([module.i, "table {\n    border-collapse: collapse;\n    width: 100%;\n}\ntd {\n    border: 1px solid #ced4da;\n    padding: 5px;\n}\na {\n    color: black;\n}\na:hover {\n    text-decoration: none;\n    color: inherit;\n}\n.task {\n    width: 400px;\n    border: none;\n}\n\n.rs-line {\n    display: block;\n    background-color: red;   \n    border-radius: 15px;\n    font-size: 12px;\n    padding: 5px;\n    color: #fff;\n    text-align: center;\n}\n.rs-line:hover {\n    color: #fff;\n}\n.rs-line--last {\n    margin-right: 0;\n    border-top-right-radius: 0px;\n    border-bottom-right-radius: 0px;\n}\n.rs-line--first {\n    margin-right: 0;\n    border-top-left-radius: 0px;\n    border-bottom-left-radius: 0px;\n}\n.table__title {\n    font-size: 28px;\n    text-align: center;\n    position: relative;\n    width: 80%;\n    line-height: 28px;\n}\n.rs-type {\n    background-color: lightgrey;\n}\n.rs-objects {\n    width: 300px;\n}\n\n.btn--prev {\n    float: left;\n} \n.btn--next {\n    float: right;\n} \n\n#table tbody tr:hover {\n    background-color: #f1f1f1;\n}\n\n.rs-show-modal{\n    text-align: center;\n    cursor: pointer;\n}\n.modal-footer--space {\n    justify-content: space-between;\n}\n.rs-day-column {\n    min-width: 25px;\n    height: 25px;\n    text-align: center;\n}\n.rs-container {\n\tpadding: 0 20px;\n\tmax-width: 1200px;\n\tmargin: 0 auto;\n}\ncaption {\n\tcaption-side: top!important;\n}\n.rs-form {\n\tdisplay: flex;\n\tjustify-content: space-between;\n\tmargin-bottom: 20px;\n    margin-top: 40px;\n    align-items: flex-end;\n}\n.rs-form__img  h1{\n    line-height: 34px;\n    color: #0062cc;\n}\n.rs-form-list {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\t/*width: 728px;*/\n}\n.rs-form-item:not(:last-child) {\n\tmargin-right: 20px;\n}\n.rs-form__img img{\n\tmax-width: 223px;\n}\n.rs-green {\n    background-color: green;\n}\n\n.rs-red {\n    background-color: lightcoral;\n}\n.rs-grey {\n    background-color: lightgrey;\n}\n.rs-task-deal {\n    color: red;\n}\n\n.rs-task-deal a {\n    color: #0062cc;\n}\n\n.weekend {\n    color: red;\n}\n.touday { \n    background-color: #fffc98;\n}", ""]);
 
 
 /***/ }),
@@ -1012,15 +1012,27 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+/**
+ * Получаем на один месяц меньше текущего
+ * @param {integer} month
+ */
 var getStartDate = function getStartDate(month) {
   var date = new Date();
-  date.setMonth(date.getMonth() + month - 1);
   date.setDate(1);
+  date.setMonth(date.getMonth() + month - 1);
   return date;
 };
 /**
- * 
- * 
+ *
+ *
  * UF_CRM_1563776654352 - date_start
  * UF_CRM_1563776665746 - date_end
  * UF_CRM_1563881923 - object
@@ -1045,7 +1057,7 @@ var getStartDate = function getStartDate(month) {
         return console.error(result.error());
       }
 
-      deals = deals.concat(result.data());
+      deals = [].concat(_toConsumableArray(deals), _toConsumableArray(result.data()));
 
       if (result.more()) {
         return result.next();
@@ -1253,14 +1265,10 @@ Date.prototype.daysInMonth = function () {
   var days = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
   var weekend = ['weekend', '', '', '', '', '', 'weekend'];
   var date = new Date();
-  date.setMonth(date.getMonth() + month);
-  var touday = "";
-
-  if (month == 0) {
-    touday = date.getDate();
-  }
-
+  var touday = month == 0 ? date.getDate() : "";
   date.setDate(1);
+  date.setMonth(date.getMonth() + month);
+  console.log('testttt');
   var startWeekDay = date.getDay();
   var countDay = date.daysInMonth();
   var timestamp = [0];
@@ -1272,12 +1280,7 @@ Date.prototype.daysInMonth = function () {
       j = 0;
     }
 
-    var classTouday = "";
-
-    if (i == touday) {
-      classTouday = "touday";
-    }
-
+    var classTouday = i == touday ? "touday" : "";
     var time = +new Date(date.getFullYear(), date.getMonth(), i) + 3600 * timeZone * 1000;
     head += "<td  class=\"rs-day-column ".concat(weekend[j], " ").concat(classTouday, "\">").concat(days[j], "</td>");
     timestamp.push(time);
@@ -1337,6 +1340,15 @@ document.querySelector('#findTasks').addEventListener('click', function (evt) {
   });
 });
 /**
+ * Перезапуск приложения
+ */
+
+document.querySelector('#resetApp').addEventListener('click', function (evt) {
+  evt.preventDefault();
+  data.busy_companies = [];
+  Object(_application_start_js__WEBPACK_IMPORTED_MODULE_2__["default"])(data);
+});
+/**
  * Слушатель на таблицу, для изменения месяца
  */
 
@@ -1347,8 +1359,8 @@ document.querySelector('#table').addEventListener('click', function (evt) {
   }
 });
 /**
- * 
- * @param {object} filter 
+ *
+ * @param {object} filter
  */
 
 var onUpdateDeal = function onUpdateDeal(filter) {
@@ -1359,9 +1371,9 @@ var onUpdateDeal = function onUpdateDeal(filter) {
   });
 };
 /**
- * 
- * @param {object} date 
- * @return {string} 
+ *
+ * @param {object} date
+ * @return {string}
  */
 
 
@@ -1373,7 +1385,7 @@ var formatDate = function formatDate(date) {
 };
 /**
  * Просмотр сделки
- * 
+ *
  * @param {object} -global data
  */
 

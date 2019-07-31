@@ -15,29 +15,33 @@ document.querySelector('#findTasks').addEventListener('click', (evt) => {
         end : new Date(+new Date(document.querySelector('#date_timepicker_find_end').value.split('/').reverse().join('/')) + 1000 * 3600 * data.DATE.TIME_ZONE)
     }
     findFreeCompany(date).then((resolve) => {
-        data.busy_companies = resolve.map((deal) => deal.UF_CRM_1563881923 );  
+        data.busy_companies = resolve.map((deal) => deal.UF_CRM_1563881923 );
         applicationStart(data);
     });
 });
 
-
-
-
+/**
+ * Перезапуск приложения
+ */
+document.querySelector('#resetApp').addEventListener('click', (evt) => {
+    evt.preventDefault();
+    data.busy_companies = [];
+    applicationStart(data);
+});
 
 /**
  * Слушатель на таблицу, для изменения месяца
  */
-document.querySelector('#table').addEventListener('click', (evt)=> { 
+document.querySelector('#table').addEventListener('click', (evt)=> {
     if (evt.target.closest('[data-name="control"]')) {
-        const target = evt.target.closest('[data-name="control"]');  
+        const target = evt.target.closest('[data-name="control"]');
         target.id == 'next' ? changeMonth(true) : changeMonth(false);
     }
 });
 
-
 /**
- * 
- * @param {object} filter 
+ *
+ * @param {object} filter
  */
 const onUpdateDeal = (filter, contact = false) => {
     updateDeal(filter, contact).then((resolve) => {
@@ -47,9 +51,9 @@ const onUpdateDeal = (filter, contact = false) => {
 }
 
 /**
- * 
- * @param {object} date 
- * @return {string} 
+ *
+ * @param {object} date
+ * @return {string}
  */
 const formatDate = (date) => {
     const year = date.getFullYear();
@@ -60,15 +64,15 @@ const formatDate = (date) => {
 
 /**
  * Просмотр сделки
- * 
+ *
  * @param {object} -global data
  */
 $('#show-deal').on('show.bs.modal', (evt) => {
-    const button = evt.relatedTarget 
+    const button = evt.relatedTarget
     let deal = {};
     let companyId = ``;
 
-    if ( button.hasAttribute('data-company-id') ) {  
+    if ( button.hasAttribute('data-company-id') ) {
         deal = data.deal_place;
         companyId = button.getAttribute('data-company-id');
     } else {
@@ -77,8 +81,8 @@ $('#show-deal').on('show.bs.modal', (evt) => {
     }
 
     const modal = evt.target;
-    
-    const start = deal.UF_CRM_1563776654352 ? new Date(deal.UF_CRM_1563776654352) : false; 
+
+    const start = deal.UF_CRM_1563776654352 ? new Date(deal.UF_CRM_1563776654352) : false;
     const end = deal.UF_CRM_1563776665746 ? new Date(deal.UF_CRM_1563776665746) : false;
     const sum = parseInt(deal.OPPORTUNITY) || 0;
     const prepaid = parseInt(deal.UF_CRM_1561618933585) || 0;
@@ -133,16 +137,16 @@ $('#form-deal-update').on('submit', (evt) => {
             'UF_CRM_1563514438': status,
             'UF_CRM_1561618933585': form.querySelector('input[name="prepaid-deal"]').value,
             'UF_CRM_1561535444028': form.querySelector('input[name="count-people"]').value,
-            'UF_CRM_1563776654352': date.start, 
-            'UF_CRM_1563776665746': date.end,   
-            'UF_CRM_1563881923' : company_id 
+            'UF_CRM_1563776654352': date.start,
+            'UF_CRM_1563776665746': date.end,
+            'UF_CRM_1563881923' : company_id
         }
     }
 
     const contact = {
         'id': form.querySelector('input[name="contact-id"]').value,
         'name': form.querySelector('input[name="contact-name"]').value
-    } 
+    }
     return onUpdateDeal(filter, contact);
 });
 
