@@ -13,7 +13,11 @@ export default () => {
 
             return resolve({
                 'deal_place': result.get_deal_place.data(),
-                'deal_fields': result.get_deal_fields.data().UF_CRM_1563514438.items,
+                'deal_fields': {
+                    'UF_CRM_1563514438': result.get_deal_fields.data().UF_CRM_1563514438.items,
+                    'UF_CRM_1565683410717': result.get_deal_fields.data().UF_CRM_1565683410717.items,
+                    'UF_CRM_1565683470394': result.get_deal_fields.data().UF_CRM_1565683470394.items
+                },
                 'company_fields': result.get_company_fields.data().UF_CRM_1561620120175.items,
                 'company_list':  result.get_company_list.data(),
                 'MONTH_COUNTER': 0

@@ -81,7 +81,6 @@ $('#show-deal').on('show.bs.modal', (evt) => {
     }
 
     const modal = evt.target;
-
     const start = deal.UF_CRM_1563776654352 ? new Date(deal.UF_CRM_1563776654352) : false;
     const end = deal.UF_CRM_1563776665746 ? new Date(deal.UF_CRM_1563776665746) : false;
     const sum = parseInt(deal.OPPORTUNITY) || 0;
@@ -98,6 +97,7 @@ $('#show-deal').on('show.bs.modal', (evt) => {
            contactInput.setAttribute('placeholder', 'Не указан');
         });
     }
+
     modal.querySelector(`.modal-title`).textContent = deal.TITLE;
     modal.querySelector(`[name="deal-id"]`).value = deal.ID;
     modal.querySelector(`[name="contact-id"]`).value = deal.CONTACT_ID;
@@ -108,12 +108,18 @@ $('#show-deal').on('show.bs.modal', (evt) => {
     modal.querySelector(`input[name="prepaid-deal"]`).value = prepaid;
     modal.querySelector(`input[name="count-people"]`).value = deal.UF_CRM_1561535444028;
     modal.querySelector('input[name="company-id"]').value = companyId;
+    modal.querySelector('textarea[name="comments"]').value = deal.COMMENTS;
 
-    const status = data.deal_fields.map((field) => {
-        const selected = deal.UF_CRM_1563514438 == field.ID ? `selected` : ``;
-        return `<option value="${field.ID}" ${selected}>${field.VALUE}</option>`;
-    });
-    modal.querySelector(`select[name="status-deal"]`).innerHTML = `<option value="0">Не выбран</option>${status.join('')}`;
+    const getFields = (id) => {
+        return data.deal_fields[id].map((field) => {
+            const selected = deal[id] == field.ID ? `selected` : ``;
+            return `<option value="${field.ID}" ${selected}>${field.VALUE}</option>`;
+        }).join(' ');
+    }
+    
+    modal.querySelector(`select[name="status-deal"]`).innerHTML = `<option value="0">Не выбран</option>${getFields('UF_CRM_1563514438')}`;
+    modal.querySelector(`select[name="type-of-prepaid"]`).innerHTML = `<option value="0">Не выбран</option>${getFields('UF_CRM_1565683410717')}`;
+    modal.querySelector(`select[name="type-of-postpay"]`).innerHTML = `<option value="0">Не выбран</option>${getFields('UF_CRM_1565683470394')}`;
 });
 
 /**
@@ -134,7 +140,10 @@ $('#form-deal-update').on('submit', (evt) => {
         'id': form.querySelector('input[name="deal-id"]').value,
         'fields': {
             'OPPORTUNITY': form.querySelector('input[name="sum-deal"]').value,
+            'COMMENTS': form.querySelector('textarea[name="comments"]').value,
             'UF_CRM_1563514438': status,
+            'UF_CRM_1565683410717': form.querySelector(`select[name="type-of-prepaid"]`).value,
+            'UF_CRM_1565683470394': form.querySelector(`select[name="type-of-postpay"]`).value,
             'UF_CRM_1561618933585': form.querySelector('input[name="prepaid-deal"]').value,
             'UF_CRM_1561535444028': form.querySelector('input[name="count-people"]').value,
             'UF_CRM_1563776654352': date.start,

@@ -56,8 +56,8 @@
 <table id="table" class=""></table>
 
 <!-- show deal -->
-<div class="modal fade" id="show-deal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-	<div class="modal-dialog" role="document">
+<div class="modal fade bd-example-modal-lg" id="show-deal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal-dialog  modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id=""></h5>
@@ -68,50 +68,73 @@
 			<form action="" id="form-deal-update">
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="">Имя контакта</label>
-						<input type="text" class='form-control' name="contact-name"  placeholder="Не указан">
-					</div>
-
-					<div class="form-group">
 						<div class="row">
-							<div class="col-md-6">
-								<label for="">Дата начала:</label>
-								<input type="text" class='form-control' name="date-start" id="date_timepicker_deal_start" >
+							<div class="col-md-8">
+								<label for="">Имя контакта</label>
+								<input type="text" class='form-control' name="contact-name"  placeholder="Не указан">
 							</div>
-							<div class="col-md-6">
-								<label for="">Дата окончания:</label>
-								<input type="text" class='form-control' name="date-end" id="date_timepicker_deal_end" >
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-md-6">
-								<label for="">Сумма сделки</label>
-								<input class='form-control' type="text" name="sum-deal">
-							</div>
-							<div class="col-md-6">
-								<label for="">Сумма аванса</label>
-								<input class='form-control' type="text" name="prepaid-deal">
-							</div>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="row">
-							<div class="col-md-6">
-								<label for="">Колличество человек</label>
-								<input type="text" class='form-control' name="count-people" placeholder="Не указано" required>
-							</div>
-							<div class="col-md-6">
-								<label for="">Статус оплаты</label>
-								<select type="text" class="form-control" name="status-deal">
+							<div class="col-md-4">
+								<label for="">Способ внесения аванса</label>
+								<select type="text" class="form-control" name="type-of-prepaid">
 									<option value="0">Не выбран</option>
 								</select>
 							</div>
 						</div>
 					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-4">
+								<label for="">Колличество человек</label>
+								<input type="text" class='form-control' name="count-people" placeholder="Не указано" required>
+							</div>
+							<div class="col-md-4">
+								<label for="">Статус оплаты</label>
+								<select type="text" class="form-control" name="status-deal">
+									<option value="0">Не выбран</option>
+								</select>
+							</div>
+							<div class="col-md-4">
+								<label for="">Cпособ внесения пост оплаты</label>
+								<select type="text" class="form-control" name="type-of-postpay">
+									<option value="0">Не выбран</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-8">
+								<div class="row">
+									<div class="col-md-6">
+										<label for="">Дата начала:</label>
+										<input type="text" class='form-control' name="date-start" id="date_timepicker_deal_start" >
+									</div>
+									<div class="col-md-6">
+										<label for="">Дата окончания:</label>
+										<input type="text" class='form-control' name="date-end" id="date_timepicker_deal_end" >
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<label for="">Сумма сделки</label>
+										<input class='form-control' type="text" name="sum-deal">
+									</div>
+									<div class="col-md-6">
+										<label for="">Сумма аванса</label>
+										<input class='form-control' type="text" name="prepaid-deal">
+									</div>
+								</div>	
+							</div>
+							<div class="col-md-4">
+								<label for="">Комментарий</label>
+								<textarea class='form-control' name="comments" rows="4" placeholder="Ваш комментарий"></textarea>
+							</div>
+
+						</div>
+					</div>
+
 
 					<input type="hidden" name="deal-id">
 					<input type="hidden" name="contact-id">

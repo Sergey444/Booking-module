@@ -95,7 +95,7 @@
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "table {\n    border-collapse: collapse;\n    width: 100%;\n}\ntd {\n    border: 1px solid #ced4da;\n    padding: 5px;\n}\na {\n    color: black;\n}\na:hover {\n    text-decoration: none;\n    color: inherit;\n}\n.task {\n    width: 400px;\n    border: none;\n}\n\n.rs-line {\n    display: block;\n    background-color: red;   \n    border-radius: 15px;\n    font-size: 12px;\n    padding: 5px;\n    color: #fff;\n    text-align: center;\n}\n.rs-line:hover {\n    color: #fff;\n}\n.rs-line--last {\n    margin-right: 0;\n    border-top-right-radius: 0px;\n    border-bottom-right-radius: 0px;\n}\n.rs-line--first {\n    margin-right: 0;\n    border-top-left-radius: 0px;\n    border-bottom-left-radius: 0px;\n}\n.table__title {\n    font-size: 28px;\n    text-align: center;\n    position: relative;\n    width: 80%;\n    line-height: 28px;\n}\n.rs-type {\n    background-color: lightgrey;\n}\n.rs-objects {\n    width: 300px;\n}\n\n.btn--prev {\n    float: left;\n} \n.btn--next {\n    float: right;\n} \n\n#table tbody tr:hover {\n    background-color: #f1f1f1;\n}\n\n.rs-show-modal{\n    text-align: center;\n    cursor: pointer;\n}\n.modal-footer--space {\n    justify-content: space-between;\n}\n.rs-day-column {\n    min-width: 25px;\n    height: 25px;\n    text-align: center;\n}\n.rs-container {\n\tpadding: 0 20px;\n\tmax-width: 1200px;\n\tmargin: 0 auto;\n}\ncaption {\n\tcaption-side: top!important;\n}\n.rs-form {\n\tdisplay: flex;\n\tjustify-content: space-between;\n\tmargin-bottom: 20px;\n    margin-top: 40px;\n    align-items: flex-end;\n}\n.rs-form__img  h1{\n    line-height: 34px;\n    color: #0062cc;\n}\n.rs-form-list {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\t/*width: 728px;*/\n}\n.rs-form-item:not(:last-child) {\n\tmargin-right: 20px;\n}\n.rs-form__img img{\n\tmax-width: 223px;\n}\n.rs-green {\n    background-color: green;\n}\n\n.rs-red {\n    background-color: lightcoral;\n}\n.rs-grey {\n    background-color: lightgrey;\n}\n.rs-task-deal {\n    color: red;\n}\n\n.rs-task-deal a {\n    color: #0062cc;\n}\n\n.weekend {\n    color: red;\n}\n.touday { \n    background-color: #fffc98;\n}", ""]);
+exports.push([module.i, "table {\r\n    border-collapse: collapse;\r\n    width: 100%;\r\n}\r\ntd {\r\n    border: 1px solid #ced4da;\r\n    padding: 5px;\r\n}\r\na {\r\n    color: black;\r\n}\r\na:hover {\r\n    text-decoration: none;\r\n    color: inherit;\r\n}\r\n.task {\r\n    width: 400px;\r\n    border: none;\r\n}\r\n\r\n.rs-line {\r\n    display: block;\r\n    background-color: red;   \r\n    border-radius: 15px;\r\n    font-size: 12px;\r\n    padding: 5px;\r\n    color: #fff;\r\n    text-align: center;\r\n}\r\n.rs-line:hover {\r\n    color: #fff;\r\n}\r\n.rs-line--last {\r\n    margin-right: 0;\r\n    border-top-right-radius: 0px;\r\n    border-bottom-right-radius: 0px;\r\n}\r\n.rs-line--first {\r\n    margin-right: 0;\r\n    border-top-left-radius: 0px;\r\n    border-bottom-left-radius: 0px;\r\n}\r\n.table__title {\r\n    font-size: 28px;\r\n    text-align: center;\r\n    position: relative;\r\n    width: 80%;\r\n    line-height: 28px;\r\n}\r\n.rs-type {\r\n    background-color: lightgrey;\r\n}\r\n.rs-objects {\r\n    width: 300px;\r\n}\r\n\r\n.btn--prev {\r\n    float: left;\r\n} \r\n.btn--next {\r\n    float: right;\r\n} \r\n\r\n#table tbody tr:hover {\r\n    background-color: #f1f1f1;\r\n}\r\n\r\n.rs-show-modal{\r\n    text-align: center;\r\n    cursor: pointer;\r\n}\r\n.modal-footer--space {\r\n    justify-content: space-between;\r\n}\r\n.rs-day-column {\r\n    min-width: 25px;\r\n    height: 25px;\r\n    text-align: center;\r\n}\r\n.rs-container {\r\n\tpadding: 0 20px;\r\n\tmax-width: 1200px;\r\n\tmargin: 0 auto;\r\n}\r\ncaption {\r\n\tcaption-side: top!important;\r\n}\r\n.rs-form {\r\n\tdisplay: flex;\r\n\tjustify-content: space-between;\r\n\tmargin-bottom: 20px;\r\n    margin-top: 40px;\r\n    align-items: flex-end;\r\n}\r\n.rs-form__img  h1{\r\n    line-height: 34px;\r\n    color: #0062cc;\r\n}\r\n.rs-form-list {\r\n\tdisplay: flex;\r\n\tflex-wrap: wrap;\r\n\t/*width: 728px;*/\r\n}\r\n.rs-form-item:not(:last-child) {\r\n\tmargin-right: 20px;\r\n}\r\n.rs-form__img img{\r\n\tmax-width: 223px;\r\n}\r\n.rs-green {\r\n    background-color: green;\r\n}\r\n\r\n.rs-red {\r\n    background-color: lightcoral;\r\n}\r\n.rs-grey {\r\n    background-color: lightgrey;\r\n}\r\n.rs-task-deal {\r\n    color: red;\r\n}\r\n\r\n.rs-task-deal a {\r\n    color: #0062cc;\r\n}\r\n\r\n.weekend {\r\n    color: red;\r\n}\r\n.touday { \r\n    background-color: #fffc98;\r\n}", ""]);
 
 
 /***/ }),
@@ -897,6 +897,14 @@ $('#date_timepicker_deal_end').datetimepicker({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 /**
  * В BX24 не реализован фильтр со сложной логикой
  * Приходится делать batch запрос
@@ -921,10 +929,17 @@ __webpack_require__.r(__webpack_exports__);
           '!UF_CRM_1563881923': false
         },
         'select': ["UF_CRM_1563881923"]
+      }],
+      third: ['crm.deal.list', {
+        'filter': {
+          ">=UF_CRM_1563776654352": date.start,
+          '<=UF_CRM_1563776665746': date.end,
+          '!UF_CRM_1563881923': false
+        },
+        'select': ["UF_CRM_1563881923"]
       }]
     }, function (result) {
-      var deals = result.first.data().concat(result.second.data());
-      return resolve(deals);
+      return resolve([].concat(_toConsumableArray(result.first.data()), _toConsumableArray(result.second.data()), _toConsumableArray(result.third.data())));
     });
   });
 });
@@ -963,7 +978,11 @@ __webpack_require__.r(__webpack_exports__);
     }, function (result) {
       return resolve({
         'deal_place': result.get_deal_place.data(),
-        'deal_fields': result.get_deal_fields.data().UF_CRM_1563514438.items,
+        'deal_fields': {
+          'UF_CRM_1563514438': result.get_deal_fields.data().UF_CRM_1563514438.items,
+          'UF_CRM_1565683410717': result.get_deal_fields.data().UF_CRM_1565683410717.items,
+          'UF_CRM_1565683470394': result.get_deal_fields.data().UF_CRM_1565683470394.items
+        },
         'company_fields': result.get_company_fields.data().UF_CRM_1561620120175.items,
         'company_list': result.get_company_list.data(),
         'MONTH_COUNTER': 0
@@ -1268,7 +1287,6 @@ Date.prototype.daysInMonth = function () {
   var touday = month == 0 ? date.getDate() : "";
   date.setDate(1);
   date.setMonth(date.getMonth() + month);
-  console.log('testttt');
   var startWeekDay = date.getDay();
   var countDay = date.daysInMonth();
   var timestamp = [0];
@@ -1433,11 +1451,18 @@ $('#show-deal').on('show.bs.modal', function (evt) {
   modal.querySelector("input[name=\"prepaid-deal\"]").value = prepaid;
   modal.querySelector("input[name=\"count-people\"]").value = deal.UF_CRM_1561535444028;
   modal.querySelector('input[name="company-id"]').value = companyId;
-  var status = data.deal_fields.map(function (field) {
-    var selected = deal.UF_CRM_1563514438 == field.ID ? "selected" : "";
-    return "<option value=\"".concat(field.ID, "\" ").concat(selected, ">").concat(field.VALUE, "</option>");
-  });
-  modal.querySelector("select[name=\"status-deal\"]").innerHTML = "<option value=\"0\">\u041D\u0435 \u0432\u044B\u0431\u0440\u0430\u043D</option>".concat(status.join(''));
+  modal.querySelector('textarea[name="comments"]').value = deal.COMMENTS;
+
+  var getFields = function getFields(id) {
+    return data.deal_fields[id].map(function (field) {
+      var selected = deal[id] == field.ID ? "selected" : "";
+      return "<option value=\"".concat(field.ID, "\" ").concat(selected, ">").concat(field.VALUE, "</option>");
+    }).join(' ');
+  };
+
+  modal.querySelector("select[name=\"status-deal\"]").innerHTML = "<option value=\"0\">\u041D\u0435 \u0432\u044B\u0431\u0440\u0430\u043D</option>".concat(getFields('UF_CRM_1563514438'));
+  modal.querySelector("select[name=\"type-of-prepaid\"]").innerHTML = "<option value=\"0\">\u041D\u0435 \u0432\u044B\u0431\u0440\u0430\u043D</option>".concat(getFields('UF_CRM_1565683410717'));
+  modal.querySelector("select[name=\"type-of-postpay\"]").innerHTML = "<option value=\"0\">\u041D\u0435 \u0432\u044B\u0431\u0440\u0430\u043D</option>".concat(getFields('UF_CRM_1565683470394'));
 });
 /**
  * Обновление сделки
@@ -1456,7 +1481,10 @@ $('#form-deal-update').on('submit', function (evt) {
     'id': form.querySelector('input[name="deal-id"]').value,
     'fields': {
       'OPPORTUNITY': form.querySelector('input[name="sum-deal"]').value,
+      'COMMENTS': form.querySelector('textarea[name="comments"]').value,
       'UF_CRM_1563514438': status,
+      'UF_CRM_1565683410717': form.querySelector("select[name=\"type-of-prepaid\"]").value,
+      'UF_CRM_1565683470394': form.querySelector("select[name=\"type-of-postpay\"]").value,
       'UF_CRM_1561618933585': form.querySelector('input[name="prepaid-deal"]').value,
       'UF_CRM_1561535444028': form.querySelector('input[name="count-people"]').value,
       'UF_CRM_1563776654352': date.start,

@@ -17,9 +17,6 @@ export default (month) => {
     date.setDate(1);
     date.setMonth(date.getMonth() + month);
 
-    console.log('testttt');
-
-
     const startWeekDay =  date.getDay();
 
     const countDay = date.daysInMonth();
